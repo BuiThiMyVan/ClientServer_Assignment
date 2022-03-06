@@ -1,0 +1,1444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VEGETFOODSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CART_ITEM">
+          <Key>
+            <PropertyRef Name="CartItemId" />
+          </Key>
+          <Property Name="CartItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SessionID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="CATEGORIES">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryParentID" Type="int" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="60" />
+          <Property Name="CategoryDesc" Type="ntext" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="CONSIGNMENTS">
+          <Key>
+            <PropertyRef Name="BathNo" />
+          </Key>
+          <Property Name="BathNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ConsProductID" Type="int" />
+          <Property Name="ConsProductAmout" Type="float" />
+          <Property Name="ConsProductPrice" Type="float" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="DISCOUNTS">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DiscountName" Type="nvarchar" MaxLength="100" />
+          <Property Name="DiscountDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="DiscountPercent" Type="float" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+          <Property Name="Products" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DISTRICTS">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DistrictName" Type="nvarchar" MaxLength="60" />
+          <Property Name="ProvinceID" Type="char" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="NewsID" />
+          </Key>
+          <Property Name="NewsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsCateID" Type="int" />
+          <Property Name="NewsTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="NewsImages" Type="nvarchar(max)" />
+          <Property Name="NewsSummary" Type="nvarchar" MaxLength="300" />
+          <Property Name="NewsBody" Type="ntext" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="NEWSCATEGORIES">
+          <Key>
+            <PropertyRef Name="NewsCateID" />
+          </Key>
+          <Property Name="NewsCateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsCateTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="NewsDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="NEWSCOMMENTS">
+          <Key>
+            <PropertyRef Name="CmtID" />
+          </Key>
+          <Property Name="CmtID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NewsID" Type="int" />
+          <Property Name="UserCode" Type="varchar" MaxLength="50" />
+          <Property Name="Content" Type="ntext" />
+          <Property Name="CreateDate" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DetailProductID" Type="int" />
+          <Property Name="DetailOrderID" Type="int" />
+          <Property Name="DetailPrice" Type="float" />
+          <Property Name="DetailQuantity" Type="int" />
+          <Property Name="DetailSKU" Type="varchar" MaxLength="50" />
+          <Property Name="DetailRate" Type="float" />
+          <Property Name="DetailComment" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ORDERS">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderUserCode" Type="varchar" MaxLength="50" />
+          <Property Name="OrderShipAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="OrderPhone" Type="nvarchar" MaxLength="11" />
+          <Property Name="OrderShippingFee" Type="float" />
+          <Property Name="OrderShippingNote" Type="nvarchar" MaxLength="200" />
+          <Property Name="OrderStatus" Type="tinyint" />
+          <Property Name="OrderEmail" Type="nvarchar" MaxLength="100" />
+          <Property Name="OrderPayMethod" Type="int" />
+          <Property Name="OrderTotal" Type="int" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PERMISSION">
+          <Key>
+            <PropertyRef Name="PerID" />
+          </Key>
+          <Property Name="PerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PERMISSION_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PerID" Type="int" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PRODUCTS">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="50" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductShortName" Type="varchar" MaxLength="255" />
+          <Property Name="ProductCategoryId" Type="int" />
+          <Property Name="ProductImages" Type="nvarchar(max)" />
+          <Property Name="ProductShortDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProductLongDesc" Type="ntext" />
+          <Property Name="ProductUnit" Type="varchar" MaxLength="10" />
+          <Property Name="ProductIngredient" Type="nvarchar(max)" />
+          <Property Name="ProductSeason" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductEXP" Type="smalldatetime" />
+          <Property Name="ProductMFG" Type="smalldatetime" />
+          <Property Name="ProductOrigin" Type="nvarchar" MaxLength="60" />
+          <Property Name="IsActive" Type="tinyint" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+          <Property Name="CreateBy" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="PROVINCES">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="ProvinceName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SHOPPING_SESSIONS">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserCode" Type="varchar" MaxLength="50" />
+          <Property Name="Total" Type="float" />
+          <Property Name="CreateTime" Type="smalldatetime" />
+          <Property Name="UpdateTime" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TOWNS">
+          <Key>
+            <PropertyRef Name="TownID" />
+          </Key>
+          <Property Name="TownID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="TownName" Type="nvarchar" MaxLength="60" />
+          <Property Name="DistrictID" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="USER_PERMISSION">
+          <Key>
+            <PropertyRef Name="UserPerID" />
+          </Key>
+          <Property Name="UserPerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PerID" Type="int" />
+          <Property Name="UserCode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="UserCode" />
+          </Key>
+          <Property Name="UserCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserEmail" Type="varchar" MaxLength="100" />
+          <Property Name="UserPassword" Type="varchar" MaxLength="50" />
+          <Property Name="UserFullName" Type="nvarchar" MaxLength="60" />
+          <Property Name="UserEmailVerified" Type="tinyint" />
+          <Property Name="UserRegistrationDate" Type="smalldatetime" />
+          <Property Name="UserVerifiactionCode" Type="varchar" MaxLength="20" />
+          <Property Name="UserAvatar" Type="nvarchar(max)" />
+          <Property Name="UserPhone" Type="varchar" MaxLength="11" />
+          <Property Name="UserAddress" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK__CART_ITEM__Sessi__5441852A">
+          <End Role="SHOPPING_SESSIONS" Type="Self.SHOPPING_SESSIONS" Multiplicity="0..1" />
+          <End Role="CART_ITEM" Type="Self.CART_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPPING_SESSIONS">
+              <PropertyRef Name="SessionID" />
+            </Principal>
+            <Dependent Role="CART_ITEM">
+              <PropertyRef Name="SessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CONSIGNME__ConsP__3B75D760">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="0..1" />
+          <End Role="CONSIGNMENTS" Type="Self.CONSIGNMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="CONSIGNMENTS">
+              <PropertyRef Name="ConsProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DISTRICTS__Provi__59063A47">
+          <End Role="PROVINCES" Type="Self.PROVINCES" Multiplicity="0..1" />
+          <End Role="DISTRICTS" Type="Self.DISTRICTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCES">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="DISTRICTS">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NEWS__NewsCateID__60A75C0F">
+          <End Role="NEWSCATEGORIES" Type="Self.NEWSCATEGORIES" Multiplicity="0..1" />
+          <End Role="NEWS" Type="Self.NEWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEWSCATEGORIES">
+              <PropertyRef Name="NewsCateID" />
+            </Principal>
+            <Dependent Role="NEWS">
+              <PropertyRef Name="NewsCateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER_DET__Detai__4BAC3F29">
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="0..1" />
+          <End Role="ORDER_DETAIL" Type="Self.ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTS">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="DetailProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER_DET__Detai__4CA06362">
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="0..1" />
+          <End Role="ORDER_DETAIL" Type="Self.ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDERS">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="DetailOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__OrderUse__48CFD27E">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="ORDERS" Type="Self.ORDERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="ORDERS">
+              <PropertyRef Name="OrderUserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERMISSIO__PerID__4222D4EF">
+          <End Role="PERMISSION" Type="Self.PERMISSION" Multiplicity="0..1" />
+          <End Role="PERMISSION_DETAIL" Type="Self.PERMISSION_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Principal>
+            <Dependent Role="PERMISSION_DETAIL">
+              <PropertyRef Name="PerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTS__Produc__38996AB5">
+          <End Role="CATEGORIES" Type="Self.CATEGORIES" Multiplicity="0..1" />
+          <End Role="PRODUCTS" Type="Self.PRODUCTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIES">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="PRODUCTS">
+              <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SHOPPING___UserC__5165187F">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="SHOPPING_SESSIONS" Type="Self.SHOPPING_SESSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="SHOPPING_SESSIONS">
+              <PropertyRef Name="UserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TOWNS__DistrictI__5BE2A6F2">
+          <End Role="DISTRICTS" Type="Self.DISTRICTS" Multiplicity="0..1" />
+          <End Role="TOWNS" Type="Self.TOWNS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICTS">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="TOWNS">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_PERM__PerID__45F365D3">
+          <End Role="PERMISSION" Type="Self.PERMISSION" Multiplicity="0..1" />
+          <End Role="USER_PERMISSION" Type="Self.USER_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Principal>
+            <Dependent Role="USER_PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_PERM__UserC__44FF419A">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="USER_PERMISSION" Type="Self.USER_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="USER_PERMISSION">
+              <PropertyRef Name="UserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="SP_CATEGORIES_CREATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+          <Parameter Name="categoryParentID" Type="int" Mode="In" />
+          <Parameter Name="categoryName" Type="nvarchar" Mode="In" />
+          <Parameter Name="categoryDesc" Type="ntext" Mode="In" />
+          <Parameter Name="isActive" Type="tinyint" Mode="In" />
+          <Parameter Name="createBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_CATEGORIES_DELETE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_CATEGORIES_GETALL" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SP_CATEGORIES_GETBYID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_CATEGORIES_SEARCH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryName" Type="nvarchar" Mode="In" />
+          <Parameter Name="startIndex" Type="int" Mode="In" />
+          <Parameter Name="count" Type="int" Mode="In" />
+          <Parameter Name="totalItems" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_CATEGORIES_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="categoryID" Type="int" Mode="In" />
+          <Parameter Name="categoryParentID" Type="int" Mode="In" />
+          <Parameter Name="categoryName" Type="nvarchar" Mode="In" />
+          <Parameter Name="categoryDesc" Type="ntext" Mode="In" />
+          <Parameter Name="isActive" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="VEGETFOODSModelStoreContainer">
+          <EntitySet Name="CART_ITEM" EntityType="Self.CART_ITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATEGORIES" EntityType="Self.CATEGORIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONSIGNMENTS" EntityType="Self.CONSIGNMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DISCOUNTS" EntityType="Self.DISCOUNTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DISTRICTS" EntityType="Self.DISTRICTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NEWSCATEGORIES" EntityType="Self.NEWSCATEGORIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NEWSCOMMENTS" EntityType="Self.NEWSCOMMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDER_DETAIL" EntityType="Self.ORDER_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERS" EntityType="Self.ORDERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSION" EntityType="Self.PERMISSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERMISSION_DETAIL" EntityType="Self.PERMISSION_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTS" EntityType="Self.PRODUCTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROVINCES" EntityType="Self.PROVINCES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SHOPPING_SESSIONS" EntityType="Self.SHOPPING_SESSIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TOWNS" EntityType="Self.TOWNS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_PERMISSION" EntityType="Self.USER_PERMISSION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CART_ITEM__Sessi__5441852A" Association="Self.FK__CART_ITEM__Sessi__5441852A">
+            <End Role="SHOPPING_SESSIONS" EntitySet="SHOPPING_SESSIONS" />
+            <End Role="CART_ITEM" EntitySet="CART_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CONSIGNME__ConsP__3B75D760" Association="Self.FK__CONSIGNME__ConsP__3B75D760">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="CONSIGNMENTS" EntitySet="CONSIGNMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DISTRICTS__Provi__59063A47" Association="Self.FK__DISTRICTS__Provi__59063A47">
+            <End Role="PROVINCES" EntitySet="PROVINCES" />
+            <End Role="DISTRICTS" EntitySet="DISTRICTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NEWS__NewsCateID__60A75C0F" Association="Self.FK__NEWS__NewsCateID__60A75C0F">
+            <End Role="NEWSCATEGORIES" EntitySet="NEWSCATEGORIES" />
+            <End Role="NEWS" EntitySet="NEWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER_DET__Detai__4BAC3F29" Association="Self.FK__ORDER_DET__Detai__4BAC3F29">
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER_DET__Detai__4CA06362" Association="Self.FK__ORDER_DET__Detai__4CA06362">
+            <End Role="ORDERS" EntitySet="ORDERS" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__OrderUse__48CFD27E" Association="Self.FK__ORDERS__OrderUse__48CFD27E">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="ORDERS" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERMISSIO__PerID__4222D4EF" Association="Self.FK__PERMISSIO__PerID__4222D4EF">
+            <End Role="PERMISSION" EntitySet="PERMISSION" />
+            <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTS__Produc__38996AB5" Association="Self.FK__PRODUCTS__Produc__38996AB5">
+            <End Role="CATEGORIES" EntitySet="CATEGORIES" />
+            <End Role="PRODUCTS" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SHOPPING___UserC__5165187F" Association="Self.FK__SHOPPING___UserC__5165187F">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="SHOPPING_SESSIONS" EntitySet="SHOPPING_SESSIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TOWNS__DistrictI__5BE2A6F2" Association="Self.FK__TOWNS__DistrictI__5BE2A6F2">
+            <End Role="DISTRICTS" EntitySet="DISTRICTS" />
+            <End Role="TOWNS" EntitySet="TOWNS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_PERM__PerID__45F365D3" Association="Self.FK__USER_PERM__PerID__45F365D3">
+            <End Role="PERMISSION" EntitySet="PERMISSION" />
+            <End Role="USER_PERMISSION" EntitySet="USER_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_PERM__UserC__44FF419A" Association="Self.FK__USER_PERM__UserC__44FF419A">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_PERMISSION" EntitySet="USER_PERMISSION" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VEGETFOODSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="VEGETFOODSEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CATEGORIES_CREATE">
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryParentID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="categoryDesc" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Byte" />
+            <Parameter Name="createBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CATEGORIES_DELETE">
+          <Parameter Name="categoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CATEGORIES_GETALL" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORIES_GETALL_Result)" />
+          <FunctionImport Name="SP_CATEGORIES_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORIES_GETBYID_Result)">
+          <Parameter Name="categoryID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CATEGORIES_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORIES_SEARCH_Result)">
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="startIndex" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Int32" />
+            <Parameter Name="totalItems" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_CATEGORIES_UPDATE">
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryParentID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryName" Mode="In" Type="String" />
+            <Parameter Name="categoryDesc" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(VEGETFOODSModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(VEGETFOODSModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="CART_ITEM" EntityType="VEGETFOODSModel.CART_ITEM" />
+          <EntitySet Name="CATEGORIES" EntityType="VEGETFOODSModel.CATEGORy" />
+          <EntitySet Name="CONSIGNMENTS" EntityType="VEGETFOODSModel.CONSIGNMENT" />
+          <EntitySet Name="DISCOUNTS" EntityType="VEGETFOODSModel.DISCOUNT" />
+          <EntitySet Name="DISTRICTS" EntityType="VEGETFOODSModel.DISTRICT" />
+          <EntitySet Name="NEWS" EntityType="VEGETFOODSModel.NEWS" />
+          <EntitySet Name="NEWSCATEGORIES" EntityType="VEGETFOODSModel.NEWSCATEGORy" />
+          <EntitySet Name="NEWSCOMMENTS" EntityType="VEGETFOODSModel.NEWSCOMMENT" />
+          <EntitySet Name="ORDER_DETAIL" EntityType="VEGETFOODSModel.ORDER_DETAIL" />
+          <EntitySet Name="ORDERS" EntityType="VEGETFOODSModel.ORDER" />
+          <EntitySet Name="PERMISSIONs" EntityType="VEGETFOODSModel.PERMISSION" />
+          <EntitySet Name="PERMISSION_DETAIL" EntityType="VEGETFOODSModel.PERMISSION_DETAIL" />
+          <EntitySet Name="PRODUCTS" EntityType="VEGETFOODSModel.PRODUCT" />
+          <EntitySet Name="PROVINCES" EntityType="VEGETFOODSModel.PROVINCE" />
+          <EntitySet Name="SHOPPING_SESSIONS" EntityType="VEGETFOODSModel.SHOPPING_SESSIONS" />
+          <EntitySet Name="sysdiagrams" EntityType="VEGETFOODSModel.sysdiagram" />
+          <EntitySet Name="TOWNS" EntityType="VEGETFOODSModel.TOWN" />
+          <EntitySet Name="USER_PERMISSION" EntityType="VEGETFOODSModel.USER_PERMISSION" />
+          <EntitySet Name="USERS" EntityType="VEGETFOODSModel.USER" />
+          <AssociationSet Name="FK__CART_ITEM__Sessi__5441852A" Association="VEGETFOODSModel.FK__CART_ITEM__Sessi__5441852A">
+            <End Role="SHOPPING_SESSIONS" EntitySet="SHOPPING_SESSIONS" />
+            <End Role="CART_ITEM" EntitySet="CART_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTS__Produc__38996AB5" Association="VEGETFOODSModel.FK__PRODUCTS__Produc__38996AB5">
+            <End Role="CATEGORy" EntitySet="CATEGORIES" />
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CONSIGNME__ConsP__3B75D760" Association="VEGETFOODSModel.FK__CONSIGNME__ConsP__3B75D760">
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+            <End Role="CONSIGNMENT" EntitySet="CONSIGNMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DISTRICTS__Provi__59063A47" Association="VEGETFOODSModel.FK__DISTRICTS__Provi__59063A47">
+            <End Role="PROVINCE" EntitySet="PROVINCES" />
+            <End Role="DISTRICT" EntitySet="DISTRICTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TOWNS__DistrictI__5BE2A6F2" Association="VEGETFOODSModel.FK__TOWNS__DistrictI__5BE2A6F2">
+            <End Role="DISTRICT" EntitySet="DISTRICTS" />
+            <End Role="TOWN" EntitySet="TOWNS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NEWS__NewsCateID__60A75C0F" Association="VEGETFOODSModel.FK__NEWS__NewsCateID__60A75C0F">
+            <End Role="NEWSCATEGORy" EntitySet="NEWSCATEGORIES" />
+            <End Role="NEWS" EntitySet="NEWS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER_DET__Detai__4BAC3F29" Association="VEGETFOODSModel.FK__ORDER_DET__Detai__4BAC3F29">
+            <End Role="PRODUCT" EntitySet="PRODUCTS" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER_DET__Detai__4CA06362" Association="VEGETFOODSModel.FK__ORDER_DET__Detai__4CA06362">
+            <End Role="ORDER" EntitySet="ORDERS" />
+            <End Role="ORDER_DETAIL" EntitySet="ORDER_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERS__OrderUse__48CFD27E" Association="VEGETFOODSModel.FK__ORDERS__OrderUse__48CFD27E">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="ORDER" EntitySet="ORDERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PERMISSIO__PerID__4222D4EF" Association="VEGETFOODSModel.FK__PERMISSIO__PerID__4222D4EF">
+            <End Role="PERMISSION" EntitySet="PERMISSIONs" />
+            <End Role="PERMISSION_DETAIL" EntitySet="PERMISSION_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_PERM__PerID__45F365D3" Association="VEGETFOODSModel.FK__USER_PERM__PerID__45F365D3">
+            <End Role="PERMISSION" EntitySet="PERMISSIONs" />
+            <End Role="USER_PERMISSION" EntitySet="USER_PERMISSION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SHOPPING___UserC__5165187F" Association="VEGETFOODSModel.FK__SHOPPING___UserC__5165187F">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="SHOPPING_SESSIONS" EntitySet="SHOPPING_SESSIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_PERM__UserC__44FF419A" Association="VEGETFOODSModel.FK__USER_PERM__UserC__44FF419A">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="USER_PERMISSION" EntitySet="USER_PERMISSION" />
+          </AssociationSet>
+        </EntityContainer>
+        <ComplexType Name="SP_CATEGORIES_GETALL_Result">
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Int32" Name="CategoryParentID" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CategoryDesc" Nullable="true" MaxLength="Max" />
+          <Property Type="Byte" Name="IsActive" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
+          <Property Type="String" Name="CreateBy" Nullable="true" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="SP_CATEGORIES_GETBYID_Result">
+          <Property Type="Int32" Name="CategoryID" Nullable="false" />
+          <Property Type="Int32" Name="CategoryParentID" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CategoryDesc" Nullable="true" MaxLength="Max" />
+          <Property Type="Byte" Name="IsActive" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
+          <Property Type="String" Name="CreateBy" Nullable="true" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="SP_CATEGORIES_SEARCH_Result">
+          <Property Type="Int64" Name="ROWID" Nullable="true" />
+          <Property Type="Int32" Name="CategoryParentID" Nullable="true" />
+          <Property Type="String" Name="CategoryName" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CategoryDesc" Nullable="true" MaxLength="Max" />
+          <Property Type="Byte" Name="IsActive" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="String" Name="CreateBy" Nullable="true" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="CART_ITEM">
+          <Key>
+            <PropertyRef Name="CartItemId" />
+          </Key>
+          <Property Name="CartItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SessionID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="SHOPPING_SESSIONS" Relationship="VEGETFOODSModel.FK__CART_ITEM__Sessi__5441852A" FromRole="CART_ITEM" ToRole="SHOPPING_SESSIONS" />
+        </EntityType>
+        <EntityType Name="CATEGORy">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryParentID" Type="Int32" />
+          <Property Name="CategoryName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTS" Relationship="VEGETFOODSModel.FK__PRODUCTS__Produc__38996AB5" FromRole="CATEGORy" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="CONSIGNMENT">
+          <Key>
+            <PropertyRef Name="BathNo" />
+          </Key>
+          <Property Name="BathNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ConsProductID" Type="Int32" />
+          <Property Name="ConsProductAmout" Type="Double" />
+          <Property Name="ConsProductPrice" Type="Double" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="PRODUCT" Relationship="VEGETFOODSModel.FK__CONSIGNME__ConsP__3B75D760" FromRole="CONSIGNMENT" ToRole="PRODUCT" />
+        </EntityType>
+        <EntityType Name="DISCOUNT">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DiscountName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountPercent" Type="Double" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <Property Name="Products" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DISTRICT">
+          <Key>
+            <PropertyRef Name="DistrictID" />
+          </Key>
+          <Property Name="DistrictID" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="DistrictName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceID" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="PROVINCE" Relationship="VEGETFOODSModel.FK__DISTRICTS__Provi__59063A47" FromRole="DISTRICT" ToRole="PROVINCE" />
+          <NavigationProperty Name="TOWNS" Relationship="VEGETFOODSModel.FK__TOWNS__DistrictI__5BE2A6F2" FromRole="DISTRICT" ToRole="TOWN" />
+        </EntityType>
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="NewsID" />
+          </Key>
+          <Property Name="NewsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsCateID" Type="Int32" />
+          <Property Name="NewsTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NewsImages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewsSummary" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="NewsBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="NEWSCATEGORy" Relationship="VEGETFOODSModel.FK__NEWS__NewsCateID__60A75C0F" FromRole="NEWS" ToRole="NEWSCATEGORy" />
+        </EntityType>
+        <EntityType Name="NEWSCATEGORy">
+          <Key>
+            <PropertyRef Name="NewsCateID" />
+          </Key>
+          <Property Name="NewsCateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsCateTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="NewsDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="NEWS" Relationship="VEGETFOODSModel.FK__NEWS__NewsCateID__60A75C0F" FromRole="NEWSCATEGORy" ToRole="NEWS" />
+        </EntityType>
+        <EntityType Name="NEWSCOMMENT">
+          <Key>
+            <PropertyRef Name="CmtID" />
+          </Key>
+          <Property Name="CmtID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NewsID" Type="Int32" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ORDER_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DetailProductID" Type="Int32" />
+          <Property Name="DetailOrderID" Type="Int32" />
+          <Property Name="DetailPrice" Type="Double" />
+          <Property Name="DetailQuantity" Type="Int32" />
+          <Property Name="DetailSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DetailRate" Type="Double" />
+          <Property Name="DetailComment" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PRODUCT" Relationship="VEGETFOODSModel.FK__ORDER_DET__Detai__4BAC3F29" FromRole="ORDER_DETAIL" ToRole="PRODUCT" />
+          <NavigationProperty Name="ORDER" Relationship="VEGETFOODSModel.FK__ORDER_DET__Detai__4CA06362" FromRole="ORDER_DETAIL" ToRole="ORDER" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderUserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderShipAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="OrderShippingFee" Type="Double" />
+          <Property Name="OrderShippingNote" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderStatus" Type="Byte" />
+          <Property Name="OrderEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderPayMethod" Type="Int32" />
+          <Property Name="OrderTotal" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ORDER_DETAIL" Relationship="VEGETFOODSModel.FK__ORDER_DET__Detai__4CA06362" FromRole="ORDER" ToRole="ORDER_DETAIL" />
+          <NavigationProperty Name="USER" Relationship="VEGETFOODSModel.FK__ORDERS__OrderUse__48CFD27E" FromRole="ORDER" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="PERMISSION">
+          <Key>
+            <PropertyRef Name="PerID" />
+          </Key>
+          <Property Name="PerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="PERMISSION_DETAIL" Relationship="VEGETFOODSModel.FK__PERMISSIO__PerID__4222D4EF" FromRole="PERMISSION" ToRole="PERMISSION_DETAIL" />
+          <NavigationProperty Name="USER_PERMISSION" Relationship="VEGETFOODSModel.FK__USER_PERM__PerID__45F365D3" FromRole="PERMISSION" ToRole="USER_PERMISSION" />
+        </EntityType>
+        <EntityType Name="PERMISSION_DETAIL">
+          <Key>
+            <PropertyRef Name="DetailID" />
+          </Key>
+          <Property Name="DetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PerID" Type="Int32" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="PERMISSION" Relationship="VEGETFOODSModel.FK__PERMISSIO__PerID__4222D4EF" FromRole="PERMISSION_DETAIL" ToRole="PERMISSION" />
+        </EntityType>
+        <EntityType Name="PRODUCT">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ProductShortName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCategoryId" Type="Int32" />
+          <Property Name="ProductImages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductShortDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProductLongDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ProductIngredient" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSeason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductEXP" Type="DateTime" Precision="0" />
+          <Property Name="ProductMFG" Type="DateTime" Precision="0" />
+          <Property Name="ProductOrigin" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Byte" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <Property Name="CreateBy" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CATEGORy" Relationship="VEGETFOODSModel.FK__PRODUCTS__Produc__38996AB5" FromRole="PRODUCT" ToRole="CATEGORy" />
+          <NavigationProperty Name="CONSIGNMENTS" Relationship="VEGETFOODSModel.FK__CONSIGNME__ConsP__3B75D760" FromRole="PRODUCT" ToRole="CONSIGNMENT" />
+          <NavigationProperty Name="ORDER_DETAIL" Relationship="VEGETFOODSModel.FK__ORDER_DET__Detai__4BAC3F29" FromRole="PRODUCT" ToRole="ORDER_DETAIL" />
+        </EntityType>
+        <EntityType Name="PROVINCE">
+          <Key>
+            <PropertyRef Name="ProvinceID" />
+          </Key>
+          <Property Name="ProvinceID" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ProvinceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DISTRICTS" Relationship="VEGETFOODSModel.FK__DISTRICTS__Provi__59063A47" FromRole="PROVINCE" ToRole="DISTRICT" />
+        </EntityType>
+        <EntityType Name="SHOPPING_SESSIONS">
+          <Key>
+            <PropertyRef Name="SessionID" />
+          </Key>
+          <Property Name="SessionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Total" Type="Double" />
+          <Property Name="CreateTime" Type="DateTime" Precision="0" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CART_ITEM" Relationship="VEGETFOODSModel.FK__CART_ITEM__Sessi__5441852A" FromRole="SHOPPING_SESSIONS" ToRole="CART_ITEM" />
+          <NavigationProperty Name="USER" Relationship="VEGETFOODSModel.FK__SHOPPING___UserC__5165187F" FromRole="SHOPPING_SESSIONS" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TOWN">
+          <Key>
+            <PropertyRef Name="TownID" />
+          </Key>
+          <Property Name="TownID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="TownName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictID" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="DISTRICT" Relationship="VEGETFOODSModel.FK__TOWNS__DistrictI__5BE2A6F2" FromRole="TOWN" ToRole="DISTRICT" />
+        </EntityType>
+        <EntityType Name="USER_PERMISSION">
+          <Key>
+            <PropertyRef Name="UserPerID" />
+          </Key>
+          <Property Name="UserPerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PerID" Type="Int32" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PERMISSION" Relationship="VEGETFOODSModel.FK__USER_PERM__PerID__45F365D3" FromRole="USER_PERMISSION" ToRole="PERMISSION" />
+          <NavigationProperty Name="USER" Relationship="VEGETFOODSModel.FK__USER_PERM__UserC__44FF419A" FromRole="USER_PERMISSION" ToRole="USER" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="UserCode" />
+          </Key>
+          <Property Name="UserCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserFullName" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="UserEmailVerified" Type="Byte" />
+          <Property Name="UserRegistrationDate" Type="DateTime" Precision="0" />
+          <Property Name="UserVerifiactionCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UserAvatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserPhone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="UserAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ORDERS" Relationship="VEGETFOODSModel.FK__ORDERS__OrderUse__48CFD27E" FromRole="USER" ToRole="ORDER" />
+          <NavigationProperty Name="SHOPPING_SESSIONS" Relationship="VEGETFOODSModel.FK__SHOPPING___UserC__5165187F" FromRole="USER" ToRole="SHOPPING_SESSIONS" />
+          <NavigationProperty Name="USER_PERMISSION" Relationship="VEGETFOODSModel.FK__USER_PERM__UserC__44FF419A" FromRole="USER" ToRole="USER_PERMISSION" />
+        </EntityType>
+        <Association Name="FK__CART_ITEM__Sessi__5441852A">
+          <End Type="VEGETFOODSModel.SHOPPING_SESSIONS" Role="SHOPPING_SESSIONS" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.CART_ITEM" Role="CART_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SHOPPING_SESSIONS">
+              <PropertyRef Name="SessionID" />
+            </Principal>
+            <Dependent Role="CART_ITEM">
+              <PropertyRef Name="SessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTS__Produc__38996AB5">
+          <End Type="VEGETFOODSModel.CATEGORy" Role="CATEGORy" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.PRODUCT" Role="PRODUCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORy">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="PRODUCT">
+              <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CONSIGNME__ConsP__3B75D760">
+          <End Type="VEGETFOODSModel.PRODUCT" Role="PRODUCT" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.CONSIGNMENT" Role="CONSIGNMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="CONSIGNMENT">
+              <PropertyRef Name="ConsProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DISTRICTS__Provi__59063A47">
+          <End Type="VEGETFOODSModel.PROVINCE" Role="PROVINCE" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.DISTRICT" Role="DISTRICT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVINCE">
+              <PropertyRef Name="ProvinceID" />
+            </Principal>
+            <Dependent Role="DISTRICT">
+              <PropertyRef Name="ProvinceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TOWNS__DistrictI__5BE2A6F2">
+          <End Type="VEGETFOODSModel.DISTRICT" Role="DISTRICT" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.TOWN" Role="TOWN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICT">
+              <PropertyRef Name="DistrictID" />
+            </Principal>
+            <Dependent Role="TOWN">
+              <PropertyRef Name="DistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NEWS__NewsCateID__60A75C0F">
+          <End Type="VEGETFOODSModel.NEWSCATEGORy" Role="NEWSCATEGORy" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.NEWS" Role="NEWS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NEWSCATEGORy">
+              <PropertyRef Name="NewsCateID" />
+            </Principal>
+            <Dependent Role="NEWS">
+              <PropertyRef Name="NewsCateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER_DET__Detai__4BAC3F29">
+          <End Type="VEGETFOODSModel.PRODUCT" Role="PRODUCT" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.ORDER_DETAIL" Role="ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCT">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="DetailProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER_DET__Detai__4CA06362">
+          <End Type="VEGETFOODSModel.ORDER" Role="ORDER" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.ORDER_DETAIL" Role="ORDER_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ORDER_DETAIL">
+              <PropertyRef Name="DetailOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERS__OrderUse__48CFD27E">
+          <End Type="VEGETFOODSModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="OrderUserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PERMISSIO__PerID__4222D4EF">
+          <End Type="VEGETFOODSModel.PERMISSION" Role="PERMISSION" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.PERMISSION_DETAIL" Role="PERMISSION_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Principal>
+            <Dependent Role="PERMISSION_DETAIL">
+              <PropertyRef Name="PerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_PERM__PerID__45F365D3">
+          <End Type="VEGETFOODSModel.PERMISSION" Role="PERMISSION" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.USER_PERMISSION" Role="USER_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Principal>
+            <Dependent Role="USER_PERMISSION">
+              <PropertyRef Name="PerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SHOPPING___UserC__5165187F">
+          <End Type="VEGETFOODSModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.SHOPPING_SESSIONS" Role="SHOPPING_SESSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="SHOPPING_SESSIONS">
+              <PropertyRef Name="UserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_PERM__UserC__44FF419A">
+          <End Type="VEGETFOODSModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="VEGETFOODSModel.USER_PERMISSION" Role="USER_PERMISSION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="UserCode" />
+            </Principal>
+            <Dependent Role="USER_PERMISSION">
+              <PropertyRef Name="UserCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VEGETFOODSModelStoreContainer" CdmEntityContainer="VEGETFOODSEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="VEGETFOODSModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_CREATE" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_CREATE" />
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_DELETE" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_DELETE" />
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_GETALL" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_GETALL">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_CATEGORIES_GETALL_Result">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryParentID" ColumnName="CategoryParentID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_GETBYID" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_GETBYID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_CATEGORIES_GETBYID_Result">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryParentID" ColumnName="CategoryParentID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_SEARCH" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_SEARCH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_CATEGORIES_SEARCH_Result">
+                <ScalarProperty Name="ROWID" ColumnName="ROWID" />
+                <ScalarProperty Name="CategoryParentID" ColumnName="CategoryParentID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_CATEGORIES_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_CATEGORIES_UPDATE" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="VEGETFOODSModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="VEGETFOODSModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="VEGETFOODSModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="VEGETFOODSModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="VEGETFOODSModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="VEGETFOODSModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="CART_ITEM">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.CART_ITEM">
+              <MappingFragment StoreEntitySet="CART_ITEM">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+                <ScalarProperty Name="CartItemId" ColumnName="CartItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORIES">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.CATEGORy">
+              <MappingFragment StoreEntitySet="CATEGORIES">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CategoryDesc" ColumnName="CategoryDesc" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryParentID" ColumnName="CategoryParentID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONSIGNMENTS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.CONSIGNMENT">
+              <MappingFragment StoreEntitySet="CONSIGNMENTS">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ConsProductPrice" ColumnName="ConsProductPrice" />
+                <ScalarProperty Name="ConsProductAmout" ColumnName="ConsProductAmout" />
+                <ScalarProperty Name="ConsProductID" ColumnName="ConsProductID" />
+                <ScalarProperty Name="BathNo" ColumnName="BathNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISCOUNTS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.DISCOUNT">
+              <MappingFragment StoreEntitySet="DISCOUNTS">
+                <ScalarProperty Name="Products" ColumnName="Products" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
+                <ScalarProperty Name="DiscountDesc" ColumnName="DiscountDesc" />
+                <ScalarProperty Name="DiscountName" ColumnName="DiscountName" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISTRICTS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.DISTRICT">
+              <MappingFragment StoreEntitySet="DISTRICTS">
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NEWS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.NEWS">
+              <MappingFragment StoreEntitySet="NEWS">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="NewsBody" ColumnName="NewsBody" />
+                <ScalarProperty Name="NewsSummary" ColumnName="NewsSummary" />
+                <ScalarProperty Name="NewsImages" ColumnName="NewsImages" />
+                <ScalarProperty Name="NewsTitle" ColumnName="NewsTitle" />
+                <ScalarProperty Name="NewsCateID" ColumnName="NewsCateID" />
+                <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NEWSCATEGORIES">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.NEWSCATEGORy">
+              <MappingFragment StoreEntitySet="NEWSCATEGORIES">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="NewsDesc" ColumnName="NewsDesc" />
+                <ScalarProperty Name="NewsCateTitle" ColumnName="NewsCateTitle" />
+                <ScalarProperty Name="NewsCateID" ColumnName="NewsCateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NEWSCOMMENTS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.NEWSCOMMENT">
+              <MappingFragment StoreEntitySet="NEWSCOMMENTS">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="NewsID" ColumnName="NewsID" />
+                <ScalarProperty Name="CmtID" ColumnName="CmtID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDER_DETAIL">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.ORDER_DETAIL">
+              <MappingFragment StoreEntitySet="ORDER_DETAIL">
+                <ScalarProperty Name="DetailComment" ColumnName="DetailComment" />
+                <ScalarProperty Name="DetailRate" ColumnName="DetailRate" />
+                <ScalarProperty Name="DetailSKU" ColumnName="DetailSKU" />
+                <ScalarProperty Name="DetailQuantity" ColumnName="DetailQuantity" />
+                <ScalarProperty Name="DetailPrice" ColumnName="DetailPrice" />
+                <ScalarProperty Name="DetailOrderID" ColumnName="DetailOrderID" />
+                <ScalarProperty Name="DetailProductID" ColumnName="DetailProductID" />
+                <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDERS">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="OrderPayMethod" ColumnName="OrderPayMethod" />
+                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderShippingNote" ColumnName="OrderShippingNote" />
+                <ScalarProperty Name="OrderShippingFee" ColumnName="OrderShippingFee" />
+                <ScalarProperty Name="OrderPhone" ColumnName="OrderPhone" />
+                <ScalarProperty Name="OrderShipAddress" ColumnName="OrderShipAddress" />
+                <ScalarProperty Name="OrderUserCode" ColumnName="OrderUserCode" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSIONs">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.PERMISSION">
+              <MappingFragment StoreEntitySet="PERMISSION">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PerName" ColumnName="PerName" />
+                <ScalarProperty Name="PerID" ColumnName="PerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERMISSION_DETAIL">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.PERMISSION_DETAIL">
+              <MappingFragment StoreEntitySet="PERMISSION_DETAIL">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ActionCode" ColumnName="ActionCode" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="PerID" ColumnName="PerID" />
+                <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.PRODUCT">
+              <MappingFragment StoreEntitySet="PRODUCTS">
+                <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProductOrigin" ColumnName="ProductOrigin" />
+                <ScalarProperty Name="ProductMFG" ColumnName="ProductMFG" />
+                <ScalarProperty Name="ProductEXP" ColumnName="ProductEXP" />
+                <ScalarProperty Name="ProductSeason" ColumnName="ProductSeason" />
+                <ScalarProperty Name="ProductIngredient" ColumnName="ProductIngredient" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+                <ScalarProperty Name="ProductLongDesc" ColumnName="ProductLongDesc" />
+                <ScalarProperty Name="ProductShortDesc" ColumnName="ProductShortDesc" />
+                <ScalarProperty Name="ProductImages" ColumnName="ProductImages" />
+                <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
+                <ScalarProperty Name="ProductShortName" ColumnName="ProductShortName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROVINCES">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.PROVINCE">
+              <MappingFragment StoreEntitySet="PROVINCES">
+                <ScalarProperty Name="ProvinceName" ColumnName="ProvinceName" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SHOPPING_SESSIONS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.SHOPPING_SESSIONS">
+              <MappingFragment StoreEntitySet="SHOPPING_SESSIONS">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TOWNS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.TOWN">
+              <MappingFragment StoreEntitySet="TOWNS">
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="TownName" ColumnName="TownName" />
+                <ScalarProperty Name="TownID" ColumnName="TownID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_PERMISSION">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.USER_PERMISSION">
+              <MappingFragment StoreEntitySet="USER_PERMISSION">
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="PerID" ColumnName="PerID" />
+                <ScalarProperty Name="UserPerID" ColumnName="UserPerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="VEGETFOODSModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UserAvatar" ColumnName="UserAvatar" />
+                <ScalarProperty Name="UserVerifiactionCode" ColumnName="UserVerifiactionCode" />
+                <ScalarProperty Name="UserRegistrationDate" ColumnName="UserRegistrationDate" />
+                <ScalarProperty Name="UserEmailVerified" ColumnName="UserEmailVerified" />
+                <ScalarProperty Name="UserFullName" ColumnName="UserFullName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

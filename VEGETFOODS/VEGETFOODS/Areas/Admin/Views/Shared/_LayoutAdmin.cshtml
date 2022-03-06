@@ -20,6 +20,7 @@
     <link href="~/Content/css/app.css" rel="stylesheet" />
     <link href="/Areas/Admin/Content/css/styles.css" rel="stylesheet" />
     <link href="/Areas/Admin/Content/css/main-admin.css" rel="stylesheet" />
+    <link href="~/Content/css/app.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     @RenderSection("Styles", false)
 </head>
@@ -38,7 +39,7 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-users-cog"></i>&nbsp;&nbsp;Tài khoản Admin</a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!"><i class="fas fa-tachometer-alt"></i>&nbsp;&nbsp;Dashboard</a></li>
-                    <li><a class="dropdown-item" href="/Admin/Movie/Index"><i class="fas fa-film"></i>&nbsp;&nbsp;Danh sách Phim</a></li>
+                    <li><a class="dropdown-item" href="/Admin/Categories/Index"><i class="fas fa-Categories"></i>&nbsp;&nbsp;Danh sách Loại Sản Phẩm</a></li>
                     <li><a class="dropdown-item" href="/Admin/Schedule/Index"><i class="/Admin/Schedule/Index"></i>&nbsp;&nbsp;Danh sách lịch chiếu</a></li>
                     <li><a class="dropdown-item" href="/Admin/Customer/Index"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;Danh sách khách hàng</a></li>
                 </ul>
@@ -55,11 +56,11 @@
                             Dashboard
                         </a>
                         <a class="nav-link" href="/Admin/Movie/Index">
-                            <div class="sb-nav-link-icon"><i class="fas fa-film"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-Categories"></i></div>
                             Sản phẩm
                         </a>
-                        <a class="nav-link" href="/Admin/Movie/Index">
-                            <div class="sb-nav-link-icon"><i class="fas fa-film"></i></div>
+                        <a class="nav-link" href="/Admin/Categories/Index">
+                            <div class="sb-nav-link-icon"><i class="fas fa-Categories"></i></div>
                             Loại sản phẩm
                         </a>
                         <a class="nav-link" href="/Admin/Schedule/Index">
@@ -107,7 +108,9 @@
     <script src="/Scripts/jquery-ui.min.js"></script>
     <script src="/Scripts/moment.js"></script>
     <script src="/Content/js/ckfinder/ckfinder.js"></script>
-    <script src="/Scripts/Common.js"></script>
+    <script src="~/Scripts/vue.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/Common.js"></script>
 </body>
 </html>
 @RenderSection("Scripts", false)

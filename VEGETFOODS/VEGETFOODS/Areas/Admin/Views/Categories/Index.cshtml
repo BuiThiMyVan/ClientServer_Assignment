@@ -1,0 +1,149 @@
+﻿@using VEGETFOODS
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    @* Phân trang *@
+    <style>
+        .paginate {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+        }
+
+        .pagePicked {
+            width: 50px;
+            height: 38px;
+            margin: 0 10px;
+        }
+
+        .paginate_sub, .sub-link {
+            margin: auto 0;
+        }
+
+        .paginate_sub-link {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        input[type=text], select {
+            font-weight: 500;
+            border: 1px solid;
+            border-color: #eee;
+            border-radius: 5px;
+        }
+
+        input[type=text] {
+            padding: 0 16px;
+        }
+
+        .paginate .nav-link {
+            height: 34px;
+        }
+
+        .pagination {
+            margin-top: -9px;
+        }
+
+        .page-link {
+            color: #515253;
+            padding: 8px 18px;
+        }
+
+            .page-link:hover {
+                color: #515253;
+                opacity: 0.8;
+                cursor: pointer;
+            }
+
+        .infoStudent {
+            position: relative;
+        }
+
+        .info {
+            position: absolute;
+            margin-left: 70px;
+            display: inline;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="" id="ListCategories">
+    <div class="header">
+        <span class="list-title">Quản lý Loại Hàng</span>
+        <a href="/Admin/Movie/AddCategories" class="btn-main-color">Tạo mới loại hàng</a>
+    </div>
+    <div id="search">
+        <div class="search-box">
+            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên phim/đạo diễn..." v-on:keypress.enter="getListCategories()" />
+            <div class="search-icon" v-on:click="getListCategories()"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+    <div class="table-list">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="ordinal-numbers text-center">STT</th>
+                    <th scope="col" class="name-Categories">Tên phim</th>
+                    <th scope="col" class="text-center">Thời lượng</th>
+                    <th scope="col" class="show-date text-center">Ngày khởi chiếu</th>
+                    <th scope="col" class="produce-year text-center">Năm sản xuất</th>
+                    <th scope="col" class="text-center">Tình trạng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in list">
+                    <td class="ordinal-numbers text-center">
+                        {{pageSize * (currentPage-1) + index +1}}
+                    </td>
+                    <td class="name-Categories"> <a class="text-main-color" v-bind:href="'/Admin/Movie/MyCategories?id=' + item.id">{{ item.TenPhim }}</a></td>
+                    <td class="text-center">{{ item.ThoiLuong }} phút</td>
+                    <td class="show-date text-center">{{ item.NgayKhoiChieuFormat }}</td>
+                    <td class="produce-year text-center">{{ item.NamSX }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginate">
+        <div class="paginate_sub paginate_sub-pageSize">
+            <label class="form-label">Số dòng trên 1 trang</label>
+            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListCategories()">
+                <option v-for="item in listPageSize" v-bind:value="item">
+                    {{item}}
+                </option>
+            </select>
+            <span>{{ pageView }} </span>
+        </div>
+        <div class="paginate_sub paginate_sub-link">
+            <div class="sub-link">
+                <label class="form-label">Đi đến trang</label>
+                <input type="text" v-bind:value="currentPage" id="pagePicked" class="pagePicked" v-on:keyup="validatePage()" onkeypress="return isNumberKey(event)">
+            </div>
+            <nav class="nav-link">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="first()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-step-backward"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="prev()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-chevron-left"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="next()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-chevron-right"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="last()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-step-forward"></i></span>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Categories/ListCategories.js"></script>
+}
+
