@@ -1,0 +1,222 @@
+﻿:root {
+    --main-color: #b9256a;
+}
+
+.mt-8 {
+    margin-top: 8px;
+}
+
+#img-spin > img {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header__logo {
+    max-width: 100%;
+    width: auto;
+    padding: 0px 16px;
+    color: #fff;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.header__logo span {
+    font-size: 26px;
+    font-weight: 900;
+    color: #82ae46;
+}
+
+.text-main-color {
+    color: var(--main-color);
+}
+
+.text-orange {
+    color: #FFB401;
+}
+
+.text-blue {
+    color: #4679CC;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--main-color);
+    opacity: 0.8;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+}
+
+.display-none {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.content-wrapper {
+    padding: 16px;
+}
+
+    .content-wrapper .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .content-wrapper .header-detail {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .content-wrapper .list-title,
+    .content-wrapper .name-title {
+        display: inline-block;
+        margin-bottom: 12px;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        color: #1D243E;
+    }
+
+    .content-wrapper .btn-main-color {
+        color: #fff;
+        background-color: var(--main-color);
+        border: 1px solid var(--main-color);
+        border-radius: 4px;
+        padding: 12px 38px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+#search {
+    margin: 16px 0;
+}
+
+    #search .search-box {
+        position: relative;
+        padding: 8px 16px;
+        width: 354px;
+        height: 40px;
+        background-color: #fff;
+        border-radius: 4px;
+    }
+
+        #search .search-box .search-input {
+            width: 100%;
+            border: none;
+        }
+
+        #search .search-box .search-icon {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            width: 14px;
+            height: 14px;
+        }
+
+.content-wrapper .table-list {
+    margin-top: 8px;
+    background-color: #fff;
+}
+
+.table > :not(:first-child) {
+    border-top: none;
+}
+
+.table-list .ordinal-numbers {
+    width: 44px;
+}
+
+.table-list .name-film {
+    min-width: 182px;
+}
+
+    .table-list .name-film:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+.table-list .produce-year {
+    width: 124px;
+}
+
+.table-list .show-date {
+    width: 158px;
+}
+
+.link-list {
+    color: var(--main-color);
+}
+
+.content-detail {
+    position: relative;
+    margin-top: 16px;
+    padding: 24px 16px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+    .content-detail .content-detail-head {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 44px;
+        background-color: #6C738D;
+        border-radius: 4px 4px 0 0;
+        color: #fff;
+        font-weight: bold;
+        padding: 12px 13px;
+    }
+
+.content-item:nth-child(2) {
+    margin-top: 68px !important;
+}
+
+.content-detail .content-item {
+    display: flex;
+    margin-top: 24px;
+}
+
+.content-detail .content-label {
+    min-width: 260px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #6C738D;
+}
+
+.content-detail .content-input {
+    flex: 1;
+    padding: 7px;
+    border: 1px solid rgb(216, 221, 230);
+    border-radius: 4px;
+}
+
+.content-detail .content-numbers {
+    max-width: 88px;
+}
+
+.content-detail .content-status {
+    max-width: 240px;
+}
+
+.content-detail .btn-update {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.content-detail .content-date {
+    max-width: 272px;
+}
+
+.content-detail .error {
+    margin-left: 260px;
+}
