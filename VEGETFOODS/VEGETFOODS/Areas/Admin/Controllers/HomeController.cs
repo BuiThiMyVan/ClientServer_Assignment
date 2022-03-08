@@ -13,5 +13,11 @@ namespace VEGETFOODS.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Error(string error)
+        {
+            ViewBag.ErrorMessage = error;
+            return View("_Error");
+        }
     }
 }

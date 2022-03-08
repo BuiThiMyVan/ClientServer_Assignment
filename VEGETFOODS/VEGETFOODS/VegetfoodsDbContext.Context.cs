@@ -28,24 +28,24 @@ namespace VEGETFOODS
         }
     
         public virtual DbSet<CART_ITEM> CART_ITEM { get; set; }
-        public virtual DbSet<CATEGORy> CATEGORIES { get; set; }
-        public virtual DbSet<CONSIGNMENT> CONSIGNMENTS { get; set; }
-        public virtual DbSet<DISCOUNT> DISCOUNTS { get; set; }
+        public virtual DbSet<CATEGORY> CATEGORies { get; set; }
+        public virtual DbSet<CONSIGNMENT> CONSIGNMENTs { get; set; }
+        public virtual DbSet<DISCOUNT> DISCOUNTs { get; set; }
         public virtual DbSet<DISTRICT> DISTRICTS { get; set; }
         public virtual DbSet<NEWS> NEWS { get; set; }
-        public virtual DbSet<NEWSCATEGORy> NEWSCATEGORIES { get; set; }
-        public virtual DbSet<NEWSCOMMENT> NEWSCOMMENTS { get; set; }
+        public virtual DbSet<NEWSCATEGORY> NEWSCATEGORies { get; set; }
+        public virtual DbSet<NEWSCOMMENT> NEWSCOMMENTs { get; set; }
+        public virtual DbSet<ORDER> ORDERs { get; set; }
         public virtual DbSet<ORDER_DETAIL> ORDER_DETAIL { get; set; }
-        public virtual DbSet<ORDER> ORDERS { get; set; }
         public virtual DbSet<PERMISSION> PERMISSIONs { get; set; }
         public virtual DbSet<PERMISSION_DETAIL> PERMISSION_DETAIL { get; set; }
-        public virtual DbSet<PRODUCT> PRODUCTS { get; set; }
-        public virtual DbSet<PROVINCE> PROVINCES { get; set; }
-        public virtual DbSet<SHOPPING_SESSIONS> SHOPPING_SESSIONS { get; set; }
+        public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
+        public virtual DbSet<PROVINCE> PROVINCEs { get; set; }
+        public virtual DbSet<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<TOWN> TOWNS { get; set; }
+        public virtual DbSet<TOWN> TOWNs { get; set; }
+        public virtual DbSet<USER> USERs { get; set; }
         public virtual DbSet<USER_PERMISSION> USER_PERMISSION { get; set; }
-        public virtual DbSet<USER> USERS { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -68,12 +68,8 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
         }
     
-        public virtual int SP_CATEGORIES_CREATE(Nullable<int> categoryID, Nullable<int> categoryParentID, string categoryName, string categoryDesc, Nullable<byte> isActive, string createBy)
+        public virtual int SP_CATEGORY_CREATE(Nullable<int> categoryParentID, string categoryName, string categoryDesc, Nullable<byte> isActive, string createBy)
         {
-            var categoryIDParameter = categoryID.HasValue ?
-                new ObjectParameter("categoryID", categoryID) :
-                new ObjectParameter("categoryID", typeof(int));
-    
             var categoryParentIDParameter = categoryParentID.HasValue ?
                 new ObjectParameter("categoryParentID", categoryParentID) :
                 new ObjectParameter("categoryParentID", typeof(int));
@@ -94,37 +90,37 @@ namespace VEGETFOODS
                 new ObjectParameter("createBy", createBy) :
                 new ObjectParameter("createBy", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORIES_CREATE", categoryIDParameter, categoryParentIDParameter, categoryNameParameter, categoryDescParameter, isActiveParameter, createByParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORY_CREATE", categoryParentIDParameter, categoryNameParameter, categoryDescParameter, isActiveParameter, createByParameter);
         }
     
-        public virtual int SP_CATEGORIES_DELETE(Nullable<int> categoryID)
+        public virtual int SP_CATEGORY_DELETE(Nullable<int> categoryID)
         {
             var categoryIDParameter = categoryID.HasValue ?
                 new ObjectParameter("categoryID", categoryID) :
                 new ObjectParameter("categoryID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORIES_DELETE", categoryIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORY_DELETE", categoryIDParameter);
         }
     
-        public virtual ObjectResult<SP_CATEGORIES_GETALL_Result> SP_CATEGORIES_GETALL()
+        public virtual ObjectResult<SP_CATEGORY_GETALL_Result> SP_CATEGORY_GETALL()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORIES_GETALL_Result>("SP_CATEGORIES_GETALL");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_GETALL_Result>("SP_CATEGORY_GETALL");
         }
     
-        public virtual ObjectResult<SP_CATEGORIES_GETBYID_Result> SP_CATEGORIES_GETBYID(Nullable<int> categoryID)
+        public virtual ObjectResult<SP_CATEGORY_GETBYID_Result> SP_CATEGORY_GETBYID(Nullable<int> categoryID)
         {
             var categoryIDParameter = categoryID.HasValue ?
                 new ObjectParameter("categoryID", categoryID) :
                 new ObjectParameter("categoryID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORIES_GETBYID_Result>("SP_CATEGORIES_GETBYID", categoryIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_GETBYID_Result>("SP_CATEGORY_GETBYID", categoryIDParameter);
         }
     
-        public virtual ObjectResult<SP_CATEGORIES_SEARCH_Result> SP_CATEGORIES_SEARCH(string categoryName, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        public virtual ObjectResult<SP_CATEGORY_SEARCH_Result> SP_CATEGORY_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
         {
-            var categoryNameParameter = categoryName != null ?
-                new ObjectParameter("categoryName", categoryName) :
-                new ObjectParameter("categoryName", typeof(string));
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
     
             var startIndexParameter = startIndex.HasValue ?
                 new ObjectParameter("startIndex", startIndex) :
@@ -134,10 +130,10 @@ namespace VEGETFOODS
                 new ObjectParameter("count", count) :
                 new ObjectParameter("count", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORIES_SEARCH_Result>("SP_CATEGORIES_SEARCH", categoryNameParameter, startIndexParameter, countParameter, totalItems);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CATEGORY_SEARCH_Result>("SP_CATEGORY_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
         }
     
-        public virtual int SP_CATEGORIES_UPDATE(Nullable<int> categoryID, Nullable<int> categoryParentID, string categoryName, string categoryDesc, Nullable<byte> isActive)
+        public virtual int SP_CATEGORY_UPDATE(Nullable<int> categoryID, Nullable<int> categoryParentID, string categoryName, string categoryDesc, Nullable<byte> isActive)
         {
             var categoryIDParameter = categoryID.HasValue ?
                 new ObjectParameter("categoryID", categoryID) :
@@ -159,7 +155,7 @@ namespace VEGETFOODS
                 new ObjectParameter("isActive", isActive) :
                 new ObjectParameter("isActive", typeof(byte));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORIES_UPDATE", categoryIDParameter, categoryParentIDParameter, categoryNameParameter, categoryDescParameter, isActiveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORY_UPDATE", categoryIDParameter, categoryParentIDParameter, categoryNameParameter, categoryDescParameter, isActiveParameter);
         }
     
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

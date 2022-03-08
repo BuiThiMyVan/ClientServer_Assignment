@@ -23,7 +23,7 @@ namespace VEGETFOODS
         public Nullable<double> DetailRate { get; set; }
         public string DetailComment { get; set; }
     
-        public virtual PRODUCT PRODUCT { get; set; }
         public virtual ORDER ORDER { get; set; }
+        public virtual PRODUCT PRODUCT { get; set; }
     }
 }

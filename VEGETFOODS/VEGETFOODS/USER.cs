@@ -17,8 +17,8 @@ namespace VEGETFOODS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public USER()
         {
-            this.ORDERS = new HashSet<ORDER>();
-            this.SHOPPING_SESSIONS = new HashSet<SHOPPING_SESSIONS>();
+            this.ORDERs = new HashSet<ORDER>();
+            this.SHOPPING_SESSION = new HashSet<SHOPPING_SESSION>();
             this.USER_PERMISSION = new HashSet<USER_PERMISSION>();
         }
     
@@ -34,9 +34,9 @@ namespace VEGETFOODS
         public string UserAddress { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ORDER> ORDERS { get; set; }
+        public virtual ICollection<ORDER> ORDERs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHOPPING_SESSIONS> SHOPPING_SESSIONS { get; set; }
+        public virtual ICollection<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USER_PERMISSION> USER_PERMISSION { get; set; }
     }

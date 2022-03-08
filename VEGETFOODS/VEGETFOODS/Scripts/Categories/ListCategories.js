@@ -48,18 +48,17 @@
         },
 
         getListCategories: function () {
-            //AddLoader();
+            AddLoader();
             var self = this;
             var modal = {
-                page: self.currentPage,
+                pageIndex: self.currentPage,
                 pageSize: self.pageSize,
                 txtSearch: self.txtSearch.trim()
             };
-            debugger
             $.ajax({
                 data: modal,
                 url: "/api/CategoriesApi/GetListCategories",
-                type: 'GET',
+                type: 'POST',
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
@@ -69,6 +68,26 @@
                 HiddenLoader();
                 $("#ListCategories").css("display", "block");
             });
+        },
+
+        deleteCategory: function (categoryID) {
+            if (confirm('Bạn có chắc muốn xoá danh mục sản phẩm có mã ' + categoryID + ' ? ')) {
+                $.ajax({
+                    url: "/api/CategoriesApi/DeleteCategory?categoryId=" + categoryID,
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                }).then(res => {
+                    if (res.message == 200) {
+                        alert('Xoá danh mục thành công');
+                        HiddenLoader();
+                        window.location.href = "/Admin/Categories/Index";
+                    } else {
+                        alert('Đã xảy ra lỗi khi xoá danh mục sản phẩm');
+                    }
+
+                });
+            }
         }
 
     }

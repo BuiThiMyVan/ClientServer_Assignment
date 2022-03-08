@@ -1,6 +1,6 @@
-﻿USE VEGETFOODSGOEXEC [dbo].[SP_CATEGORIES_SEARCH] '', 0, 10, 0DROP PROC [dbo].[SP_CATEGORIES_SEARCH]CREATE PROCEDURE [dbo].[SP_CATEGORIES_SEARCH]
+﻿USE VEGETFOODSGOEXEC [dbo].[SP_CATEGORY_SEARCH] '', 0, 10, 0DROP PROC [dbo].[SP_CATEGORY_SEARCH]CREATE PROCEDURE [dbo].[SP_CATEGORY_SEARCH]
 (
-@categoryName NVARCHAR(50)
+@txtSearch NVARCHAR(50)
 -----
 , @startIndex int
 , @count int
@@ -20,17 +20,19 @@ Begin -- Start
 				 *
 				From
 				(
-					SELECT Row_Number() Over ( Order by [CreateTime] Desc ) as [ROWID],
-							[CategoryParentID]
-							  ,[CategoryName]
-							  ,[CategoryDesc]
-							  ,[IsActive]
-							  ,[CreateTime]
-							  ,[CreateBy]
-					FROM CATEGORIES
+					SELECT Row_Number() Over ( Order by cate1.[CreateTime] Desc ) as [ROWID],
+							cate2.[CategoryName] AS [CategoryParentName]
+							  ,cate1.[CategoryName]
+							  ,cate1.[CategoryDesc]
+							  ,cate1.[IsActive]
+							  ,cate1.[CreateTime]
+							  ,cate1.[CreateBy]
+					FROM CATEGORY cate1
+					LEFT JOIN CATEGORY cate2
+					ON cate1.CategoryParentID = cate2.CategoryID
 					WHERE 
 					(
-						( @categoryName IS NULL OR @categoryName = '' OR [CategoryName] LIKE '%' + @categoryName + '%' )
+						( @txtSearch IS NULL OR @txtSearch = '' OR cate1.[CategoryName] LIKE '%' + @txtSearch + '%' )
 						
 					)
 				) T
@@ -41,11 +43,12 @@ Begin -- Start
 				Select @totalItems 
 				 = (
 					SELECT Count(*)
-					FROM CATEGORIES
+					FROM CATEGORY cate1
+					LEFT JOIN CATEGORY cate2
+					ON cate1.CategoryParentID = cate2.CategoryID
 					WHERE 
 					(
-						( @categoryName IS NULL OR @categoryName = '' OR [CategoryName] LIKE '%' + @categoryName + '%' )
-						
+						( @txtSearch IS NULL OR @txtSearch = '' OR cate1.[CategoryName] LIKE '%' + @txtSearch + '%' )						
 					)
 				);	
 				
@@ -62,7 +65,7 @@ Begin -- Start
 	---------------------
 	End -- if(@count > 0)
 -----
---End -- StartGOCREATE PROCEDURE [dbo].[SP_CATEGORIES_GETBYID](@categoryID INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT TOP 1 *			FROM CATEGORIES cate		WHERE cate.CategoryID = @categoryID		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORIES_GETALL]ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT *		FROM CATEGORIES		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORIES_DELETE](@categoryID INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		DELETE FROM CATEGORIES		WHERE [CategoryID] = @categoryID		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORIES_UPDATE](@categoryID INT,@categoryParentID INT,@categoryName NVARCHAR(60),@categoryDesc NTEXT,@isActive TINYINT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		UPDATE CATEGORIES		SET [CategoryParentID] = @categoryParentID,			[CategoryName] = @categoryName,			[CategoryDesc] = @categoryDesc,			[IsActive] = @isActive,			[UpdateTime] = GETDATE()		WHERE [CategoryID] = @categoryID				COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORIES_CREATE](@categoryID INT,@categoryParentID INT,@categoryName NVARCHAR(60),@categoryDesc NTEXT,@isActive TINYINT,@createBy VARCHAR(60))ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		INSERT INTO CATEGORIES			(				[CategoryParentID]
+--End -- StartGOCREATE PROCEDURE [dbo].[SP_CATEGORY_GETBYID](@categoryID INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT TOP 1 *			FROM CATEGORY cate		WHERE cate.CategoryID = @categoryID		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORY_GETALL]ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT *		FROM CATEGORY		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORY_DELETE](@categoryID INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		DELETE FROM CATEGORY		WHERE [CategoryID] = @categoryID		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORY_UPDATE](@categoryID INT,@categoryParentID INT,@categoryName NVARCHAR(60),@categoryDesc NTEXT,@isActive TINYINT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		UPDATE CATEGORY		SET [CategoryParentID] = @categoryParentID,			[CategoryName] = @categoryName,			[CategoryDesc] = @categoryDesc,			[IsActive] = @isActive,			[UpdateTime] = GETDATE()		WHERE [CategoryID] = @categoryID				COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDGO-- Begin TransactionCREATE PROCEDURE [dbo].[SP_CATEGORY_CREATE](@categoryParentID INT,@categoryName NVARCHAR(60),@categoryDesc NTEXT,@isActive TINYINT,@createBy VARCHAR(60))ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		INSERT INTO CATEGORY			(				[CategoryParentID]
 			  ,[CategoryName]
 			  ,[CategoryDesc]
 			  ,[IsActive]

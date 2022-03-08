@@ -1,0 +1,47 @@
+﻿@using VEGETFOODS
+@using VEGETFOODS.Models
+@{
+    ViewBag.Title = "AddFilm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    <style>
+        .content-wrapper .header-detail {
+            flex-direction: column;
+        }
+    </style>
+}
+
+<div class="content-wrapper" id="CreateCategory">
+    <div class="header-detail">
+        <a href="/Admin/Categories/Index" class="link-list"> < Danh sách danh mục sản phẩm</a>
+        <span class="name-title mt-8"> Tạo mới danh mục sản phẩm </span>
+    </div>
+    <div class="content-detail">
+        <div class="content-detail-head"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;&nbsp; Thông tin danh mục sản phẩm</div>
+        <div class="content-item">
+            <label class="content-label">Tên danh mục</label>
+            <input class="content-input" type="text" v-model="CategoryName" />
+        </div>
+        <div class="error text-danger"> {{ error_name }}</div>
+        <div class="content-item">
+            <label class="content-label">Danh mục cha</label>
+            <select class="content-input content-status" v-model="CategoryParentID">
+                <option value="0">--</option>
+                <option v-for="item in ListCategoryActive" :value="item.CategoryID">{{ item.CategoryName }}</option>
+            </select>
+        </div>
+        <div class="content-item">
+            <label class="content-label">Mô tả</label>
+            <textarea class="content-input" type="text" rows="4" v-model="CategoryDesc"></textarea>
+        </div>
+        <div class="btn-update">
+            <button v-on:click="createCategory()" class="btn-main-color">Hoàn thành</button>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/Scripts/Categories/CreateCategory.js"></script>
+}
+

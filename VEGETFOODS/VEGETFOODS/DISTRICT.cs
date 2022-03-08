@@ -17,7 +17,7 @@ namespace VEGETFOODS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DISTRICT()
         {
-            this.TOWNS = new HashSet<TOWN>();
+            this.TOWNs = new HashSet<TOWN>();
         }
     
         public string DistrictID { get; set; }
@@ -26,6 +26,6 @@ namespace VEGETFOODS
     
         public virtual PROVINCE PROVINCE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TOWN> TOWNS { get; set; }
+        public virtual ICollection<TOWN> TOWNs { get; set; }
     }
 }

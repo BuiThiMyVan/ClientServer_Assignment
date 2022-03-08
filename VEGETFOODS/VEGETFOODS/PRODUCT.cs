@@ -17,7 +17,7 @@ namespace VEGETFOODS
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PRODUCT()
         {
-            this.CONSIGNMENTS = new HashSet<CONSIGNMENT>();
+            this.CONSIGNMENTs = new HashSet<CONSIGNMENT>();
             this.ORDER_DETAIL = new HashSet<ORDER_DETAIL>();
         }
     
@@ -40,9 +40,9 @@ namespace VEGETFOODS
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string CreateBy { get; set; }
     
-        public virtual CATEGORy CATEGORy { get; set; }
+        public virtual CATEGORY CATEGORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONSIGNMENT> CONSIGNMENTS { get; set; }
+        public virtual ICollection<CONSIGNMENT> CONSIGNMENTs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDER_DETAIL> ORDER_DETAIL { get; set; }
     }

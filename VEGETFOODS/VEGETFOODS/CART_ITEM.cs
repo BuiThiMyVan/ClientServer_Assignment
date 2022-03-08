@@ -21,6 +21,6 @@ namespace VEGETFOODS
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
     
-        public virtual SHOPPING_SESSIONS SHOPPING_SESSIONS { get; set; }
+        public virtual SHOPPING_SESSION SHOPPING_SESSION { get; set; }
     }
 }

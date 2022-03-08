@@ -12,10 +12,10 @@ namespace VEGETFOODS
     using System;
     using System.Collections.Generic;
     
-    public partial class NEWSCATEGORy
+    public partial class NEWSCATEGORY
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NEWSCATEGORy()
+        public NEWSCATEGORY()
         {
             this.NEWS = new HashSet<NEWS>();
         }

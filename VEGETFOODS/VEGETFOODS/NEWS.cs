@@ -24,6 +24,6 @@ namespace VEGETFOODS
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
     
-        public virtual NEWSCATEGORy NEWSCATEGORy { get; set; }
+        public virtual NEWSCATEGORY NEWSCATEGORY { get; set; }
     }
 }
