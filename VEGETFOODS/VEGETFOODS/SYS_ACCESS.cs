@@ -12,13 +12,9 @@ namespace VEGETFOODS
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_PERMISSION
+    public partial class SYS_ACCESS
     {
-        public int UserPerID { get; set; }
-        public Nullable<int> PerID { get; set; }
-        public string UserCode { get; set; }
-    
-        public virtual PERMISSION PERMISSION { get; set; }
-        public virtual USER USER { get; set; }
+        public int Sys_AccessID { get; set; }
+        public string Sys_AccessName { get; set; }
     }
 }

@@ -176,6 +176,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
@@ -185,11 +187,14 @@
     <Compile Include="CATEGORY.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Common\CommonConstants.cs" />
     <Compile Include="CONSIGNMENT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
     <Compile Include="Controllers\MVC_Controller\HomeController.cs" />
+    <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="DISCOUNT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -218,12 +223,7 @@
     </Compile>
     <Compile Include="Partials\SP_CATEGORIES_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_CATEGORY_GETBYID_Result.cs" />
-    <Compile Include="PERMISSION.cs">
-      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PERMISSION_DETAIL.cs">
-      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Partials\USER.cs" />
     <Compile Include="PRODUCT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -249,16 +249,28 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_PRODUCT_GETBYID_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_PRODUCT_SEARCH_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_USER_GETBYUSERCODE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagram.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SYS_ACCESS.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SYS_GROUP.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="TOWN.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="USER.cs">
-      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="USER_PERMISSION.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Utils\ObjectUtil.cs" />
@@ -382,6 +394,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Account\Login.js" />
+    <Content Include="Scripts\Account\Register.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\css\.DS_Store" />
@@ -537,6 +551,7 @@
     <Content Include="Areas\Admin\Content\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Areas\Admin\Content\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
     <Content Include="Scripts\Categories\ListCategories.js" />
@@ -594,6 +609,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

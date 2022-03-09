@@ -37,15 +37,14 @@ namespace VEGETFOODS
         public virtual DbSet<NEWSCOMMENT> NEWSCOMMENTs { get; set; }
         public virtual DbSet<ORDER> ORDERs { get; set; }
         public virtual DbSet<ORDER_DETAIL> ORDER_DETAIL { get; set; }
-        public virtual DbSet<PERMISSION> PERMISSIONs { get; set; }
-        public virtual DbSet<PERMISSION_DETAIL> PERMISSION_DETAIL { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
         public virtual DbSet<PROVINCE> PROVINCEs { get; set; }
         public virtual DbSet<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
+        public virtual DbSet<SYS_ACCESS> SYS_ACCESS { get; set; }
+        public virtual DbSet<SYS_GROUP> SYS_GROUP { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TOWN> TOWNs { get; set; }
         public virtual DbSet<USER> USERs { get; set; }
-        public virtual DbSet<USER_PERMISSION> USER_PERMISSION { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -238,6 +237,244 @@ namespace VEGETFOODS
         public virtual int sp_upgraddiagrams()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> SP_LOGIN(string usercode, string password)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_LOGIN", usercodeParameter, passwordParameter);
+        }
+    
+        public virtual int SP_PRODUCT_CREATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, string productUnit, string productIngredient, string productSeason, Nullable<System.DateTime> productEXP, Nullable<System.DateTime> productMFG, string productOrigin, string createBy)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("productCode", productCode) :
+                new ObjectParameter("productCode", typeof(string));
+    
+            var productNameParameter = productName != null ?
+                new ObjectParameter("productName", productName) :
+                new ObjectParameter("productName", typeof(string));
+    
+            var productShortNameParameter = productShortName != null ?
+                new ObjectParameter("productShortName", productShortName) :
+                new ObjectParameter("productShortName", typeof(string));
+    
+            var productCategoryIdParameter = productCategoryId.HasValue ?
+                new ObjectParameter("productCategoryId", productCategoryId) :
+                new ObjectParameter("productCategoryId", typeof(int));
+    
+            var productImagesParameter = productImages != null ?
+                new ObjectParameter("productImages", productImages) :
+                new ObjectParameter("productImages", typeof(string));
+    
+            var productShortDescParameter = productShortDesc != null ?
+                new ObjectParameter("productShortDesc", productShortDesc) :
+                new ObjectParameter("productShortDesc", typeof(string));
+    
+            var productLongDescParameter = productLongDesc != null ?
+                new ObjectParameter("productLongDesc", productLongDesc) :
+                new ObjectParameter("productLongDesc", typeof(string));
+    
+            var productUnitParameter = productUnit != null ?
+                new ObjectParameter("productUnit", productUnit) :
+                new ObjectParameter("productUnit", typeof(string));
+    
+            var productIngredientParameter = productIngredient != null ?
+                new ObjectParameter("productIngredient", productIngredient) :
+                new ObjectParameter("productIngredient", typeof(string));
+    
+            var productSeasonParameter = productSeason != null ?
+                new ObjectParameter("productSeason", productSeason) :
+                new ObjectParameter("productSeason", typeof(string));
+    
+            var productEXPParameter = productEXP.HasValue ?
+                new ObjectParameter("productEXP", productEXP) :
+                new ObjectParameter("productEXP", typeof(System.DateTime));
+    
+            var productMFGParameter = productMFG.HasValue ?
+                new ObjectParameter("productMFG", productMFG) :
+                new ObjectParameter("productMFG", typeof(System.DateTime));
+    
+            var productOriginParameter = productOrigin != null ?
+                new ObjectParameter("productOrigin", productOrigin) :
+                new ObjectParameter("productOrigin", typeof(string));
+    
+            var createByParameter = createBy != null ?
+                new ObjectParameter("createBy", createBy) :
+                new ObjectParameter("createBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_CREATE", productIDParameter, productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, productEXPParameter, productMFGParameter, productOriginParameter, createByParameter);
+        }
+    
+        public virtual int SP_PRODUCT_DELETE(Nullable<int> productID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_DELETE", productIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_GETBYID_Result> SP_PRODUCT_GETBYID(Nullable<int> productID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_GETBYID_Result>("SP_PRODUCT_GETBYID", productIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEARCH_Result> SP_PRODUCT_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_Result>("SP_PRODUCT_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual int SP_PRODUCT_UPDATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, string productUnit, string productIngredient, string productSeason, Nullable<System.DateTime> productEXP, Nullable<System.DateTime> productMFG, string productOrigin, Nullable<byte> isActive)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("productCode", productCode) :
+                new ObjectParameter("productCode", typeof(string));
+    
+            var productNameParameter = productName != null ?
+                new ObjectParameter("productName", productName) :
+                new ObjectParameter("productName", typeof(string));
+    
+            var productShortNameParameter = productShortName != null ?
+                new ObjectParameter("productShortName", productShortName) :
+                new ObjectParameter("productShortName", typeof(string));
+    
+            var productCategoryIdParameter = productCategoryId.HasValue ?
+                new ObjectParameter("productCategoryId", productCategoryId) :
+                new ObjectParameter("productCategoryId", typeof(int));
+    
+            var productImagesParameter = productImages != null ?
+                new ObjectParameter("productImages", productImages) :
+                new ObjectParameter("productImages", typeof(string));
+    
+            var productShortDescParameter = productShortDesc != null ?
+                new ObjectParameter("productShortDesc", productShortDesc) :
+                new ObjectParameter("productShortDesc", typeof(string));
+    
+            var productLongDescParameter = productLongDesc != null ?
+                new ObjectParameter("productLongDesc", productLongDesc) :
+                new ObjectParameter("productLongDesc", typeof(string));
+    
+            var productUnitParameter = productUnit != null ?
+                new ObjectParameter("productUnit", productUnit) :
+                new ObjectParameter("productUnit", typeof(string));
+    
+            var productIngredientParameter = productIngredient != null ?
+                new ObjectParameter("productIngredient", productIngredient) :
+                new ObjectParameter("productIngredient", typeof(string));
+    
+            var productSeasonParameter = productSeason != null ?
+                new ObjectParameter("productSeason", productSeason) :
+                new ObjectParameter("productSeason", typeof(string));
+    
+            var productEXPParameter = productEXP.HasValue ?
+                new ObjectParameter("productEXP", productEXP) :
+                new ObjectParameter("productEXP", typeof(System.DateTime));
+    
+            var productMFGParameter = productMFG.HasValue ?
+                new ObjectParameter("productMFG", productMFG) :
+                new ObjectParameter("productMFG", typeof(System.DateTime));
+    
+            var productOriginParameter = productOrigin != null ?
+                new ObjectParameter("productOrigin", productOrigin) :
+                new ObjectParameter("productOrigin", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_UPDATE", productIDParameter, productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, productEXPParameter, productMFGParameter, productOriginParameter, isActiveParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> SP_USERCODE_IS_EXISTED(string usercode)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
+        }
+    
+        public virtual ObjectResult<SP_USER_GETBYUSERCODE_Result> SP_USER_GETBYUSERCODE(string usercode)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_USER_GETBYUSERCODE_Result>("SP_USER_GETBYUSERCODE", usercodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> SP_EMAIL_IS_EXISTED(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_EMAIL_IS_EXISTED", emailParameter);
+        }
+    
+        public virtual int SP_USER_CREATE(string userCode, string userEmail, string userPassword, string userFullName, string userPhone, string userAddress, Nullable<int> role)
+        {
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("userCode", userCode) :
+                new ObjectParameter("userCode", typeof(string));
+    
+            var userEmailParameter = userEmail != null ?
+                new ObjectParameter("userEmail", userEmail) :
+                new ObjectParameter("userEmail", typeof(string));
+    
+            var userPasswordParameter = userPassword != null ?
+                new ObjectParameter("userPassword", userPassword) :
+                new ObjectParameter("userPassword", typeof(string));
+    
+            var userFullNameParameter = userFullName != null ?
+                new ObjectParameter("userFullName", userFullName) :
+                new ObjectParameter("userFullName", typeof(string));
+    
+            var userPhoneParameter = userPhone != null ?
+                new ObjectParameter("userPhone", userPhone) :
+                new ObjectParameter("userPhone", typeof(string));
+    
+            var userAddressParameter = userAddress != null ?
+                new ObjectParameter("userAddress", userAddress) :
+                new ObjectParameter("userAddress", typeof(string));
+    
+            var roleParameter = role.HasValue ?
+                new ObjectParameter("role", role) :
+                new ObjectParameter("role", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_CREATE", userCodeParameter, userEmailParameter, userPasswordParameter, userFullNameParameter, userPhoneParameter, userAddressParameter, roleParameter);
         }
     }
 }

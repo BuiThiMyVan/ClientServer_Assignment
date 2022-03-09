@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace VEGETFOODS.Areas.Admin.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategoriesController : BaseController
     {
         // GET: Admin/Categories
         public ActionResult Index()

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace VEGETFOODS.Areas.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: Admin/Dashboard
         public ActionResult Dashboard()

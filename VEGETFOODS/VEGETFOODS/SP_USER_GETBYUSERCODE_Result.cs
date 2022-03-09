@@ -10,17 +10,9 @@
 namespace VEGETFOODS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class USER
+    public partial class SP_USER_GETBYUSERCODE_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER()
-        {
-            this.ORDERs = new HashSet<ORDER>();
-            this.SHOPPING_SESSION = new HashSet<SHOPPING_SESSION>();
-        }
-    
         public string UserCode { get; set; }
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
@@ -32,10 +24,5 @@ namespace VEGETFOODS
         public string UserPhone { get; set; }
         public string UserAddress { get; set; }
         public Nullable<int> Role { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ORDER> ORDERs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
     }
 }
