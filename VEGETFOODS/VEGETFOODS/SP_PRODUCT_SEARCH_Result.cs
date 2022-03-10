@@ -21,5 +21,7 @@ namespace VEGETFOODS
         public Nullable<byte> IsActive { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateBy { get; set; }
+        public Nullable<double> ProductPrice { get; set; }
+        public string CategoryName { get; set; }
     }
 }

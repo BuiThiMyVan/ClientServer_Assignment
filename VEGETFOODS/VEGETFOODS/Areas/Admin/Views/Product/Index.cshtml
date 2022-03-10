@@ -1,8 +1,104 @@
-﻿
+﻿@using VEGETFOODS
+@using VEGETFOODS.Models
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Index</h2>
+@section Styles {
+    <style>
+        .btn-delete {
+            color: #808080;
+        }
+
+            .btn-delete:hover {
+                cursor: pointer;
+                color: rgb(220, 53, 69);
+            }
+    </style>
+}
+
+<div class="content-wrapper" style="display: none" id="ListProduct">
+    <div class="header">
+        <span class="list-title">Quản lý Sản Phẩm</span>
+        <a href="/Admin/Product/Create" class="btn-main-color">Thêm mới</a>
+    </div>
+    <div id="search">
+        <div class="search-box">
+            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên sản phẩm/ người tạo" v-on:keypress.enter="getListProduct()" />
+            <div class="search-icon" v-on:click="getListProduct()"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+    <div class="table-list">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="ordinal-numbers text-center">STT</th>
+                    <th scope="col" class="name-film">Tên sản phẩm</th>
+                    <th scope="col" class="name-film">Hình ảnh</th>
+                    <th scope="col" class="text-center">Tên danh mục</th>
+                    <th scope="col" class="show-date text-center">Ngày tạo</th>
+                    <th scope="col" class="show-date text-center">Người tạo</th>
+                    <th scope="col" class="produce-year text-center">Trạng thái</th>
+                    <th scope="col" class="text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in list">
+                    <td class="ordinal-numbers text-center">
+                        {{ item.ROWID }}
+                    </td>
+                    <td class="name-film"> <a class="text-main-color" v-bind:href="'/Admin/Product/Details?productId=' + item.ProductID">{{ item.ProductName }}</a></td>
+                    <td class="name-film"> <img src="item.ProductImages" /></td>
+                    <td class="text-center">{{ item.CategoryName }} </td>
+                    <td class="show-date text-center">{{ item.CreateTimeFormat }}</td>
+                    <td class="show-date text-center">{{ item.CreateBy }}</td>
+                    <td class="text-center text-main-color" v-if="item.IsActive == @((int)Common.ActiveStatus.Active)"> Active </td>
+                    <td class="text-center text-danger" v-if="item.IsActive == @((int)Common.ActiveStatus.InActive)"> InActive </td>
+                    <td class="text-center"><a class="btn-delete" v-on:click="deleteProduct(item.ProductID)"><i class="fas fa-trash"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginate">
+        <div class="paginate_sub paginate_sub-pageSize">
+            <label class="form-label">Số dòng trên 1 trang</label>
+            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListProduct()">
+                <option v-for="item in listPageSize" v-bind:value="item">
+                    {{item}}
+                </option>
+            </select>
+            <span>{{ pageView }} </span>
+        </div>
+        <div class="paginate_sub paginate_sub-link">
+            <div class="sub-link">
+                <label class="form-label">Đi đến trang</label>
+                <input type="text" v-bind:value="currentPage" id="pagePicked" class="pagePicked" v-on:keyup="validatePage()" onkeypress="return isNumberKey(event)">
+            </div>
+            <nav class="nav-link">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="first()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-step-backward"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="prev()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-chevron-left"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="next()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-chevron-right"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="last()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-step-forward"></i></span>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Product/ListProduct.js"></script>
+}
+
 

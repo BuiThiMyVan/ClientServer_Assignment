@@ -32,13 +32,11 @@ namespace VEGETFOODS
         public string ProductUnit { get; set; }
         public string ProductIngredient { get; set; }
         public string ProductSeason { get; set; }
-        public Nullable<System.DateTime> ProductEXP { get; set; }
-        public Nullable<System.DateTime> ProductMFG { get; set; }
-        public string ProductOrigin { get; set; }
         public Nullable<byte> IsActive { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string CreateBy { get; set; }
+        public Nullable<double> ProductPrice { get; set; }
     
         public virtual CATEGORY CATEGORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

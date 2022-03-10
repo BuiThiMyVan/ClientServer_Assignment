@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "AddFilm";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var session = (USER)Session[VEGETFOODS.Common.CommonConstants.USER_SESSION];
 }
 
 @section Styles {
@@ -41,7 +42,11 @@
         </div>
     </div>
 </div>
-@section Scripts {
+@section Scripts {    
+    <script>
+        var userLogin = '@Html.Raw(session.UserCode)';
+        debugger
+    </script>
     <script src="~/Scripts/Categories/CreateCategory.js"></script>
 }
 

@@ -1,0 +1,99 @@
+﻿@using VEGETFOODS
+@using VEGETFOODS.Models
+@{
+    ViewBag.Title = "AddFilm";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    var session = (USER)Session[VEGETFOODS.Common.CommonConstants.USER_SESSION];
+}
+
+@section Styles {
+    <style>
+        .content-wrapper .header-detail {
+            flex-direction: column;
+        }
+
+        
+    </style>
+}
+
+<div class="content-wrapper" id="CreateProduct">
+    <div class="header-detail">
+        <a href="/Admin/Product/Index" class="link-list"> < Danh sách sản phẩm</a>
+        <span class="name-title mt-8"> Tạo mới sản phẩm </span>
+    </div>
+    <div class="content-detail">
+        <div class="content-detail-head">
+            <a class="btn-tab-info"data-bs-toggle="collapse" data-bs-target="#productTab" aria-expanded="false" aria-controls="collapseTwo">
+                <i class="fas fa-info-circle" style="border-radius: 4px"></i>&nbsp;&nbsp;&nbsp; Thông tin sản phẩm
+            </a>
+        </div>
+        <div class="collapse show" id="productTab">
+            <div class="card-body">
+                <div class="content-item">
+                    <label class="content-label">Tên sản phẩm</label>
+                    <input class="content-input" type="text" v-model="ProductName" />
+                </div>
+                <div class="error text-danger"> {{ error_name }}</div>
+                <div class="content-item">
+                    <label class="content-label">Áp phích</label>
+                    <input class="content-input" type="text" v-model="ProductImages" />
+                </div>
+                <div class="content-item">
+                    <label class="content-label"></label>
+                    <span class="text-main-color pointer-hover" v-on:click="ChooseImage()">Tải ảnh lên... </span>
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Danh mục</label>
+                    <select class="content-input content-status" v-model="ProductCategoryId">
+                        <option value="0">--</option>
+                        <option v-for="item in ListCategoryActive" :value="item.CategoryID">{{ item.CategoryName }}</option>
+                    </select>
+                </div>
+                <div class="error text-danger"> {{ error_cate }}</div>
+                <div class="content-item">
+                    <label class="content-label">Mô tả tóm tắt</label>
+                    <textarea class="content-input" type="text" rows="4" v-model="ProductShortDesc"></textarea>
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Mô tả chi tiết</label>
+                    <textarea class="content-input" type="text" rows="6" v-model="ProductLongDesc"></textarea>
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Giá</label>
+                    <div>
+                        <input class="content-input" size="3" type="number" v-model="ProductPrice" />
+                    </div>
+
+                </div>
+                <div class="error text-danger"> {{ error_price }}</div>
+                <div class="content-item">
+                    <label class="content-label">Đơn vị tính</label>
+                    <div>
+                        <input class="content-input" size="5" type="text" v-model="ProductUnit" />
+                    </div>
+                </div>
+                <div class="error text-danger"> {{ error_unit }}</div>
+                <div class="content-item">
+                    <label class="content-label">Thành phần</label>
+                    <input class="content-input" type="text" v-model="ProductIngredient" />
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Mùa vụ</label>
+                    <input class="content-input" type="text" v-model="ProductSeason" />
+                </div>
+                <div class="btn-update">
+                    <button v-on:click="createProduct()" class="btn-main-color">Hoàn thành</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var userLogin = '@Html.Raw(session.UserCode)';
+        debugger
+    </script>
+    <script src="~/Scripts/Product/CreateProduct.js"></script>
+}
+

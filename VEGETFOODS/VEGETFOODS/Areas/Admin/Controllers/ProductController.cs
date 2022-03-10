@@ -13,5 +13,16 @@ namespace VEGETFOODS.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult Details(int productId)
+        {
+            ViewBag.ProductId = productId;
+            return View();
+        }
     }
 }

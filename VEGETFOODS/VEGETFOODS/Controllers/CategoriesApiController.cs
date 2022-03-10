@@ -75,8 +75,7 @@ namespace VEGETFOODS.Controllers
             try
             {
                 byte isActive = 1;
-                var createBy = "vanbtm";
-                context.SP_CATEGORY_CREATE(category.CategoryParentID, category.CategoryName, category.CategoryDesc, isActive, createBy);
+                context.SP_CATEGORY_CREATE(category.CategoryParentID, category.CategoryName, category.CategoryDesc, isActive, category.CreateBy);
                 return Json(new { message = 200 });
             }
             catch

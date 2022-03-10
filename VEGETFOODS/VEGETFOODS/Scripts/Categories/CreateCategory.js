@@ -58,9 +58,10 @@
             var modal = {
                 CategoryName: self.CategoryName,
                 CategoryParentID: self.CategoryParentID,
-                CategoryDesc: self.CategoryDesc
+                CategoryDesc: self.CategoryDesc,
+                CreateBy: userLogin
             };
-
+            debugger
             $.ajax({
                 data: modal,
                 url: "/api/CategoriesApi/CreateCategory",

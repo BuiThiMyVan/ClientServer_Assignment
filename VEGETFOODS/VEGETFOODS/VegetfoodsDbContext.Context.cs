@@ -157,6 +157,70 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CATEGORY_UPDATE", categoryIDParameter, categoryParentIDParameter, categoryNameParameter, categoryDescParameter, isActiveParameter);
         }
     
+        public virtual int SP_CONSIGNMENT_CREATE(string bathNo, Nullable<int> consProductID, Nullable<double> consProductAmout, Nullable<byte> isActive, Nullable<System.DateTime> productEXP)
+        {
+            var bathNoParameter = bathNo != null ?
+                new ObjectParameter("bathNo", bathNo) :
+                new ObjectParameter("bathNo", typeof(string));
+    
+            var consProductIDParameter = consProductID.HasValue ?
+                new ObjectParameter("consProductID", consProductID) :
+                new ObjectParameter("consProductID", typeof(int));
+    
+            var consProductAmoutParameter = consProductAmout.HasValue ?
+                new ObjectParameter("consProductAmout", consProductAmout) :
+                new ObjectParameter("consProductAmout", typeof(double));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(byte));
+    
+            var productEXPParameter = productEXP.HasValue ?
+                new ObjectParameter("productEXP", productEXP) :
+                new ObjectParameter("productEXP", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGNMENT_CREATE", bathNoParameter, consProductIDParameter, consProductAmoutParameter, isActiveParameter, productEXPParameter);
+        }
+    
+        public virtual ObjectResult<SP_CONSIGNMENT_GETBYID_Result> SP_CONSIGNMENT_GETBYID(string batchNo)
+        {
+            var batchNoParameter = batchNo != null ?
+                new ObjectParameter("batchNo", batchNo) :
+                new ObjectParameter("batchNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CONSIGNMENT_GETBYID_Result>("SP_CONSIGNMENT_GETBYID", batchNoParameter);
+        }
+    
+        public virtual ObjectResult<SP_CONSIGNMENT_GETBYPRODUCTID_Result> SP_CONSIGNMENT_GETBYPRODUCTID(Nullable<int> productID)
+        {
+            var productIDParameter = productID.HasValue ?
+                new ObjectParameter("productID", productID) :
+                new ObjectParameter("productID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CONSIGNMENT_GETBYPRODUCTID_Result>("SP_CONSIGNMENT_GETBYPRODUCTID", productIDParameter);
+        }
+    
+        public virtual int SP_CONSIGNMENT_UPDATE(string bathNo, Nullable<double> consProductAmout, Nullable<byte> isActive, Nullable<System.DateTime> productEXP)
+        {
+            var bathNoParameter = bathNo != null ?
+                new ObjectParameter("bathNo", bathNo) :
+                new ObjectParameter("bathNo", typeof(string));
+    
+            var consProductAmoutParameter = consProductAmout.HasValue ?
+                new ObjectParameter("consProductAmout", consProductAmout) :
+                new ObjectParameter("consProductAmout", typeof(double));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(byte));
+    
+            var productEXPParameter = productEXP.HasValue ?
+                new ObjectParameter("productEXP", productEXP) :
+                new ObjectParameter("productEXP", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGNMENT_UPDATE", bathNoParameter, consProductAmoutParameter, isActiveParameter, productEXPParameter);
+        }
+    
         public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
             var diagramnameParameter = diagramname != null ?
@@ -191,6 +255,15 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
+        public virtual ObjectResult<Nullable<bool>> SP_EMAIL_IS_EXISTED(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_EMAIL_IS_EXISTED", emailParameter);
+        }
+    
         public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
@@ -217,28 +290,6 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
         public virtual ObjectResult<Nullable<bool>> SP_LOGIN(string usercode, string password)
         {
             var usercodeParameter = usercode != null ?
@@ -252,12 +303,8 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_LOGIN", usercodeParameter, passwordParameter);
         }
     
-        public virtual int SP_PRODUCT_CREATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, string productUnit, string productIngredient, string productSeason, Nullable<System.DateTime> productEXP, Nullable<System.DateTime> productMFG, string productOrigin, string createBy)
+        public virtual int SP_PRODUCT_CREATE(string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, string createBy)
         {
-            var productIDParameter = productID.HasValue ?
-                new ObjectParameter("productID", productID) :
-                new ObjectParameter("productID", typeof(int));
-    
             var productCodeParameter = productCode != null ?
                 new ObjectParameter("productCode", productCode) :
                 new ObjectParameter("productCode", typeof(string));
@@ -286,6 +333,10 @@ namespace VEGETFOODS
                 new ObjectParameter("productLongDesc", productLongDesc) :
                 new ObjectParameter("productLongDesc", typeof(string));
     
+            var productPriceParameter = productPrice.HasValue ?
+                new ObjectParameter("productPrice", productPrice) :
+                new ObjectParameter("productPrice", typeof(double));
+    
             var productUnitParameter = productUnit != null ?
                 new ObjectParameter("productUnit", productUnit) :
                 new ObjectParameter("productUnit", typeof(string));
@@ -298,23 +349,11 @@ namespace VEGETFOODS
                 new ObjectParameter("productSeason", productSeason) :
                 new ObjectParameter("productSeason", typeof(string));
     
-            var productEXPParameter = productEXP.HasValue ?
-                new ObjectParameter("productEXP", productEXP) :
-                new ObjectParameter("productEXP", typeof(System.DateTime));
-    
-            var productMFGParameter = productMFG.HasValue ?
-                new ObjectParameter("productMFG", productMFG) :
-                new ObjectParameter("productMFG", typeof(System.DateTime));
-    
-            var productOriginParameter = productOrigin != null ?
-                new ObjectParameter("productOrigin", productOrigin) :
-                new ObjectParameter("productOrigin", typeof(string));
-    
             var createByParameter = createBy != null ?
                 new ObjectParameter("createBy", createBy) :
                 new ObjectParameter("createBy", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_CREATE", productIDParameter, productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, productEXPParameter, productMFGParameter, productOriginParameter, createByParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_CREATE", productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productPriceParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, createByParameter);
         }
     
         public virtual int SP_PRODUCT_DELETE(Nullable<int> productID)
@@ -352,7 +391,7 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_Result>("SP_PRODUCT_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
         }
     
-        public virtual int SP_PRODUCT_UPDATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, string productUnit, string productIngredient, string productSeason, Nullable<System.DateTime> productEXP, Nullable<System.DateTime> productMFG, string productOrigin, Nullable<byte> isActive)
+        public virtual int SP_PRODUCT_UPDATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, Nullable<byte> isActive)
         {
             var productIDParameter = productID.HasValue ?
                 new ObjectParameter("productID", productID) :
@@ -386,6 +425,10 @@ namespace VEGETFOODS
                 new ObjectParameter("productLongDesc", productLongDesc) :
                 new ObjectParameter("productLongDesc", typeof(string));
     
+            var productPriceParameter = productPrice.HasValue ?
+                new ObjectParameter("productPrice", productPrice) :
+                new ObjectParameter("productPrice", typeof(double));
+    
             var productUnitParameter = productUnit != null ?
                 new ObjectParameter("productUnit", productUnit) :
                 new ObjectParameter("productUnit", typeof(string));
@@ -398,50 +441,33 @@ namespace VEGETFOODS
                 new ObjectParameter("productSeason", productSeason) :
                 new ObjectParameter("productSeason", typeof(string));
     
-            var productEXPParameter = productEXP.HasValue ?
-                new ObjectParameter("productEXP", productEXP) :
-                new ObjectParameter("productEXP", typeof(System.DateTime));
-    
-            var productMFGParameter = productMFG.HasValue ?
-                new ObjectParameter("productMFG", productMFG) :
-                new ObjectParameter("productMFG", typeof(System.DateTime));
-    
-            var productOriginParameter = productOrigin != null ?
-                new ObjectParameter("productOrigin", productOrigin) :
-                new ObjectParameter("productOrigin", typeof(string));
-    
             var isActiveParameter = isActive.HasValue ?
                 new ObjectParameter("isActive", isActive) :
                 new ObjectParameter("isActive", typeof(byte));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_UPDATE", productIDParameter, productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, productEXPParameter, productMFGParameter, productOriginParameter, isActiveParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PRODUCT_UPDATE", productIDParameter, productCodeParameter, productNameParameter, productShortNameParameter, productCategoryIdParameter, productImagesParameter, productShortDescParameter, productLongDescParameter, productPriceParameter, productUnitParameter, productIngredientParameter, productSeasonParameter, isActiveParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> SP_USERCODE_IS_EXISTED(string usercode)
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
         {
-            var usercodeParameter = usercode != null ?
-                new ObjectParameter("usercode", usercode) :
-                new ObjectParameter("usercode", typeof(string));
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
         }
     
-        public virtual ObjectResult<SP_USER_GETBYUSERCODE_Result> SP_USER_GETBYUSERCODE(string usercode)
+        public virtual int sp_upgraddiagrams()
         {
-            var usercodeParameter = usercode != null ?
-                new ObjectParameter("usercode", usercode) :
-                new ObjectParameter("usercode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_USER_GETBYUSERCODE_Result>("SP_USER_GETBYUSERCODE", usercodeParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<bool>> SP_EMAIL_IS_EXISTED(string email)
-        {
-            var emailParameter = email != null ?
-                new ObjectParameter("email", email) :
-                new ObjectParameter("email", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_EMAIL_IS_EXISTED", emailParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
         public virtual int SP_USER_CREATE(string userCode, string userEmail, string userPassword, string userFullName, string userPhone, string userAddress, Nullable<int> role)
@@ -475,6 +501,24 @@ namespace VEGETFOODS
                 new ObjectParameter("role", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_CREATE", userCodeParameter, userEmailParameter, userPasswordParameter, userFullNameParameter, userPhoneParameter, userAddressParameter, roleParameter);
+        }
+    
+        public virtual ObjectResult<SP_USER_GETBYUSERCODE_Result> SP_USER_GETBYUSERCODE(string usercode)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_USER_GETBYUSERCODE_Result>("SP_USER_GETBYUSERCODE", usercodeParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> SP_USERCODE_IS_EXISTED(string usercode)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
         }
     }
 }

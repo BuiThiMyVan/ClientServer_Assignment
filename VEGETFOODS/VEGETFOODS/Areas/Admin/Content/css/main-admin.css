@@ -47,6 +47,7 @@ a {
 a:hover {
     color: var(--main-color);
     opacity: 0.8;
+    cursor: pointer;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -158,7 +159,7 @@ input:focus, select:focus, textarea:focus {
 .content-detail {
     position: relative;
     margin-top: 16px;
-    padding: 24px 16px;
+    padding: 22px 16px;
     background-color: #fff;
     border-radius: 4px;
 }
@@ -281,3 +282,10 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+/**/
+.btn-tab-info {
+    color: #FFF;
+    display: block;
+    width: 100%;
+}
