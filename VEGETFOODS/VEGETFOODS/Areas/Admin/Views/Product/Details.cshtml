@@ -11,6 +11,19 @@
         .content-wrapper .header-detail {
             flex-direction: column;
         }
+
+        .btn-delete:hover {
+            cursor: pointer;
+            color: rgb(220, 53, 69);
+        }
+
+        .modal-body .content-label {
+            min-width: 120px;
+        }
+
+        .content-detail .modal-body .error {
+            margin-left: 120px;
+        }
     </style>
 }
 
@@ -33,7 +46,7 @@
                 </div>
                 <div class="error text-danger"> {{ error_name }}</div>
                 <div class="content-item">
-                    <label class="content-label">Áp phích</label>
+                    <label class="content-label">Hình ảnh</label>
                     <input class="content-input" type="text" v-model="ProductImages" />
                 </div>
                 <div class="content-item">
@@ -79,6 +92,13 @@
                     <label class="content-label">Mùa vụ</label>
                     <input class="content-input" type="text" v-model="ProductSeason" />
                 </div>
+                <div class="content-item">
+                    <label class="content-label">Active</label>
+                    <label class="switch">
+                        <input type="checkbox" v-model="IsActive">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
                 <div class="btn-update">
                     <button v-on:click="updateProduct()" class="btn-main-color">Cập nhật</button>
                 </div>
@@ -95,47 +115,114 @@
         <div class="collapse" id="consignmentTab">
             <div class="card-body">
                 <div class="header" style="justify-content: flex-end; margin-top: 32px; margin-bottom: 24px;">
-                    <a href="/Admin/Product/Create" class="btn-main-color" style="padding: 8px 16px;"> + </a>
+                    <a href="/Admin/Product/Create" class="btn-main-color" style="padding: 8px 16px;" data-bs-toggle="modal" data-bs-target="#createConsignment" onclick="refreshModal()"> + </a>
                 </div>
                 <div class="table-list">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th scope="col" class="ordinal-numbers text-center">STT</th>
                                 <th scope="col" class="name-film">Số Lô</th>
                                 <th scope="col" class="show-date text-center">Số Lượng</th>
                                 <th scope="col" class="show-date text-center">HSD</th>
                                 <th scope="col" class="show-date text-center">Ngày tạo</th>
-                                <th scope="col" class="show-date text-center">Người nhập</th>
                                 <th scope="col" class="produce-year text-center">Trạng thái</th>
                                 <th scope="col" class="text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item, index) in list">
-                                <td class="ordinal-numbers text-center">
-                                    {{ item.ROWID }}
-                                </td>
-                                <td class="name-film"> <a class="text-main-color" v-bind:href="'/Admin/Product/Details?productId=' + item.CategoryID">{{ item.BathNo }}</a></td>
+                            <tr v-for="(item, index) in ListConsignment">
+                                <td class="name-film"> <a class="text-main-color" data-bs-toggle="modal" data-bs-target="#createConsignment" v-on:click="getInfoConsignment(item.BathNo)">{{ item.BathNo }}</a></td>
                                 <td class="text-center">{{ item.ConsProductAmout }} </td>
                                 <td class="show-date text-center">{{ item.ProductEXPFormat }}</td>
-                                <td class="show-date text-center">{{ item.CreateTime }}</td>
-                                <td class="show-date text-center">{{ item.CreateBy }}</td>
+                                <td class="show-date text-center">{{ item.CreateTimeFormat }}</td>
                                 <td class="text-center text-main-color" v-if="item.IsActive == @((int)Common.ActiveStatus.Active)"> Active </td>
                                 <td class="text-center text-danger" v-if="item.IsActive == @((int)Common.ActiveStatus.InActive)"> InActive </td>
-                                <td class="text-center"><a class="btn-delete" v-on:click="deleteProduct(item.BathNo)"><i class="fas fa-trash"></i></a></td>
+                                <td class="text-center"><a class="btn-delete" v-on:click="deleteConsignment(item.BathNo)"><i class="fas fa-trash"></i></a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+        <div class="modal fade" id="createConsignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Thêm lô hàng</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" style="border: none; background: #FFF;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="padding-bottom: 32px;">
+                        <div class="content-item">
+                            <label class="content-label">Số Lô</label>
+                            <input class="content-input" type="text" v-model="batchNo" />
+                        </div>
+                        <div class="error text-danger"> {{ error_batchNo }}</div>
+                        <div class="content-item">
+                            <label class="content-label">Số lượng</label>
+                            <div>
+                                <input class="content-input" size="3" type="number" v-model="amount" />
+                            </div>
+                        </div>
+                        <div class="error text-danger"> {{ error_amount }}</div>
+                        <div class="content-item">
+                            <label class="content-label">Hạn sử dụng</label>
+                            <input class="content-input content-date" type="text" v-model="exp" id="exp" onchange="getEXP()" />
+                        </div>
+                        <div class="error text-danger"> {{ error_exp }}</div>
+                        <div class="content-item">
+                            <label class="content-label">Active</label>
+                            <label class="switch">
+                                <input type="checkbox" v-model="ConsIsActive">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshModal()">Huỷ</button>
+                        <button type="button" v-on:click="createConsignment('create')" class="btn btn-main-color" style="padding: 6px 30px;" v-if="batchNo == ''">Tạo</button>
+                        <button type="button" v-on:click="createConsignment('update')" class="btn btn-main-color" style="padding: 6px 30px;" v-else>Cập nhật</button>
+                    </div>
+                </div>
             </div>
-
+        </div>
     </div>
+    
 </div>
+
+
 @section Scripts {
     <script>
         var productId = @ViewBag.ProductId;
+
+        $(document).ready(function () {
+            $('#exp').datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true
+            })
+        })
+
+        function getEXP() {
+            var exp = $("#exp").val();
+            vmMyProduct.exp = exp;
+        }
+
+        function refreshModal() {
+            vmMyProduct.error_batchNo = '';
+            vmMyProduct.error_amount = '';
+            vmMyProduct.error_exp = '';
+
+            vmMyProduct.batchNo = '';
+            vmMyProduct.exp = '';
+            vmMyProduct.amount = 0;
+            vmMyProduct.ConsIsActive = 0;
+            debugger
+            vmMyProduct.error_batchNo = '';
+            vmMyProduct.error_amount = '';
+            vmMyProduct.error_exp = '';
+        }
     </script>
     <script src="~/Scripts/Product/MyProduct.js"></script>
 }

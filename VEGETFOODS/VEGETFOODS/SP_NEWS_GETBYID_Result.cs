@@ -10,9 +10,8 @@
 namespace VEGETFOODS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class NEWS
+    public partial class SP_NEWS_GETBYID_Result
     {
         public int NewsID { get; set; }
         public Nullable<int> NewsCateID { get; set; }
@@ -25,7 +24,5 @@ namespace VEGETFOODS
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public string CreateBy { get; set; }
         public string Hashtags { get; set; }
-    
-        public virtual NEWSCATEGORY NEWSCATEGORY { get; set; }
     }
 }

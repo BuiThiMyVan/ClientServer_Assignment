@@ -184,6 +184,7 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NewsCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="CART_ITEM.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
@@ -198,6 +199,8 @@
     <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
     <Compile Include="Controllers\MVC_Controller\HomeController.cs" />
+    <Compile Include="Controllers\MVC_Controller\ProductController.cs" />
+    <Compile Include="Controllers\NewsCategoryApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="DISCOUNT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
@@ -227,6 +230,9 @@
     </Compile>
     <Compile Include="Partials\SP_CATEGORIES_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_CATEGORY_GETBYID_Result.cs" />
+    <Compile Include="Partials\SP_CONSIGNMENT_GETALL_Result.cs" />
+    <Compile Include="Partials\SP_CONSIGNMENT_GETBYID_Result.cs" />
+    <Compile Include="Partials\SP_NEWSCATEGORY_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_GETBYID_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_SEARCH_Result.cs" />
     <Compile Include="Partials\USER.cs" />
@@ -249,6 +255,9 @@
     <Compile Include="SP_CATEGORY_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_CONSIGNMENT_GETALL_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_CONSIGNMENT_GETBYID_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -259,6 +268,27 @@
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWSCATEGORY_GETALLACTIVE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWSCATEGORY_GETBYID_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWSCATEGORY_SEARCH_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWS_GETBYID_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWS_GETTOP3_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWS_SEARCHACTIVE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_NEWS_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_PRODUCT_GETBYID_Result.cs">
@@ -357,6 +387,8 @@
     <Content Include="Content\images\category-3.jpg" />
     <Content Include="Content\images\category-4.jpg" />
     <Content Include="Content\images\category.jpg" />
+    <Content Include="Content\images\icon-tab.jpg" />
+    <Content Include="Content\images\icon-tab.png" />
     <Content Include="Content\images\image_1.jpg" />
     <Content Include="Content\images\image_2.jpg" />
     <Content Include="Content\images\image_3.jpg" />
@@ -1202,6 +1234,9 @@
     <Content Include="Content\js\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\js\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NewsCategory\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\NewsCategory\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NewsCategory\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
     <Content Include="Scripts\Categories\ListCategories.js" />
@@ -1220,6 +1255,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\NewsCategory\CreateNewsCategory.js" />
+    <Content Include="Scripts\NewsCategory\ListNewsCategories.js" />
+    <Content Include="Scripts\NewsCategory\MyNewsCategory.js" />
     <Content Include="Scripts\Product\CreateProduct.js" />
     <Content Include="Scripts\Product\ListProduct.js" />
     <Content Include="Scripts\Product\MyProduct.js" />
@@ -1258,6 +1296,7 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

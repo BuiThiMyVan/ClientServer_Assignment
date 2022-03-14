@@ -19,15 +19,15 @@
     </style>
 }
 
-<div class="content-wrapper" style="display: none" id="ListProduct">
+<div class="content-wrapper" style="display: none" id="ListNewsCategories">
     <div class="header">
-        <span class="list-title">Quản lý Sản Phẩm</span>
-        <a href="/Admin/Product/Create" class="btn-main-color">Thêm mới</a>
+        <span class="list-title">Quản lý Danh Mục Tin Tức</span>
+        <a href="/Admin/NewsCategory/Create" class="btn-main-color">Thêm mới</a>
     </div>
     <div id="search">
         <div class="search-box">
-            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên sản phẩm/ người tạo" v-on:keypress.enter="getListProduct()" />
-            <div class="search-icon" v-on:click="getListProduct()"><i class="fas fa-search"></i></div>
+            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên danh mục" v-on:keypress.enter="getListNewsCategories()" />
+            <div class="search-icon" v-on:click="getListNewsCategories()"><i class="fas fa-search"></i></div>
         </div>
     </div>
     <div class="table-list">
@@ -35,11 +35,8 @@
             <thead>
                 <tr>
                     <th scope="col" class="ordinal-numbers text-center">STT</th>
-                    <th scope="col" class="name-film">Tên sản phẩm</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col" class="text-center">Tên danh mục</th>
+                    <th scope="col" class="name-film">Tên danh mục</th>
                     <th scope="col" class="show-date text-center">Ngày tạo</th>
-                    <th scope="col" class="show-date text-center">Người tạo</th>
                     <th scope="col" class="produce-year text-center">Trạng thái</th>
                     <th scope="col" class="text-center"></th>
                 </tr>
@@ -49,14 +46,11 @@
                     <td class="ordinal-numbers text-center">
                         {{ item.ROWID }}
                     </td>
-                    <td class="name-film"> <a class="text-main-color" v-bind:href="'/Admin/Product/Details?productId=' + item.ProductID">{{ item.ProductName }}</a></td>
-                    <td> <img v-bind:src="item.ProductImages" width="100" height="100" /></td>
-                    <td class="text-center">{{ item.CategoryName }} </td>
+                    <td class="name-film"> <a class="text-main-color" v-bind:href="'/Admin/NewsCategory/Details?categoryId=' + item.NewsCateID">{{ item.NewsCateTitle }}</a></td>
                     <td class="show-date text-center">{{ item.CreateTimeFormat }}</td>
-                    <td class="show-date text-center">{{ item.CreateBy }}</td>
                     <td class="text-center text-main-color" v-if="item.IsActive == @((int)Common.ActiveStatus.Active)"> Active </td>
                     <td class="text-center text-danger" v-if="item.IsActive == @((int)Common.ActiveStatus.InActive)"> InActive </td>
-                    <td class="text-center"><a class="btn-delete" v-on:click="deleteProduct(item.ProductID)"><i class="fas fa-trash"></i></a></td>
+                    <td class="text-center"><a class="btn-delete" v-on:click="deleteCategory(item.NewsCateID)"><i class="fas fa-trash"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -64,7 +58,7 @@
     <div class="paginate">
         <div class="paginate_sub paginate_sub-pageSize">
             <label class="form-label">Số dòng trên 1 trang</label>
-            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListProduct()">
+            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListCategories()">
                 <option v-for="item in listPageSize" v-bind:value="item">
                     {{item}}
                 </option>
@@ -98,7 +92,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/Scripts/Product/ListProduct.js"></script>
+    <script src="~/Scripts/NewsCategory/ListNewsCategories.js"></script>
 }
-
 

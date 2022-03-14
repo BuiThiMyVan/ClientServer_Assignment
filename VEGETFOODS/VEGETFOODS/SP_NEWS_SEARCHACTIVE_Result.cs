@@ -10,22 +10,15 @@
 namespace VEGETFOODS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class NEWS
+    public partial class SP_NEWS_SEARCHACTIVE_Result
     {
-        public int NewsID { get; set; }
-        public Nullable<int> NewsCateID { get; set; }
+        public Nullable<long> ROWID { get; set; }
         public string NewsTitle { get; set; }
-        public string NewsImages { get; set; }
+        public string NewsCateTitle { get; set; }
         public string NewsSummary { get; set; }
-        public string NewsBody { get; set; }
+        public string CreateBy { get; set; }
         public Nullable<byte> IsActive { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public Nullable<System.DateTime> UpdateTime { get; set; }
-        public string CreateBy { get; set; }
-        public string Hashtags { get; set; }
-    
-        public virtual NEWSCATEGORY NEWSCATEGORY { get; set; }
     }
 }

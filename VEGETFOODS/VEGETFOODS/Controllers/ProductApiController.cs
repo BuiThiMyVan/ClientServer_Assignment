@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using VEGETFOODS.Models;
+using static VEGETFOODS.SP_CONSIGNMENT_GETALL_Result;
 using static VEGETFOODS.SP_PRODUCT_SEARCH_Result;
 
 namespace VEGETFOODS.Controllers
@@ -97,6 +98,68 @@ namespace VEGETFOODS.Controllers
                 return Json(new { message = 400 });
             }
         }
-       
+
+        [System.Web.Http.AcceptVerbs("GET")]
+        public IHttpActionResult GetConsignmentByProductId(int productId)
+        {
+            var consigment = context.SP_CONSIGNMENT_GETALL(productId).ToList();
+
+            JsonCONSIGNMENT jsonreturn = new JsonCONSIGNMENT
+            {
+                list = consigment.Select(t => t.CopyObjectForSP_CONSIGNMENT_GETALL_ResultDTOApi()).ToArray(),
+            };
+            return Json(new { data = jsonreturn });
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteConsignment(string bathNo)
+        {
+            try
+            {
+                context.SP_CONSIGNMENT_DELETE(bathNo);
+                return Json(new { message = 200 });
+            }
+            catch
+            {
+                return Json(new { message = 400 });
+            }
+        }
+
+        [System.Web.Http.AcceptVerbs("GET")]
+        public IHttpActionResult GetConsignmentById(string bathNo)
+        {
+            var consignment = context.SP_CONSIGNMENT_GETBYID(bathNo).FirstOrDefault().CopyObjectForSP_CONSIGNMENT_GETBYID_ResultDTOApi();
+
+            return Json(new { data = consignment });
+        }
+
+        [System.Web.Http.AcceptVerbs("POST")]
+        public IHttpActionResult UpdateConsignnment(CONSIGNMENT consignment)
+        {
+            try
+            {
+                context.SP_CONSIGNMENT_UPDATE(consignment.BathNo, consignment.ConsProductAmout, consignment.IsActive, consignment.ProductEXP);
+                return Json(new { message = 200 });
+            }
+            catch
+            {
+                return Json(new { message = 400 });
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult CreateConsignnment(CONSIGNMENT consignment)
+        {
+            try
+            {
+                context.SP_CONSIGNMENT_CREATE(consignment.BathNo, consignment.ConsProductID, consignment.ConsProductAmout, consignment.IsActive, consignment.ProductEXP);
+                return Json(new { message = 200 });
+            }
+            catch (Exception e)
+            {
+                return Json(new { message = 400 });
+            }
+        }
+
     }
 }
