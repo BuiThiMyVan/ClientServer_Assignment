@@ -35,7 +35,7 @@
                 </div>
                 <div class="error text-danger"> {{ error_name }}</div>
                 <div class="content-item">
-                    <label class="content-label">Áp phích</label>
+                    <label class="content-label">Hình ảnh</label>
                     <input class="content-input" type="text" v-model="ProductImages" />
                 </div>
                 <div class="content-item">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="content-item">
                     <label class="content-label">Mô tả chi tiết</label>
-                    <textarea class="content-input" type="text" rows="6" v-model="ProductLongDesc"></textarea>
+                    <textarea class="content-input" id="ProductLongDesc" type="text" rows="6" v-model="ProductLongDesc"></textarea>
                 </div>
                 <div class="content-item">
                     <label class="content-label">Giá</label>
@@ -88,10 +88,20 @@
         </div>
     </div>
     </div>
-</div>
 @section Scripts {
     <script>
         var userLogin = '@Html.Raw(session.UserCode)';
+
+        tinymce.init({
+            selector: '#ProductLongDesc',
+            width: '100%',
+            plugins: 'code',
+            setup: function (editor) {
+                editor.on('Change', function (e) {
+                    vmCreateProduct.ProductLongDesc = tinyMCE.get('ProductLongDesc').getContent();
+                });
+            },
+        })
     </script>
     <script src="~/Scripts/Product/CreateProduct.js"></script>
 }

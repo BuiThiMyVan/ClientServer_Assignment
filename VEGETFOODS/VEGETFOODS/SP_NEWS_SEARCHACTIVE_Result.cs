@@ -14,6 +14,7 @@ namespace VEGETFOODS
     public partial class SP_NEWS_SEARCHACTIVE_Result
     {
         public Nullable<long> ROWID { get; set; }
+        public int NewsID { get; set; }
         public string NewsTitle { get; set; }
         public string NewsCateTitle { get; set; }
         public string NewsSummary { get; set; }

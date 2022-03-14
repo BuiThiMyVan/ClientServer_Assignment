@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace VEGETFOODS.Models
 {
@@ -18,6 +19,12 @@ namespace VEGETFOODS.Models
             Successfull = 1,
             DoesNotExist = 2,
             WrongPassword = 3
+        }
+
+        public class ContentMetadataProduct
+        {
+            [AllowHtml]
+            public string ProductLongDesc { get; set; }
         }
     }
 }

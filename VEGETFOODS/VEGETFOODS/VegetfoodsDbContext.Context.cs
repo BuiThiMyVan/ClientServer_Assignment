@@ -182,6 +182,24 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGNMENT_CREATE", bathNoParameter, consProductIDParameter, consProductAmoutParameter, isActiveParameter, productEXPParameter);
         }
     
+        public virtual int SP_CONSIGNMENT_DELETE(string bathNo)
+        {
+            var bathNoParameter = bathNo != null ?
+                new ObjectParameter("bathNo", bathNo) :
+                new ObjectParameter("bathNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGNMENT_DELETE", bathNoParameter);
+        }
+    
+        public virtual ObjectResult<SP_CONSIGNMENT_GETALL_Result> SP_CONSIGNMENT_GETALL(Nullable<int> productId)
+        {
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("productId", productId) :
+                new ObjectParameter("productId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CONSIGNMENT_GETALL_Result>("SP_CONSIGNMENT_GETALL", productIdParameter);
+        }
+    
         public virtual ObjectResult<SP_CONSIGNMENT_GETBYID_Result> SP_CONSIGNMENT_GETBYID(string batchNo)
         {
             var batchNoParameter = batchNo != null ?
@@ -301,6 +319,211 @@ namespace VEGETFOODS
                 new ObjectParameter("password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_LOGIN", usercodeParameter, passwordParameter);
+        }
+    
+        public virtual int SP_NEWS_CREATE(Nullable<int> newsCateID, string newsTitle, string newsImages, string newsSummary, string newsBody, string createBy, string hashtags)
+        {
+            var newsCateIDParameter = newsCateID.HasValue ?
+                new ObjectParameter("newsCateID", newsCateID) :
+                new ObjectParameter("newsCateID", typeof(int));
+    
+            var newsTitleParameter = newsTitle != null ?
+                new ObjectParameter("newsTitle", newsTitle) :
+                new ObjectParameter("newsTitle", typeof(string));
+    
+            var newsImagesParameter = newsImages != null ?
+                new ObjectParameter("newsImages", newsImages) :
+                new ObjectParameter("newsImages", typeof(string));
+    
+            var newsSummaryParameter = newsSummary != null ?
+                new ObjectParameter("newsSummary", newsSummary) :
+                new ObjectParameter("newsSummary", typeof(string));
+    
+            var newsBodyParameter = newsBody != null ?
+                new ObjectParameter("newsBody", newsBody) :
+                new ObjectParameter("newsBody", typeof(string));
+    
+            var createByParameter = createBy != null ?
+                new ObjectParameter("createBy", createBy) :
+                new ObjectParameter("createBy", typeof(string));
+    
+            var hashtagsParameter = hashtags != null ?
+                new ObjectParameter("hashtags", hashtags) :
+                new ObjectParameter("hashtags", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_CREATE", newsCateIDParameter, newsTitleParameter, newsImagesParameter, newsSummaryParameter, newsBodyParameter, createByParameter, hashtagsParameter);
+        }
+    
+        public virtual int SP_NEWS_DELETE(Nullable<int> newsID)
+        {
+            var newsIDParameter = newsID.HasValue ?
+                new ObjectParameter("newsID", newsID) :
+                new ObjectParameter("newsID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_DELETE", newsIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_NEWS_GETBYID_Result> SP_NEWS_GETBYID(Nullable<int> newsID)
+        {
+            var newsIDParameter = newsID.HasValue ?
+                new ObjectParameter("newsID", newsID) :
+                new ObjectParameter("newsID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_GETBYID_Result>("SP_NEWS_GETBYID", newsIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_NEWS_GETTOP3_Result> SP_NEWS_GETTOP3()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_GETTOP3_Result>("SP_NEWS_GETTOP3");
+        }
+    
+        public virtual ObjectResult<SP_NEWS_SEARCH_Result> SP_NEWS_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCH_Result>("SP_NEWS_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual ObjectResult<SP_NEWS_SEARCHACTIVE_Result> SP_NEWS_SEARCHACTIVE(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCHACTIVE_Result>("SP_NEWS_SEARCHACTIVE", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual int SP_NEWS_UPDATE(Nullable<int> newsID, Nullable<int> newsCateID, string newsTitle, string newsImages, string newsSummary, string newsBody, string createBy, string hashtags, Nullable<byte> isActive)
+        {
+            var newsIDParameter = newsID.HasValue ?
+                new ObjectParameter("newsID", newsID) :
+                new ObjectParameter("newsID", typeof(int));
+    
+            var newsCateIDParameter = newsCateID.HasValue ?
+                new ObjectParameter("newsCateID", newsCateID) :
+                new ObjectParameter("newsCateID", typeof(int));
+    
+            var newsTitleParameter = newsTitle != null ?
+                new ObjectParameter("newsTitle", newsTitle) :
+                new ObjectParameter("newsTitle", typeof(string));
+    
+            var newsImagesParameter = newsImages != null ?
+                new ObjectParameter("newsImages", newsImages) :
+                new ObjectParameter("newsImages", typeof(string));
+    
+            var newsSummaryParameter = newsSummary != null ?
+                new ObjectParameter("newsSummary", newsSummary) :
+                new ObjectParameter("newsSummary", typeof(string));
+    
+            var newsBodyParameter = newsBody != null ?
+                new ObjectParameter("newsBody", newsBody) :
+                new ObjectParameter("newsBody", typeof(string));
+    
+            var createByParameter = createBy != null ?
+                new ObjectParameter("createBy", createBy) :
+                new ObjectParameter("createBy", typeof(string));
+    
+            var hashtagsParameter = hashtags != null ?
+                new ObjectParameter("hashtags", hashtags) :
+                new ObjectParameter("hashtags", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_UPDATE", newsIDParameter, newsCateIDParameter, newsTitleParameter, newsImagesParameter, newsSummaryParameter, newsBodyParameter, createByParameter, hashtagsParameter, isActiveParameter);
+        }
+    
+        public virtual int SP_NEWSCATEGORY_CREATE(string newsCateTitle, string newsDesc)
+        {
+            var newsCateTitleParameter = newsCateTitle != null ?
+                new ObjectParameter("newsCateTitle", newsCateTitle) :
+                new ObjectParameter("newsCateTitle", typeof(string));
+    
+            var newsDescParameter = newsDesc != null ?
+                new ObjectParameter("newsDesc", newsDesc) :
+                new ObjectParameter("newsDesc", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_CREATE", newsCateTitleParameter, newsDescParameter);
+        }
+    
+        public virtual int SP_NEWSCATEGORY_DELETE(Nullable<int> newsCateID)
+        {
+            var newsCateIDParameter = newsCateID.HasValue ?
+                new ObjectParameter("newsCateID", newsCateID) :
+                new ObjectParameter("newsCateID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_DELETE", newsCateIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_NEWSCATEGORY_GETALLACTIVE_Result> SP_NEWSCATEGORY_GETALLACTIVE()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_GETALLACTIVE_Result>("SP_NEWSCATEGORY_GETALLACTIVE");
+        }
+    
+        public virtual ObjectResult<SP_NEWSCATEGORY_GETBYID_Result> SP_NEWSCATEGORY_GETBYID(Nullable<int> newsCateID)
+        {
+            var newsCateIDParameter = newsCateID.HasValue ?
+                new ObjectParameter("newsCateID", newsCateID) :
+                new ObjectParameter("newsCateID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_GETBYID_Result>("SP_NEWSCATEGORY_GETBYID", newsCateIDParameter);
+        }
+    
+        public virtual ObjectResult<SP_NEWSCATEGORY_SEARCH_Result> SP_NEWSCATEGORY_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_SEARCH_Result>("SP_NEWSCATEGORY_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual int SP_NEWSCATEGORY_UPDATE(Nullable<int> newsCateID, string newsCateTitle, string newsDesc, Nullable<byte> isActive)
+        {
+            var newsCateIDParameter = newsCateID.HasValue ?
+                new ObjectParameter("newsCateID", newsCateID) :
+                new ObjectParameter("newsCateID", typeof(int));
+    
+            var newsCateTitleParameter = newsCateTitle != null ?
+                new ObjectParameter("newsCateTitle", newsCateTitle) :
+                new ObjectParameter("newsCateTitle", typeof(string));
+    
+            var newsDescParameter = newsDesc != null ?
+                new ObjectParameter("newsDesc", newsDesc) :
+                new ObjectParameter("newsDesc", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(byte));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_UPDATE", newsCateIDParameter, newsCateTitleParameter, newsDescParameter, isActiveParameter);
         }
     
         public virtual int SP_PRODUCT_CREATE(string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, string createBy)
@@ -519,229 +742,6 @@ namespace VEGETFOODS
                 new ObjectParameter("usercode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
-        }
-    
-        public virtual ObjectResult<SP_CONSIGNMENT_GETALL_Result> SP_CONSIGNMENT_GETALL(Nullable<int> productId)
-        {
-            var productIdParameter = productId.HasValue ?
-                new ObjectParameter("productId", productId) :
-                new ObjectParameter("productId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_CONSIGNMENT_GETALL_Result>("SP_CONSIGNMENT_GETALL", productIdParameter);
-        }
-    
-        public virtual int SP_CONSIGNMENT_DELETE(string bathNo)
-        {
-            var bathNoParameter = bathNo != null ?
-                new ObjectParameter("bathNo", bathNo) :
-                new ObjectParameter("bathNo", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGNMENT_DELETE", bathNoParameter);
-        }
-    
-        public virtual int SP_NEWS_CREATE(Nullable<int> newsCateID, string newsTitle, string newsImages, string newsSummary, string newsBody, string createBy, string hashtags)
-        {
-            var newsCateIDParameter = newsCateID.HasValue ?
-                new ObjectParameter("newsCateID", newsCateID) :
-                new ObjectParameter("newsCateID", typeof(int));
-    
-            var newsTitleParameter = newsTitle != null ?
-                new ObjectParameter("newsTitle", newsTitle) :
-                new ObjectParameter("newsTitle", typeof(string));
-    
-            var newsImagesParameter = newsImages != null ?
-                new ObjectParameter("newsImages", newsImages) :
-                new ObjectParameter("newsImages", typeof(string));
-    
-            var newsSummaryParameter = newsSummary != null ?
-                new ObjectParameter("newsSummary", newsSummary) :
-                new ObjectParameter("newsSummary", typeof(string));
-    
-            var newsBodyParameter = newsBody != null ?
-                new ObjectParameter("newsBody", newsBody) :
-                new ObjectParameter("newsBody", typeof(string));
-    
-            var createByParameter = createBy != null ?
-                new ObjectParameter("createBy", createBy) :
-                new ObjectParameter("createBy", typeof(string));
-    
-            var hashtagsParameter = hashtags != null ?
-                new ObjectParameter("hashtags", hashtags) :
-                new ObjectParameter("hashtags", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_CREATE", newsCateIDParameter, newsTitleParameter, newsImagesParameter, newsSummaryParameter, newsBodyParameter, createByParameter, hashtagsParameter);
-        }
-    
-        public virtual int SP_NEWS_DELETE(Nullable<int> newsID)
-        {
-            var newsIDParameter = newsID.HasValue ?
-                new ObjectParameter("newsID", newsID) :
-                new ObjectParameter("newsID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_DELETE", newsIDParameter);
-        }
-    
-        public virtual ObjectResult<SP_NEWS_GETBYID_Result> SP_NEWS_GETBYID(Nullable<int> newsID)
-        {
-            var newsIDParameter = newsID.HasValue ?
-                new ObjectParameter("newsID", newsID) :
-                new ObjectParameter("newsID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_GETBYID_Result>("SP_NEWS_GETBYID", newsIDParameter);
-        }
-    
-        public virtual ObjectResult<SP_NEWS_GETTOP3_Result> SP_NEWS_GETTOP3()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_GETTOP3_Result>("SP_NEWS_GETTOP3");
-        }
-    
-        public virtual ObjectResult<SP_NEWS_SEARCH_Result> SP_NEWS_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
-        {
-            var txtSearchParameter = txtSearch != null ?
-                new ObjectParameter("txtSearch", txtSearch) :
-                new ObjectParameter("txtSearch", typeof(string));
-    
-            var startIndexParameter = startIndex.HasValue ?
-                new ObjectParameter("startIndex", startIndex) :
-                new ObjectParameter("startIndex", typeof(int));
-    
-            var countParameter = count.HasValue ?
-                new ObjectParameter("count", count) :
-                new ObjectParameter("count", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCH_Result>("SP_NEWS_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
-        }
-    
-        public virtual ObjectResult<SP_NEWS_SEARCHACTIVE_Result> SP_NEWS_SEARCHACTIVE(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
-        {
-            var txtSearchParameter = txtSearch != null ?
-                new ObjectParameter("txtSearch", txtSearch) :
-                new ObjectParameter("txtSearch", typeof(string));
-    
-            var startIndexParameter = startIndex.HasValue ?
-                new ObjectParameter("startIndex", startIndex) :
-                new ObjectParameter("startIndex", typeof(int));
-    
-            var countParameter = count.HasValue ?
-                new ObjectParameter("count", count) :
-                new ObjectParameter("count", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCHACTIVE_Result>("SP_NEWS_SEARCHACTIVE", txtSearchParameter, startIndexParameter, countParameter, totalItems);
-        }
-    
-        public virtual int SP_NEWS_UPDATE(Nullable<int> newsID, Nullable<int> newsCateID, string newsTitle, string newsImages, string newsSummary, string newsBody, string createBy, string hashtags, Nullable<byte> isActive)
-        {
-            var newsIDParameter = newsID.HasValue ?
-                new ObjectParameter("newsID", newsID) :
-                new ObjectParameter("newsID", typeof(int));
-    
-            var newsCateIDParameter = newsCateID.HasValue ?
-                new ObjectParameter("newsCateID", newsCateID) :
-                new ObjectParameter("newsCateID", typeof(int));
-    
-            var newsTitleParameter = newsTitle != null ?
-                new ObjectParameter("newsTitle", newsTitle) :
-                new ObjectParameter("newsTitle", typeof(string));
-    
-            var newsImagesParameter = newsImages != null ?
-                new ObjectParameter("newsImages", newsImages) :
-                new ObjectParameter("newsImages", typeof(string));
-    
-            var newsSummaryParameter = newsSummary != null ?
-                new ObjectParameter("newsSummary", newsSummary) :
-                new ObjectParameter("newsSummary", typeof(string));
-    
-            var newsBodyParameter = newsBody != null ?
-                new ObjectParameter("newsBody", newsBody) :
-                new ObjectParameter("newsBody", typeof(string));
-    
-            var createByParameter = createBy != null ?
-                new ObjectParameter("createBy", createBy) :
-                new ObjectParameter("createBy", typeof(string));
-    
-            var hashtagsParameter = hashtags != null ?
-                new ObjectParameter("hashtags", hashtags) :
-                new ObjectParameter("hashtags", typeof(string));
-    
-            var isActiveParameter = isActive.HasValue ?
-                new ObjectParameter("isActive", isActive) :
-                new ObjectParameter("isActive", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWS_UPDATE", newsIDParameter, newsCateIDParameter, newsTitleParameter, newsImagesParameter, newsSummaryParameter, newsBodyParameter, createByParameter, hashtagsParameter, isActiveParameter);
-        }
-    
-        public virtual int SP_NEWSCATEGORY_CREATE(string newsCateTitle, string newsDesc)
-        {
-            var newsCateTitleParameter = newsCateTitle != null ?
-                new ObjectParameter("newsCateTitle", newsCateTitle) :
-                new ObjectParameter("newsCateTitle", typeof(string));
-    
-            var newsDescParameter = newsDesc != null ?
-                new ObjectParameter("newsDesc", newsDesc) :
-                new ObjectParameter("newsDesc", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_CREATE", newsCateTitleParameter, newsDescParameter);
-        }
-    
-        public virtual int SP_NEWSCATEGORY_DELETE(Nullable<int> newsCateID)
-        {
-            var newsCateIDParameter = newsCateID.HasValue ?
-                new ObjectParameter("newsCateID", newsCateID) :
-                new ObjectParameter("newsCateID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_DELETE", newsCateIDParameter);
-        }
-    
-        public virtual ObjectResult<SP_NEWSCATEGORY_GETALLACTIVE_Result> SP_NEWSCATEGORY_GETALLACTIVE()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_GETALLACTIVE_Result>("SP_NEWSCATEGORY_GETALLACTIVE");
-        }
-    
-        public virtual ObjectResult<SP_NEWSCATEGORY_GETBYID_Result> SP_NEWSCATEGORY_GETBYID(Nullable<int> newsCateID)
-        {
-            var newsCateIDParameter = newsCateID.HasValue ?
-                new ObjectParameter("newsCateID", newsCateID) :
-                new ObjectParameter("newsCateID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_GETBYID_Result>("SP_NEWSCATEGORY_GETBYID", newsCateIDParameter);
-        }
-    
-        public virtual ObjectResult<SP_NEWSCATEGORY_SEARCH_Result> SP_NEWSCATEGORY_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
-        {
-            var txtSearchParameter = txtSearch != null ?
-                new ObjectParameter("txtSearch", txtSearch) :
-                new ObjectParameter("txtSearch", typeof(string));
-    
-            var startIndexParameter = startIndex.HasValue ?
-                new ObjectParameter("startIndex", startIndex) :
-                new ObjectParameter("startIndex", typeof(int));
-    
-            var countParameter = count.HasValue ?
-                new ObjectParameter("count", count) :
-                new ObjectParameter("count", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWSCATEGORY_SEARCH_Result>("SP_NEWSCATEGORY_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
-        }
-    
-        public virtual int SP_NEWSCATEGORY_UPDATE(Nullable<int> newsCateID, string newsCateTitle, string newsDesc, Nullable<byte> isActive)
-        {
-            var newsCateIDParameter = newsCateID.HasValue ?
-                new ObjectParameter("newsCateID", newsCateID) :
-                new ObjectParameter("newsCateID", typeof(int));
-    
-            var newsCateTitleParameter = newsCateTitle != null ?
-                new ObjectParameter("newsCateTitle", newsCateTitle) :
-                new ObjectParameter("newsCateTitle", typeof(string));
-    
-            var newsDescParameter = newsDesc != null ?
-                new ObjectParameter("newsDesc", newsDesc) :
-                new ObjectParameter("newsDesc", typeof(string));
-    
-            var isActiveParameter = isActive.HasValue ?
-                new ObjectParameter("isActive", isActive) :
-                new ObjectParameter("isActive", typeof(byte));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_UPDATE", newsCateIDParameter, newsCateTitleParameter, newsDescParameter, isActiveParameter);
         }
     }
 }

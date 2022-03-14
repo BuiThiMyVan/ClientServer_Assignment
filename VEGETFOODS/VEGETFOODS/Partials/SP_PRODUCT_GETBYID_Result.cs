@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using static VEGETFOODS.Models.Common;
 
 namespace VEGETFOODS
 {
+    [MetadataType(typeof(ContentMetadataProduct))]
     public partial class SP_PRODUCT_GETBYID_Result
     {
         public class SP_PRODUCT_GETBYID_ResultDTO {
@@ -15,13 +19,11 @@ namespace VEGETFOODS
             public Nullable<int> ProductCategoryId { get; set; }
             public string ProductImages { get; set; }
             public string ProductShortDesc { get; set; }
+            [AllowHtml]
             public string ProductLongDesc { get; set; }
             public string ProductUnit { get; set; }
             public string ProductIngredient { get; set; }
             public string ProductSeason { get; set; }
-            public Nullable<System.DateTime> ProductEXP { get; set; }
-            public Nullable<System.DateTime> ProductMFG { get; set; }
-            public string ProductOrigin { get; set; }
             public Nullable<byte> IsActive { get; set; }
             public Nullable<System.DateTime> CreateTime { get; set; }
             public Nullable<System.DateTime> UpdateTime { get; set; }

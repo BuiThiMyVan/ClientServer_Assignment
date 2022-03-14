@@ -30,7 +30,7 @@
 <div class="content-wrapper" id="MyProduct">
     <div class="header-detail">
         <a href="/Admin/Product/Index" class="link-list"> < Danh sách sản phẩm</a>
-        <span class="name-title mt-8"> Tạo mới sản phẩm </span>
+        <span class="name-title mt-8"> Cập nhật sản phẩm </span>
     </div>
     <div class="content-detail">
         <div class="content-detail-head">
@@ -67,7 +67,7 @@
                 </div>
                 <div class="content-item">
                     <label class="content-label">Mô tả chi tiết</label>
-                    <textarea class="content-input" type="text" rows="6" v-model="ProductLongDesc"></textarea>
+                    <textarea class="content-input" id="ProductLongDesc" type="text" rows="6" v-model="ProductLongDesc"></textarea>
                 </div>
                 <div class="content-item">
                     <label class="content-label">Giá</label>
@@ -195,6 +195,7 @@
 @section Scripts {
     <script>
         var productId = @ViewBag.ProductId;
+        var userLogin = '@session.UserCode';
 
         $(document).ready(function () {
             $('#exp').datepicker({
@@ -223,6 +224,17 @@
             vmMyProduct.error_amount = '';
             vmMyProduct.error_exp = '';
         }
+
+        tinymce.init({
+            selector: '#ProductLongDesc',
+            width: '100%',
+            plugins: 'code',
+            setup: function (editor) {
+                editor.on('Change', function (e) {
+                    vmMyProduct.ProductLongDesc = tinyMCE.get('ProductLongDesc').getContent();
+                });
+            },
+        })
     </script>
     <script src="~/Scripts/Product/MyProduct.js"></script>
 }

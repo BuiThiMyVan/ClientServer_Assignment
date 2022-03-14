@@ -145,6 +145,7 @@
                 self.ProductImages = res.data.ProductImages == null ? '' : res.data.ProductImages;
                 self.ProductCategoryId = res.data.ProductCategoryId == null ? -1 : res.data.ProductCategoryId;
                 self.ProductLongDesc = res.data.ProductLongDesc == null ? '' : res.data.ProductLongDesc;
+                tinymce.get("ProductLongDesc").setContent(res.data.ProductLongDesc);
                 self.ProductShortDesc = res.data.ProductShortDesc == null ? '' : res.data.ProductShortDesc;
                 self.ProductPrice = res.data.ProductPrice == null ? 0 : res.data.ProductPrice;
                 self.ProductUnit = res.data.ProductUnit == null ? '' : res.data.ProductUnit;
