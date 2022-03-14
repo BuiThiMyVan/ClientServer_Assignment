@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Web.Http;
 using VEGETFOODS.Models;
 using static VEGETFOODS.SP_NEWS_SEARCH_Result;
+using static VEGETFOODS.SP_NEWS_SEARCHACTIVE_Result;
+using static VEGETFOODS.SP_NEWS_SEARCHACTIVE_Result.SP_NEWS_SEARCHACTIVE_ResultDTO;
 
 namespace VEGETFOODS.Controllers
 {
@@ -95,6 +97,47 @@ namespace VEGETFOODS.Controllers
             {
                 return Json(new { message = 400 });
             }
+        }
+
+        [HttpPost]
+        public IHttpActionResult GetListNewsActive(Pagination objPage)
+        {
+            var totalItems = new ObjectParameter("totalItems", typeof(int));
+            var startIndex = (objPage.pageIndex - 1) * objPage.pageSize + 1;
+            var count = objPage.pageSize;
+            var txtSearch = objPage.txtSearch == null ? "" : objPage.txtSearch.Trim();
+            var categories = context.SP_NEWS_SEARCHACTIVE(txtSearch, startIndex, count, totalItems).ToList();
+            var totalCategories = Convert.ToInt32(totalItems.Value);
+            var pageView = "";
+
+            if (totalCategories < (objPage.pageIndex * objPage.pageSize))
+            {
+                pageView = (startIndex + 1) + "-" + totalCategories + " trong tổng số " + totalCategories;
+            }
+            else
+            {
+                pageView = (startIndex + 1) + "-" + (objPage.pageIndex * objPage.pageSize) + " trong tổng số " + totalCategories;
+            }
+            int totalPage = 0;
+            totalPage = (int)Math.Ceiling((double)totalCategories / objPage.pageSize);
+
+            JsonNEWSACTIVE jsonreturn = new JsonNEWSACTIVE
+            {
+                list = categories.Select(t => t.CopyObjectForSP_NEWS_SEARCHACTIVE_ResultApi()).ToArray(),
+                totalPage = totalPage,
+                pageView = pageView
+            };
+
+            return Json(new { data = jsonreturn });
+
+        }
+
+        [System.Web.Http.AcceptVerbs("GET")]
+        public IHttpActionResult GetRecentNews()
+        {
+            var news = context.SP_NEWS_GETTOP3().ToList();
+
+            return Json(new { data = news });
         }
     }
 }

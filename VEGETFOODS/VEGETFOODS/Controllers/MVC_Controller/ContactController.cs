@@ -6,17 +6,11 @@ using System.Web.Mvc;
 
 namespace VEGETFOODS.Controllers.MVC_Controller
 {
-    public class ProductController : Controller
+    public class ContactController : Controller
     {
-        // GET: Product
+        // GET: Contact
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult Details(int id)
-        {
-            ViewBag.ProductId = id;
             return View();
         }
     }

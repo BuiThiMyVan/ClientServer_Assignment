@@ -201,7 +201,10 @@
     </Compile>
     <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
+    <Compile Include="Controllers\MVC_Controller\AboutUsController.cs" />
+    <Compile Include="Controllers\MVC_Controller\ContactController.cs" />
     <Compile Include="Controllers\MVC_Controller\HomeController.cs" />
+    <Compile Include="Controllers\MVC_Controller\NewsController.cs" />
     <Compile Include="Controllers\MVC_Controller\ProductController.cs" />
     <Compile Include="Controllers\NewsApiController.cs" />
     <Compile Include="Controllers\NewsCategoryApiController.cs" />
@@ -237,6 +240,7 @@
     <Compile Include="Partials\SP_CONSIGNMENT_GETALL_Result.cs" />
     <Compile Include="Partials\SP_CONSIGNMENT_GETBYID_Result.cs" />
     <Compile Include="Partials\SP_NEWSCATEGORY_SEARCH_Result.cs" />
+    <Compile Include="Partials\SP_NEWS_SEARCHACTIVE_Result.cs" />
     <Compile Include="Partials\SP_NEWS_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_GETBYID_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_SEARCH_Result.cs" />
@@ -1897,14 +1901,17 @@
     <Content Include="Scripts\News\CreateNews.js" />
     <Content Include="Scripts\News\ListNews.js" />
     <Content Include="Scripts\News\MyNews.js" />
+    <Content Include="Scripts\News\News.js" />
+    <Content Include="Scripts\News\NewsDetail.js" />
     <Content Include="Scripts\Product\CreateProduct.js" />
     <Content Include="Scripts\Product\ListProduct.js" />
     <Content Include="Scripts\Product\MyProduct.js" />
+    <Content Include="Scripts\Product\Product.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="VegetfoodsDbContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>VegetfoodsDbContext.Context.cs</LastGenOutput>
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
+      <LastGenOutput>VegetfoodsDbContext.Context.cs</LastGenOutput>
     </Content>
     <Content Include="VegetfoodsDbContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1929,6 +1936,7 @@
     <Content Include="Views\Shared\_RegisterEmail.cshtml" />
     <Content Include="Views\Shared\Script.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
     <EntityDeploy Include="VegetfoodsDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VegetfoodsDbContext.Designer.cs</LastGenOutput>
@@ -1936,6 +1944,10 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\News\Details.cshtml" />
+    <Content Include="Views\AboutUs\Index.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

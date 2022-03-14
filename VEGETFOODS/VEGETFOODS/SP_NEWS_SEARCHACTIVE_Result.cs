@@ -18,8 +18,10 @@ namespace VEGETFOODS
         public string NewsTitle { get; set; }
         public string NewsCateTitle { get; set; }
         public string NewsSummary { get; set; }
+        public string NewsImages { get; set; }
         public string CreateBy { get; set; }
         public Nullable<byte> IsActive { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> TotalNewsCmt { get; set; }
     }
 }

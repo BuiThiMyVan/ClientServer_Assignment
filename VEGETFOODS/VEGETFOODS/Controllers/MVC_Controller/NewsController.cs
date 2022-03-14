@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace VEGETFOODS.Controllers.MVC_Controller
 {
-    public class ProductController : Controller
+    public class NewsController : Controller
     {
-        // GET: Product
+        // GET: News
         public ActionResult Index()
         {
             return View();
@@ -16,7 +16,7 @@ namespace VEGETFOODS.Controllers.MVC_Controller
 
         public ActionResult Details(int id)
         {
-            ViewBag.ProductId = id;
+            ViewBag.NewsId = id;
             return View();
         }
     }

@@ -406,4 +406,16 @@ Begin -- Start
 	---------------------
 	End -- if(@count > 0)
 -----
---End -- StartCREATE PROCEDURE [dbo].[SP_NEWS_GETTOP3]ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT TOP(3) *		FROM NEWS		WHERE IsActive = 1		ORDER BY CreateTime DESC		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----END
+--End -- StartCREATE PROCEDURE [dbo].[SP_NEWS_GETTOP3]ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT TOP(3) *		FROM NEWS		WHERE IsActive = 1		ORDER BY CreateTime DESC		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE FUNCTION TotalCommentsOfNews(@newsID INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @total INT;
+	SET @total = (SELECT COUNT(*) FROM NEWSCOMMENT WHERE NewsID = @newsID)
+    RETURN @total
+END
+
+CREATE PROCEDURE [dbo].[SP_NEWSCOMMENT_CREATE](@newsID INT,@userCode VARCHAR(50),@content NTEXT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		INSERT INTO [NEWSCOMMENT] (						[NewsID]
+					  ,[UserCode]
+					  ,[Content]
+					  ,[CreateDate]		)		VALUES(			@newsID,			@userCode,			@content,			GETDATE()		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----END

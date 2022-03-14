@@ -526,6 +526,23 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCATEGORY_UPDATE", newsCateIDParameter, newsCateTitleParameter, newsDescParameter, isActiveParameter);
         }
     
+        public virtual int SP_NEWSCOMMENT_CREATE(Nullable<int> newsID, string userCode, string content)
+        {
+            var newsIDParameter = newsID.HasValue ?
+                new ObjectParameter("newsID", newsID) :
+                new ObjectParameter("newsID", typeof(int));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("userCode", userCode) :
+                new ObjectParameter("userCode", typeof(string));
+    
+            var contentParameter = content != null ?
+                new ObjectParameter("content", content) :
+                new ObjectParameter("content", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCOMMENT_CREATE", newsIDParameter, userCodeParameter, contentParameter);
+        }
+    
         public virtual int SP_PRODUCT_CREATE(string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, string createBy)
         {
             var productCodeParameter = productCode != null ?

@@ -505,6 +505,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Parameter Name="newsDesc" Type="nvarchar" Mode="In" />
           <Parameter Name="isActive" Type="tinyint" Mode="In" />
         </Function>
+        <Function Name="SP_NEWSCOMMENT_CREATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="newsID" Type="int" Mode="In" />
+          <Parameter Name="userCode" Type="varchar" Mode="In" />
+          <Parameter Name="content" Type="ntext" Mode="In" />
+        </Function>
         <Function Name="SP_PRODUCT_CREATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="productCode" Type="varchar" Mode="In" />
           <Parameter Name="productName" Type="nvarchar" Mode="In" />
@@ -566,6 +571,9 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
         </Function>
         <Function Name="SP_USERCODE_IS_EXISTED" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="usercode" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="TotalCommentsOfNews" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="newsID" Type="int" Mode="In" />
         </Function>
         <Function Name="TotalNewsOfCate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="cateNewsID" Type="int" Mode="In" />
@@ -1189,6 +1197,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="newsDesc" Mode="In" Type="String" />
             <Parameter Name="isActive" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="SP_NEWSCOMMENT_CREATE">
+            <Parameter Name="newsID" Mode="In" Type="Int32" />
+            <Parameter Name="userCode" Mode="In" Type="String" />
+            <Parameter Name="content" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_CREATE">
             <Parameter Name="productCode" Mode="In" Type="String" />
             <Parameter Name="productName" Mode="In" Type="String" />
@@ -1361,9 +1374,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Property Type="String" Name="NewsTitle" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="NewsCateTitle" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="NewsSummary" Nullable="true" MaxLength="300" />
+          <Property Type="String" Name="NewsImages" Nullable="true" />
           <Property Type="String" Name="CreateBy" Nullable="true" MaxLength="60" />
           <Property Type="Byte" Name="IsActive" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="Int32" Name="TotalNewsCmt" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_NEWSCATEGORY_GETALLACTIVE_Result">
           <Property Type="Int32" Name="NewsCateID" Nullable="false" />
@@ -1830,9 +1845,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
                 <ScalarProperty Name="NewsTitle" ColumnName="NewsTitle" />
                 <ScalarProperty Name="NewsCateTitle" ColumnName="NewsCateTitle" />
                 <ScalarProperty Name="NewsSummary" ColumnName="NewsSummary" />
+                <ScalarProperty Name="NewsImages" ColumnName="NewsImages" />
                 <ScalarProperty Name="CreateBy" ColumnName="CreateBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="TotalNewsCmt" ColumnName="TotalNewsCmt" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1872,6 +1889,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_NEWSCATEGORY_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_NEWSCATEGORY_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_NEWSCOMMENT_CREATE" FunctionName="VEGETFOODSModel.Store.SP_NEWSCOMMENT_CREATE" />
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_CREATE" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_CREATE" />
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_DELETE" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_DELETE" />
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_GETBYID" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_GETBYID">
