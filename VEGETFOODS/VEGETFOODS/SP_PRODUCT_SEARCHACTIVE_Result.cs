@@ -10,17 +10,13 @@
 namespace VEGETFOODS
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CART_ITEM
+    public partial class SP_PRODUCT_SEARCHACTIVE_Result
     {
-        public int CartItemId { get; set; }
-        public Nullable<int> SessionID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public Nullable<int> Quantity { get; set; }
-        public Nullable<System.DateTime> CreateTime { get; set; }
-        public Nullable<System.DateTime> UpdateTime { get; set; }
-    
-        public virtual SHOPPING_SESSION SHOPPING_SESSION { get; set; }
+        public Nullable<long> ROWID { get; set; }
+        public int ProductID { get; set; }
+        public string ProductImages { get; set; }
+        public string ProductName { get; set; }
+        public Nullable<double> ProductPrice { get; set; }
     }
 }

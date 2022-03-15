@@ -27,7 +27,6 @@ namespace VEGETFOODS
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CART_ITEM> CART_ITEM { get; set; }
         public virtual DbSet<CATEGORY> CATEGORies { get; set; }
         public virtual DbSet<CONSIGNMENT> CONSIGNMENTs { get; set; }
         public virtual DbSet<DISCOUNT> DISCOUNTs { get; set; }
@@ -39,7 +38,6 @@ namespace VEGETFOODS
         public virtual DbSet<ORDER_DETAIL> ORDER_DETAIL { get; set; }
         public virtual DbSet<PRODUCT> PRODUCTs { get; set; }
         public virtual DbSet<PROVINCE> PROVINCEs { get; set; }
-        public virtual DbSet<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
         public virtual DbSet<SYS_ACCESS> SYS_ACCESS { get; set; }
         public virtual DbSet<SYS_GROUP> SYS_GROUP { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
@@ -759,6 +757,27 @@ namespace VEGETFOODS
                 new ObjectParameter("usercode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEARCHACTIVE_Result> SP_PRODUCT_SEARCHACTIVE(string txtSearch, Nullable<int> cateId, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var cateIdParameter = cateId.HasValue ?
+                new ObjectParameter("cateId", cateId) :
+                new ObjectParameter("cateId", typeof(int));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCHACTIVE_Result>("SP_PRODUCT_SEARCHACTIVE", txtSearchParameter, cateIdParameter, startIndexParameter, countParameter, totalItems);
         }
     }
 }

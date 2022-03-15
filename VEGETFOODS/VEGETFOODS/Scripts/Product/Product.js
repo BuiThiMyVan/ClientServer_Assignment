@@ -12,7 +12,8 @@
         CountAllProduct: 0,
         VName: "",
         RoleId: -1,
-        ListCategoryActive: {}
+        ListCategoryActive: {},
+        cateId: -1,
     },
 
     methods: {
@@ -60,7 +61,8 @@
             var modal = {
                 pageIndex: self.currentPage,
                 pageSize: self.pageSize,
-                txtSearch: self.txtSearch.trim()
+                txtSearch: self.txtSearch.trim(),
+                cateId: self.cateId
             };
             $.ajax({
                 data: modal,
@@ -73,11 +75,42 @@
                 self.totalPage = res.data.totalPage;
                 self.pageView = res.data.pageView;
                 HiddenLoader();
+                $("#Product").css("display", "block");
+                if (self.cateId == -1) {
+                    $('.product-category .product-cate-all').addClass('active');
+                }
+            });
+        },
+
+        getListProductByCate: function (cateId, event) {
+            AddLoader();
+            $('.product-category a').removeClass('active');
+            $(event.target).addClass('active');
+            var self = this;
+            self.cateId = cateId;
+            var modal = {
+                pageIndex: self.currentPage,
+                pageSize: self.pageSize,
+                txtSearch: self.txtSearch.trim(),
+                cateId: cateId
+            };
+            $.ajax({
+                data: modal,
+                url: "/api/ProductApi/SearchProductActive",
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+            }).then(res => {
+                self.list = res.data.list;
+                self.totalPage = res.data.totalPage;
+                self.pageView = res.data.pageView;
+                HiddenLoader();
+                $("#Product").css("display", "block");
             });
         }
 
     }
 })
 
-//vmProduct.getListProduct();
+vmProduct.getListProduct();
 vmProduct.getAllCategoryActive();

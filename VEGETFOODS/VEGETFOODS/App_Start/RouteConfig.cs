@@ -14,6 +14,20 @@ namespace VEGETFOODS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+               name: "Payment",
+               url: "dat-hang",
+               defaults: new { controller = "Payment", action = "Index", id = UrlParameter.Optional },
+               namespaces: new[] { "VEGETFOODS.Controllers.MVC_Controller" }
+           );
+
+            routes.MapRoute(
+               name: "Cart",
+               url: "gio-hang",
+               defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
+               namespaces: new[] { "VEGETFOODS.Controllers.MVC_Controller" }
+           );
+
+            routes.MapRoute(
                name: "Contact",
                url: "lien-he",
                defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },

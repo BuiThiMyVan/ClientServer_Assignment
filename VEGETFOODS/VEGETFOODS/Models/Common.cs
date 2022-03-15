@@ -26,5 +26,23 @@ namespace VEGETFOODS.Models
             [AllowHtml]
             public string ProductLongDesc { get; set; }
         }
+
+        public class PaginationClient {
+
+            public int pageIndex { get; set; }
+
+            public int pageSize { get; set; }
+
+            public string txtSearch { get; set; }
+
+            public int cateId { get; set; }
+        }
+
+        public class JsonObject
+        {
+            public object[] list { get; set; }
+            public int totalPage { get; set; }
+            public string pageView { get; set; }
+        }
     }
 }

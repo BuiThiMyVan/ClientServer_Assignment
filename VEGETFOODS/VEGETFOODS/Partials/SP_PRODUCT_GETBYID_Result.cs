@@ -46,5 +46,12 @@ namespace VEGETFOODS
             Utils.ObjectUtil.CopyPropertiesTo(this, sp_Product_GetByID_ResultDTO);
             return sp_Product_GetByID_ResultDTO;
         }
+
+        public PRODUCT CopyObjectForPRODUCTApi()
+        {
+            var product = new PRODUCT();
+            Utils.ObjectUtil.CopyPropertiesTo(this, product);
+            return product;
+        }
     }
 }

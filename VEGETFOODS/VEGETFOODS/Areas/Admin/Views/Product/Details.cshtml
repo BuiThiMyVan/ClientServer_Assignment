@@ -115,7 +115,7 @@
         <div class="collapse" id="consignmentTab">
             <div class="card-body">
                 <div class="header" style="justify-content: flex-end; margin-top: 32px; margin-bottom: 24px;">
-                    <a href="/Admin/Product/Create" class="btn-main-color" style="padding: 8px 16px;" data-bs-toggle="modal" data-bs-target="#createConsignment" onclick="refreshModal()"> + </a>
+                    <a href="/Admin/Product/Create" class="btn-main-color" style="padding: 8px 16px;" data-bs-toggle="modal" data-bs-target="#createConsignment" onclick="refreshModal(1)"> + </a>
                 </div>
                 <div class="table-list">
                     <table class="table table-bordered">
@@ -181,7 +181,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshModal()">Huỷ</button>
-                        <button type="button" v-on:click="createConsignment('create')" class="btn btn-main-color" style="padding: 6px 30px;" v-if="batchNo == ''">Tạo</button>
+                        <button type="button" v-on:click="createConsignment('create')" class="btn btn-main-color" style="padding: 6px 30px;" v-if="isModalCreate == 1">Tạo</button>
                         <button type="button" v-on:click="createConsignment('update')" class="btn btn-main-color" style="padding: 6px 30px;" v-else>Cập nhật</button>
                     </div>
                 </div>
@@ -211,6 +211,7 @@
         }
 
         function refreshModal() {
+            vmMyProduct.isModalCreate = 1;
             vmMyProduct.error_batchNo = '';
             vmMyProduct.error_amount = '';
             vmMyProduct.error_exp = '';
@@ -219,7 +220,7 @@
             vmMyProduct.exp = '';
             vmMyProduct.amount = 0;
             vmMyProduct.ConsIsActive = 0;
-            debugger
+
             vmMyProduct.error_batchNo = '';
             vmMyProduct.error_amount = '';
             vmMyProduct.error_exp = '';

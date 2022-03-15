@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hero-wrap hero-bread" style="background-image: url('/Content/images/bg_1.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9  text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Trang chủ</a></span> <span>Thanh toán</span></p>
+                <h1 class="mb-0 bread">Thanh toán</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section" id="Payment">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 ">
+                <div class="billing-form">
+                    <h3 class="mb-4 billing-heading">Thông tin hoá đơn</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="firstname">Họ tên khách hàng</label>
+                                <input type="text" v-model="OrderFullname" class="form-control" placeholder="Nhập đầy đủ họ và tên">
+                            </div>
+                            <div class="text-danger">{{ error_name }}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="streetaddress">Địa chỉ nhận hàng</label>
+                                <input type="text" v-model="OrderShipAddress" class="form-control" placeholder="Số nhà, tên đường, thị trấn/xã, huyện/quận, thành phố">
+                            </div>
+                            <div class="text-danger">{{ error_address }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="towncity">Số điện thoại</label>
+                                <input type="text" v-model="OrderPhone" class="form-control" placeholder="">
+                            </div>
+                            <div class="text-danger">{{ error_phone }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="emailaddress">Email</label>
+                                <input type="text" v-model="OrderEmail" class="form-control" placeholder="">
+                            </div>
+                            <div class="text-danger">{{ error_email }}</div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="streetaddress">Ghi chú</label>
+                                <input type="text" v-model="OrderShipAddress" class="form-control" placeholder="Ghi chú">
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- END -->
+
+                
+            </div>
+            <div class="col-xl-5">
+                <div class="row mt-5 pt-3">
+                    <div class="col-md-12 d-flex mb-5">
+                        <div class="cart-detail cart-total p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Thanh toán</h3>
+                            <p class="d-flex">
+                                <span>Tạm tính</span>
+                                <span>{{ subTotal() }} VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Phí vận chuyển</span>
+                                <span>30000 VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Giảm giá</span>
+                                <span>0 VNĐ</span>
+                            </p>
+                            <hr>
+                            <p class="d-flex total-price">
+                                <span>Tổng tiền</span>
+                                <span>{{ totalCartValue() }}  VNĐ</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="cart-detail p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Hình thức thanh toán</h3>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input v-model="OrderPayMethod" type="radio" name="optradio" value="1" class="mr-2"> Chuyển khoản</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input v-model="OrderPayMethod" type="radio" name="optradio" value="2" class="mr-2"> Thanh toán tiền mặt khi nhận hàng</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p><a href="javascript:void(0)" v-on:click="createOrder()" class="btn btn-primary py-3 px-4">Xác nhận đặt hàng</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- .col-md-8 -->
+            <div class="col-md-12">
+                <section class="ftco-section ftco-cart">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="cart-list">
+                                    <table class="table">
+                                        <thead class="thead-primary">
+                                            <tr class="text-center">
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center" v-for="(item, index) in list">
+                                                <td class="product-remove"><a v-on:click="deleteItem(item.Product.ProductID)"><span class="ion-ios-close"></span></a></td>
+
+                                                <td class="image-prod"><div class="img"><img v-bind:src="item.Product.ProductImages" style="width: 100%; height: 100%" alt="Alternate Text" /></div></td>
+
+                                                <td class="product-name">
+                                                    <h3> {{ item.Product.ProductName }}</h3>
+                                                </td>
+
+                                                <td class="price">{{ item.Product.ProductPrice }} VNĐ</td>
+                                                <td class="quantity" style="padding-bottom: 0">
+                                                    <div class="input-group mb-3" style="align-items: center;">
+                                                        <input type="number" name="quantity" class="form-control input-number" :value="item.Quantity" readonly>
+                                                        <span>&nbsp; {{ item.Product.ProductUnit }}</span>
+                                                    </div>
+                                                    <div class="error-qty text-danger"> {{ error_qty }}</div>
+                                                </td>
+                                                <td class="total">{{ getAmount(item.Quantity, item.Product.ProductPrice) }}  VNĐ </td>
+                                            </tr><!-- END TR-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section> <!-- .section -->
+
+@section Scripts {
+
+    <script src="~/Scripts/Payment/Payment.js"></script>
+}

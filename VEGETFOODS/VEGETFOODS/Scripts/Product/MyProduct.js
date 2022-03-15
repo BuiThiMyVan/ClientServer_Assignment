@@ -6,7 +6,7 @@
         ProductImages: '',
         ProductShortDesc: '',
         ProductLongDesc: '',
-        ProductPrice: '',
+        ProductPrice: 0,
         ProductUnit: '',
         ProductIngredient: '',
         ProductSeason: '',
@@ -25,7 +25,9 @@
         ConsIsActive: 0,
         error_batchNo: '',
         error_amount: '',
-        error_exp: ''
+        error_exp: '',
+        error_qty: '',
+        isModalCreate: 1,
     },
 
     watch: {
@@ -110,7 +112,6 @@
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
                 if (res != 400) {
-                    debugger
                     self.ListCategoryActive = res.data;
                 } else {
                     alert('Đã xảy ra lỗi từ phía máy chủ');
@@ -127,7 +128,7 @@
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
-                    self.ListConsignment = res.data.list;
+                self.ListConsignment = res.data.list;               
             });
         },
 
@@ -139,7 +140,6 @@
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
-                debugger
                 self.ProductID = productId;
                 self.ProductName = res.data.ProductName == null ? '' : res.data.ProductName;
                 self.ProductImages = res.data.ProductImages == null ? '' : res.data.ProductImages;
@@ -304,6 +304,7 @@
 
         getInfoConsignment: function (batchNo) {
             var self = this;
+            self.isModalCreate = 0;
             $.ajax({
                 url: "/api/ProductApi/GetConsignmentById?bathNo=" + batchNo,
                 type: 'GET',
@@ -330,7 +331,7 @@
             self.error_batchNo = '';
             self.error_amount = '';
             self.error_exp = '';
-        }
+        },
 
 
     }

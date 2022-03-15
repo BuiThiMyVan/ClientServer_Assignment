@@ -17,6 +17,13 @@ namespace VEGETFOODS.Controllers.MVC_Controller
         public ActionResult Details(int id)
         {
             ViewBag.ProductId = id;
+            var session = (USER)Session["USER_SESSION"];
+            var userLogin = "";
+            if(session != null)
+            {
+                userLogin = session.UserCode;
+            }
+            ViewBag.UserLogin = userLogin;
             return View();
         }
     }

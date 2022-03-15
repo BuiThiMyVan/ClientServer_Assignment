@@ -1,7 +1,11 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 }
 
 <div class="hero-wrap hero-bread" style="background-image: url('/Content/images/bg_1.jpg');">
@@ -15,17 +19,17 @@
     </div>
 </div>
 
-<section class="ftco-section">
+<section class="ftco-section" style="padding-bottom: 0">
     <div class="container" id="ProductDetail">
         <div class="row">
-            <div class="col-lg-6 mb-5 ftco-animate">
-                <a href="/Content/images/product-1.jpg" class="image-popup"><img src="/Content/images/product-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+            <div class="col-lg-6 mb-5">
+                <a href="/Content/images/product-1.jpg" class="image-popup"><img v-bind:src="ProductImages" class="img-fluid" alt="Ảnh sản phẩm" style="width: 100%; height: 432px"></a>
             </div>
-            <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                <h3>Bell Pepper</h3>
+            <div class="col-lg-6 product-details pl-md-5">
+                <h3>{{ ProductName }}</h3>
                 <div class="rating d-flex">
                     <p class="text-left mr-4">
-                        <a href="#" class="mr-2">5.0</a>
+                        <a href="#" class="mr-2">{{ RateScore }}</a>
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
@@ -33,50 +37,44 @@
                         <a href="#"><span class="ion-ios-star-outline"></span></a>
                     </p>
                     <p class="text-left mr-4">
-                        <a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Lượt đánh giá</span></a>
+                        <a href="#" class="mr-2" style="color: #000;">{{ TotalSold }} <span style="color: #bbb;">Lượt đánh giá</span></a>
                     </p>
                     <p class="text-left">
-                        <a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Đã bán</span></a>
+                        <a href="#" class="mr-2" style="color: #000;">{{ TotalSold }} <span style="color: #bbb;">Đã bán</span></a>
                     </p>
                 </div>
-                <p class="price"><span>VNĐ 120.00</span></p>
+                <p class="price"><span>VNĐ {{ ProductPrice }}</span></p>
                 <p>
-                    A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until.
+                    {{ ProductShortDesc }}
                 </p>
-                <div class="row mt-4">
-                    <div class="col-md-6">
-                        <div class="form-group d-flex">
-                            <div class="select-wrap">
-                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select name="" id="" class="form-control">
-                                    <option value="">Small</option>
-                                    <option value="">Medium</option>
-                                    <option value="">Large</option>
-                                    <option value="">Extra Large</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row mt-4" v-if="ProductAmount > 0">
                     <div class="w-100"></div>
                     <div class="input-group col-md-6 d-flex mb-3">
-                        <span class="input-group-btn mr-2">
+                        <span class="input-group-btn mr-2" v-on:click="decreaseQty()">
                             <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
                                 <i class="ion-ios-remove"></i>
                             </button>
                         </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-                        <span class="input-group-btn ml-2">
+                        <input type="text" id="quantity" name="quantity" class="form-control input-number" v-model="QtyOrder">
+                        <span class="input-group-btn ml-2" v-on:click="increaseQty()">
                             <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                                 <i class="ion-ios-add"></i>
                             </button>
                         </span>
+                        <span style="line-height: 40px">&nbsp;&nbsp;{{ ProductUnit }}</span>
                     </div>
+                    <span class="text-danger">{{ error_qty }}</span>
                     <div class="w-100"></div>
                     <div class="col-md-12">
-                        <p style="color: #000;">600 kg available</p>
+                        <p style="color: #000;">{{ ProductAmount}} {{ ProductUnit }} available</p>
                     </div>
                 </div>
-                <p><a href="/gio-hang" class="btn btn-black py-3 px-5">Thêm vào giỏ hàng</a></p>
+                <div class="row mt-4" v-else>
+                    Sản phẩm tạm thời hết hàng
+                </div>
+                <p><a v-on:click="addToCart(ProductID)" class="btn btn-black py-3 px-5" v-if="ProductAmount > 0">Thêm vào giỏ hàng</a></p>
+            </div>
+            <div class="col-lg-12 mb-5" v-html="ProductLongDesc">
             </div>
         </div>
     </div>
@@ -127,4 +125,22 @@
         </div>
     </div>
 </section>
+<div id="toast"></div>
+@section Scripts {
+    <script>
+        var productId = @ViewBag.ProductId;
+        var userLogin = '@ViewBag.UserLogin';
+    </script>
+    <script>
+        function showSuccessToast(message) {
+            toast({
+                title: "Thông báo!",
+                message: message,
+                type: "success",
+                duration: 5000
+            });
+        }
+    </script>
+    <script src="~/Scripts/Product/ProductDetail.js"></script>
+}
 

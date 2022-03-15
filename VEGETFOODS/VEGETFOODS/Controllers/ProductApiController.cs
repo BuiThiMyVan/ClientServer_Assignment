@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using VEGETFOODS.Models;
+using static VEGETFOODS.Models.Common;
 using static VEGETFOODS.SP_CONSIGNMENT_GETALL_Result;
 using static VEGETFOODS.SP_PRODUCT_SEARCH_Result;
 
@@ -52,8 +55,11 @@ namespace VEGETFOODS.Controllers
         public IHttpActionResult GetProductById(int productId)
         {
             var product = context.SP_PRODUCT_GETBYID(productId).FirstOrDefault().CopyObjectForSP_PRODUCT_GETBYID_ResultApi();
+            var totalSold = context.Database.SqlQuery<int?>("Select dbo.TotalSold(@productId)", new SqlParameter("@productId", productId)).FirstOrDefault();   
+            var rateScore = context.Database.SqlQuery<int?>("Select dbo.RateScore(@productId)", new SqlParameter("@productId", productId)).FirstOrDefault();
+            var rateCount = context.Database.SqlQuery<int?>("Select dbo.RateCount(@productId)", new SqlParameter("@productId", productId)).FirstOrDefault();
 
-            return Json(new { data = product });
+            return Json(new { data = product, totalSold = totalSold, rateScore = rateScore, rateCount = rateCount });
         }
 
         [System.Web.Http.AcceptVerbs("POST")]
@@ -159,6 +165,39 @@ namespace VEGETFOODS.Controllers
             {
                 return Json(new { message = 400 });
             }
+        }
+
+        [HttpPost]
+        public IHttpActionResult SearchProductActive(PaginationClient objPage)
+        {
+            var totalItems = new ObjectParameter("totalItems", typeof(int));
+            var startIndex = (objPage.pageIndex - 1) * objPage.pageSize + 1;
+            var count = objPage.pageSize;
+            var txtSearch = objPage.txtSearch == null ? "" : objPage.txtSearch.Trim();
+            var categories = context.SP_PRODUCT_SEARCHACTIVE(txtSearch, objPage.cateId, startIndex, count, totalItems).ToList();
+            var totalCategories = Convert.ToInt32(totalItems.Value);
+            var pageView = "";
+
+            if (totalCategories < (objPage.pageIndex * objPage.pageSize))
+            {
+                pageView = (startIndex + 1) + "-" + totalCategories + " trong tổng số " + totalCategories;
+            }
+            else
+            {
+                pageView = (startIndex + 1) + "-" + (objPage.pageIndex * objPage.pageSize) + " trong tổng số " + totalCategories;
+            }
+            int totalPage = 0;
+            totalPage = (int)Math.Ceiling((double)totalCategories / objPage.pageSize);
+
+            JsonObject jsonreturn = new JsonObject
+            {
+                list = categories.ToArray(),
+                totalPage = totalPage,
+                pageView = pageView
+            };
+
+            return Json(new { data = jsonreturn });
+
         }
 
     }

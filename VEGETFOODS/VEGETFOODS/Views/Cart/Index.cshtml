@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="ListCart" style="display: none">
+    <div class="hero-wrap hero-bread" style="background-image: url('/Content/images/bg_1.jpg');">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9  text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="/home-page">Trang chủ</a></span> <span>Giỏ hàng</span></p>
+                    <h1 class="mb-0 bread">Giỏ hàng của tôi</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="list.length > 0">
+        <section class="ftco-section ftco-cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div class="cart-list">
+                            <table class="table">
+                                <thead class="thead-primary">
+                                    <tr class="text-center">
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center" v-for="(item, index) in list">
+                                        <td class="product-remove"><a v-on:click="deleteItem(item.Product.ProductID)"><span class="ion-ios-close"></span></a></td>
+
+                                        <td class="image-prod"><div class="img"><img v-bind:src="item.Product.ProductImages" style="width: 100%; height: 100%" alt="Alternate Text" /></div></td>
+
+                                        <td class="product-name">
+                                            <h3> {{ item.Product.ProductName }}</h3>
+                                        </td>
+
+                                        <td class="price">{{ item.Product.ProductPrice }} VNĐ</td>
+                                        <td class="quantity" style="padding-bottom: 0">
+                                            <div class="input-group mb-3" style="align-items: center;">
+                                                <input type="number" name="quantity" class="form-control input-number" :value="item.Quantity" v-on:input="updateAmount(item.Product.ProductID, index, item.ProductAmount, $event)">
+                                                <span>&nbsp; {{ item.Product.ProductUnit }}</span>
+                                            </div>
+                                            <div class="error-qty text-danger"> {{ error_qty }}</div>
+                                        </td>
+                                    <td class="total">{{ getAmount(item.Quantity, item.Product.ProductPrice) }}  VNĐ </td>
+                                    </tr><!-- END TR-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-lg-4 mt-5 cart-wrap ">                       
+                    </div>
+                    <div class="col-lg-4 mt-5 cart-wrap ">
+                       </div>
+                    <div class="col-lg-4 mt-5 cart-wrap ">
+                        <div class="cart-total mb-3">
+                            <h3>Thanh toán</h3>
+                            <p class="d-flex">
+                                <span>Tạm tính</span>
+                                <span>{{ subTotal() }} VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Phí vận chuyển</span>
+                                <span>30000 VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Giảm giá</span>
+                                <span>0 VNĐ</span>
+                            </p>
+                            <hr>
+                            <p class="d-flex total-price">
+                                <span>Tổng tiền</span>
+                                <span>{{ totalCartValue() }}  VNĐ</span>
+                            </p>
+                        </div>
+                        <p><a href="/dat-hang" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="p-5" v-else>
+        <div class="text-center p-5"> Chưa có sản phẩm nào trong giỏ hàng </div>
+        <p style="display: flex; justify-content: center;"><a href="/san-pham" class="btn btn-primary py-3 px-4">Tiếp tục mua sắm</a></p>
+    </div>      
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Cart/ListCart.js"></script>
+}
+
+

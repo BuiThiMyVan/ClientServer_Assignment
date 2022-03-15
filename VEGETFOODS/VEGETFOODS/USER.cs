@@ -18,7 +18,6 @@ namespace VEGETFOODS
         public USER()
         {
             this.ORDERs = new HashSet<ORDER>();
-            this.SHOPPING_SESSION = new HashSet<SHOPPING_SESSION>();
         }
     
         public string UserCode { get; set; }
@@ -35,7 +34,5 @@ namespace VEGETFOODS
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDER> ORDERs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHOPPING_SESSION> SHOPPING_SESSION { get; set; }
     }
 }

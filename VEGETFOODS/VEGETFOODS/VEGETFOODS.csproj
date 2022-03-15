@@ -189,9 +189,6 @@
     <Compile Include="Areas\Admin\Controllers\NewsCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
-    <Compile Include="CART_ITEM.cs">
-      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="CATEGORY.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -202,9 +199,11 @@
     <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
     <Compile Include="Controllers\MVC_Controller\AboutUsController.cs" />
+    <Compile Include="Controllers\MVC_Controller\CartController.cs" />
     <Compile Include="Controllers\MVC_Controller\ContactController.cs" />
     <Compile Include="Controllers\MVC_Controller\HomeController.cs" />
     <Compile Include="Controllers\MVC_Controller\NewsController.cs" />
+    <Compile Include="Controllers\MVC_Controller\PaymentController.cs" />
     <Compile Include="Controllers\MVC_Controller\ProductController.cs" />
     <Compile Include="Controllers\NewsApiController.cs" />
     <Compile Include="Controllers\NewsCategoryApiController.cs" />
@@ -218,6 +217,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Common.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="NEWS.cs">
@@ -250,9 +250,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PROVINCE.cs">
-      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SHOPPING_SESSION.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_CATEGORY_GETALL_Result.cs">
@@ -303,6 +300,9 @@
     <Compile Include="SP_PRODUCT_GETBYID_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_PRODUCT_SEARCHACTIVE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_PRODUCT_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -325,6 +325,7 @@
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Utils\ObjectUtil.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="VegetfoodsDbContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1878,10 +1879,12 @@
     <Content Include="Content\js\tinymce\skins\lightgray\skin.mobile.min.css.map" />
     <Content Include="Areas\Admin\Views\News\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\Cart\ListCart.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
     <Content Include="Scripts\Categories\ListCategories.js" />
     <Content Include="Scripts\Categories\MyCategory.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\Home.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -1903,10 +1906,12 @@
     <Content Include="Scripts\News\MyNews.js" />
     <Content Include="Scripts\News\News.js" />
     <Content Include="Scripts\News\NewsDetail.js" />
+    <Content Include="Scripts\Payment\Payment.js" />
     <Content Include="Scripts\Product\CreateProduct.js" />
     <Content Include="Scripts\Product\ListProduct.js" />
     <Content Include="Scripts\Product\MyProduct.js" />
     <Content Include="Scripts\Product\Product.js" />
+    <Content Include="Scripts\Product\ProductDetail.js" />
     <Content Include="Scripts\vue.js" />
     <Content Include="VegetfoodsDbContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -1948,6 +1953,8 @@
     <Content Include="Views\AboutUs\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

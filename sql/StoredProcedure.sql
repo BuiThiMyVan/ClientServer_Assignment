@@ -418,4 +418,114 @@ END
 CREATE PROCEDURE [dbo].[SP_NEWSCOMMENT_CREATE](@newsID INT,@userCode VARCHAR(50),@content NTEXT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		INSERT INTO [NEWSCOMMENT] (						[NewsID]
 					  ,[UserCode]
 					  ,[Content]
-					  ,[CreateDate]		)		VALUES(			@newsID,			@userCode,			@content,			GETDATE()		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----END
+					  ,[CreateDate]		)		VALUES(			@newsID,			@userCode,			@content,			GETDATE()		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_PRODUCT_SEARCHACTIVE]
+(
+@txtSearch NVARCHAR(50),
+@cateId INT
+-----
+, @startIndex int
+, @count int
+, @totalItems int OUTPUT
+)
+As
+Begin -- Start
+-----
+	if(@count > 0)
+	Begin
+	---------------------
+		SET XACT_ABORT ON
+		Begin Transaction
+
+			Begin Try
+				Select
+				 *
+				From
+				(
+					SELECT Row_Number() Over ( Order by product.[CreateTime] Desc ) as [ROWID],
+							product.[ProductID],
+							product.[ProductImages],
+							product.[ProductName],
+							product.[ProductPrice]
+					FROM PRODUCT product
+					WHERE 
+					(
+						( @txtSearch IS NULL OR @txtSearch = '' OR product.[ProductName] LIKE '%' + @txtSearch + '%' )
+						AND (@cateId = -1 OR @cateId IS NULL OR product.[ProductCategoryId] = @cateId)
+						
+					)
+				) T
+				Where
+					[ROWID] BETWEEN (@startIndex) AND (@startIndex + @count - 1);
+				
+				----- @totalItems -----
+				Select @totalItems 
+				 = (
+					SELECT Count(*)
+					FROM PRODUCT product
+					WHERE 
+					(
+						( @txtSearch IS NULL OR @txtSearch = '' OR product.[ProductName] LIKE '%' + @txtSearch + '%' )
+						AND (@cateId = -1 OR @cateId IS NULL OR product.[ProductCategoryId] = @cateId)
+						
+					)
+				);	
+				
+				Commit
+			End Try
+			Begin Catch
+				RollBack
+				Declare @ErrorMessage varchar(2000)
+				Select @ErrorMessage = 'Error: ' + ERROR_MESSAGE()
+				RAISERROR(@ErrorMessage, 16, 1)
+			End Catch
+		------
+		End -- Begin Transaction
+	---------------------
+	End -- if(@count > 0)CREATE FUNCTION TotalSold(@productId INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @total INT;
+	SET @total = (SELECT COUNT(*) 
+					FROM ORDER_DETAIL detail
+					LEFT JOIN dbo.[ORDER] ord
+					ON detail.DetailOrderID = ord.OrderID
+					WHERE detail.DetailProductID = @productID AND ord.OrderStatus = 4)
+    RETURN @total
+END
+GO
+
+CREATE FUNCTION RateScore(@productId INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @rate INT;
+	SET @rate = (SELECT AVG(DetailRate) 
+					FROM ORDER_DETAIL detail
+					LEFT JOIN dbo.[ORDER] ord
+					ON detail.DetailOrderID = ord.OrderID
+					WHERE detail.DetailProductID = @productID AND ord.OrderStatus = 4 AND DetailRate IS NOT NULL)
+    RETURN @rate
+END
+GO
+
+CREATE FUNCTION RateCount(@productId INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @rate INT;
+	SET @rate = (SELECT COUNT(DetailID) 
+					FROM ORDER_DETAIL detail
+					LEFT JOIN dbo.[ORDER] ord
+					ON detail.DetailOrderID = ord.OrderID
+					WHERE detail.DetailProductID = @productID AND ord.OrderStatus = 4 AND DetailRate IS NOT NULL)
+    RETURN @rate
+END
+GO
+
+select dbo.TotalSold(1)
+
+DROP TABLE SHOPPING_SESSION
+
+ALTER TABLE dbo.[ORDER]
+ADD OrderCode VARCHAR(20)
