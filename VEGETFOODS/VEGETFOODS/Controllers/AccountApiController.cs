@@ -19,7 +19,7 @@ namespace VEGETFOODS.Controllers
             var emailExist = 0;
             if(context.SP_USERCODE_IS_EXISTED(objUser.UserCode).FirstOrDefault() == true)
             {
-                userCodeExist = 1;
+                userCodeExist = 1;                
             } else if (context.SP_EMAIL_IS_EXISTED(objUser.UserEmail).FirstOrDefault() == true)
             {
                 emailExist = 1;
@@ -30,6 +30,14 @@ namespace VEGETFOODS.Controllers
                 context.SP_USER_CREATE(objUser.UserCode, objUser.UserEmail, objUser.UserPassword, objUser.UserFullName, objUser.UserPhone, objUser.UserAddress, objUser.Role);
             }
             return Json(new { userCodeExist = userCodeExist, emailExist = emailExist });
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetUserByUsercode(string usercode)
+        {
+            var user = context.SP_USER_GETBYUSERCODE(usercode).FirstOrDefault();
+
+            return Json(new { data = user });
         }
     }
 }

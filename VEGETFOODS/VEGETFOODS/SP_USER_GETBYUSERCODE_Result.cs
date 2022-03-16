@@ -24,5 +24,8 @@ namespace VEGETFOODS
         public string UserPhone { get; set; }
         public string UserAddress { get; set; }
         public Nullable<int> Role { get; set; }
+        public Nullable<byte> IsActive { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
     }
 }

@@ -84,6 +84,24 @@
             });
         },
 
+        getUserInfo: function () {
+            if (Usercode != null && Usercode != '' && Usercode != undefined) {
+                var self = this;
+                $.ajax({
+                    url: "/api/AccountApi/GetUserByUsercode?usercode=" + Usercode,
+                    type: 'GET',
+                    dataType: 'json',
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+                }).then(res => {
+                    self.OrderFullname = res.data.UserFullName == null ? '' : res.data.UserFullName;
+                    self.OrderPhone = res.data.UserPhone == null ? '' : res.data.UserPhone;
+                    self.OrderShipAddress = res.data.UserAddress == null ? '' : res.data.UserAddress;
+                    self.OrderEmail = res.data.UserEmail == null ? '' : res.data.UserEmail;
+                });
+            }
+            
+        },
+
         getAmount: function (qty, price) {
             return qty * price;
         },
@@ -145,8 +163,37 @@
             if (bug != 0) {
                 return false;
             }
+
+            AddLoader();
+            var modal = {
+                Order: {
+                    OrderShipAddress: self.OrderShipAddress,
+                    OrderPhone: self.OrderPhone,
+                    OrderShippingNote: self.OrderShippingNote,
+                    OrderPayMethod: self.OrderPayMethod,
+                    OrderTotal: self.totalCartValue(),
+                    OrderFullname: self.OrderFullname,
+                    OrderEmail: self.OrderEmail,
+                    OrderPayMethod: self.OrderPayMethod,
+                    OrderShippingFee: 30000,
+                    OrderUsercode: Usercode
+                },
+                ListItem: self.list
+            };
+            $.ajax({
+                data: modal,
+                url: "/Payment/CreateOrder",
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8"
+            }).then(res => {
+                self.list = res.data.listCategories;
+                self.totalPage = res.data.totalPage;
+                self.pageView = res.data.pageView;
+            });
         }
     }
 })
 
 vmPayment.getListCart();
+vmPayment.getUserInfo();

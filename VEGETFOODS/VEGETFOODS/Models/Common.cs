@@ -18,7 +18,14 @@ namespace VEGETFOODS.Models
         {
             Successfull = 1,
             DoesNotExist = 2,
-            WrongPassword = 3
+            WrongPassword = 3,
+            AccountBlocked = 4
+        }
+
+        public enum Role
+        {
+            Admin = 1,
+            Client = 2
         }
 
         public class ContentMetadataProduct

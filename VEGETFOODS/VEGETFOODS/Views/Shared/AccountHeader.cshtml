@@ -1,0 +1,14 @@
+﻿@using VEGETFOODS
+@{
+    var cookie = Request.Cookies[VEGETFOODS.Common.CommonConstants.USER_COOKIES];
+}
+
+@if ( cookie == null)
+{
+<li class="nav-item"><a href="/dang-nhap" class="nav-link">Đăng nhập/Đăng ký</a></li>
+}
+else
+{
+    <li class="nav-item"><a href="/tai-khoan" class="nav-link"><i class="fas fa-user"></i></a></li>
+}
+

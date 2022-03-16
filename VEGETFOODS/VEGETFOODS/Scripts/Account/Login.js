@@ -73,6 +73,9 @@
                         case 3:
                             self.error_login = "Mật khẩu nhập không chính xác";
                             break;
+                        case 4:
+                            self.error_login = "Tài khoản đã bị khoá";
+                            break;
                     }
                     
                 });

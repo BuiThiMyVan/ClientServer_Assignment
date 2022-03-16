@@ -31,6 +31,9 @@ namespace VEGETFOODS
         public string UserPhone { get; set; }
         public string UserAddress { get; set; }
         public Nullable<int> Role { get; set; }
+        public Nullable<byte> IsActive { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ORDER> ORDERs { get; set; }

@@ -207,6 +207,7 @@
     <Compile Include="Controllers\MVC_Controller\ProductController.cs" />
     <Compile Include="Controllers\NewsApiController.cs" />
     <Compile Include="Controllers\NewsCategoryApiController.cs" />
+    <Compile Include="Controllers\OrderApiController.cs" />
     <Compile Include="Controllers\ProductApiController.cs" />
     <Compile Include="DISCOUNT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
@@ -219,6 +220,7 @@
     </Compile>
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Common.cs" />
+    <Compile Include="Models\OrderInfo.cs" />
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="NEWS.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
@@ -295,6 +297,9 @@
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_NEWS_SEARCH_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_ORDER_GETBYORDERCODE_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_PRODUCT_GETBYID_Result.cs">
@@ -1942,6 +1947,12 @@
     <Content Include="Views\Shared\Script.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Details.cshtml" />
+    <Content Include="Views\AboutUs\Index.cshtml" />
+    <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
     <EntityDeploy Include="VegetfoodsDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VegetfoodsDbContext.Designer.cs</LastGenOutput>
@@ -1949,18 +1960,14 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\News\Details.cshtml" />
-    <Content Include="Views\AboutUs\Index.cshtml" />
-    <Content Include="Views\Contact\Index.cshtml" />
-    <Content Include="Views\Product\Details.cshtml" />
-    <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Shared\AccountHeader.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\OrderApi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

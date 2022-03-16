@@ -30,13 +30,28 @@ namespace VEGETFOODS.Areas.Admin.Controllers
             var acc = new SP_USER_GETBYUSERCODE_Result();
             if (result == true)
             {
-                jsonreturn = LoginStatus.Successfull.GetHashCode();
                 acc = context.SP_USER_GETBYUSERCODE(objUser.UserCode).FirstOrDefault();
-
-                var userSession = new USER();
-                userSession.UserCode = acc.UserCode;
-                userSession.Role = acc.Role;
-                Session.Add(CommonConstants.USER_SESSION, userSession);
+                if (acc.IsActive == 0)
+                {
+                    jsonreturn = LoginStatus.AccountBlocked.GetHashCode();
+                } else
+                {
+                    jsonreturn = LoginStatus.Successfull.GetHashCode();
+                    var userSession = new USER();
+                    userSession.UserCode = acc.UserCode;
+                    userSession.Role = acc.Role;
+                    if (acc.Role == Role.Admin.GetHashCode())
+                    {                      
+                        Session.Add(CommonConstants.USER_SESSION, userSession);
+                    } else if(acc.Role == Role.Client.GetHashCode())
+                    {
+                        HttpCookie cookie = new HttpCookie(CommonConstants.USER_COOKIES);
+                        cookie[CommonConstants.USER_COOKIES] = userSession.UserCode;
+                        cookie.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(cookie);
+                    }
+                    
+                }
             }
             else
             {

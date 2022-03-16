@@ -541,6 +541,89 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_NEWSCOMMENT_CREATE", newsIDParameter, userCodeParameter, contentParameter);
         }
     
+        public virtual int SP_ORDER_CREATE(string orderUsercode, string orderShipAddress, string orderPhone, Nullable<double> orderShippingFee, string orderShippingNote, string orderEmail, Nullable<int> orderPayMethod, Nullable<int> orderTotal, string orderCode, string orderFullname)
+        {
+            var orderUsercodeParameter = orderUsercode != null ?
+                new ObjectParameter("orderUsercode", orderUsercode) :
+                new ObjectParameter("orderUsercode", typeof(string));
+    
+            var orderShipAddressParameter = orderShipAddress != null ?
+                new ObjectParameter("orderShipAddress", orderShipAddress) :
+                new ObjectParameter("orderShipAddress", typeof(string));
+    
+            var orderPhoneParameter = orderPhone != null ?
+                new ObjectParameter("orderPhone", orderPhone) :
+                new ObjectParameter("orderPhone", typeof(string));
+    
+            var orderShippingFeeParameter = orderShippingFee.HasValue ?
+                new ObjectParameter("orderShippingFee", orderShippingFee) :
+                new ObjectParameter("orderShippingFee", typeof(double));
+    
+            var orderShippingNoteParameter = orderShippingNote != null ?
+                new ObjectParameter("orderShippingNote", orderShippingNote) :
+                new ObjectParameter("orderShippingNote", typeof(string));
+    
+            var orderEmailParameter = orderEmail != null ?
+                new ObjectParameter("orderEmail", orderEmail) :
+                new ObjectParameter("orderEmail", typeof(string));
+    
+            var orderPayMethodParameter = orderPayMethod.HasValue ?
+                new ObjectParameter("orderPayMethod", orderPayMethod) :
+                new ObjectParameter("orderPayMethod", typeof(int));
+    
+            var orderTotalParameter = orderTotal.HasValue ?
+                new ObjectParameter("orderTotal", orderTotal) :
+                new ObjectParameter("orderTotal", typeof(int));
+    
+            var orderCodeParameter = orderCode != null ?
+                new ObjectParameter("orderCode", orderCode) :
+                new ObjectParameter("orderCode", typeof(string));
+    
+            var orderFullnameParameter = orderFullname != null ?
+                new ObjectParameter("orderFullname", orderFullname) :
+                new ObjectParameter("orderFullname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_CREATE", orderUsercodeParameter, orderShipAddressParameter, orderPhoneParameter, orderShippingFeeParameter, orderShippingNoteParameter, orderEmailParameter, orderPayMethodParameter, orderTotalParameter, orderCodeParameter, orderFullnameParameter);
+        }
+    
+        public virtual int SP_ORDER_UPDATE(Nullable<int> orderID, Nullable<int> orderStatus)
+        {
+            var orderIDParameter = orderID.HasValue ?
+                new ObjectParameter("orderID", orderID) :
+                new ObjectParameter("orderID", typeof(int));
+    
+            var orderStatusParameter = orderStatus.HasValue ?
+                new ObjectParameter("orderStatus", orderStatus) :
+                new ObjectParameter("orderStatus", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDER_UPDATE", orderIDParameter, orderStatusParameter);
+        }
+    
+        public virtual int SP_ORDERDETAIL_CREATE(Nullable<int> detailProductID, Nullable<int> detailOrderID, Nullable<double> detailPrice, Nullable<double> detailQuantity, string batchNo)
+        {
+            var detailProductIDParameter = detailProductID.HasValue ?
+                new ObjectParameter("detailProductID", detailProductID) :
+                new ObjectParameter("detailProductID", typeof(int));
+    
+            var detailOrderIDParameter = detailOrderID.HasValue ?
+                new ObjectParameter("detailOrderID", detailOrderID) :
+                new ObjectParameter("detailOrderID", typeof(int));
+    
+            var detailPriceParameter = detailPrice.HasValue ?
+                new ObjectParameter("detailPrice", detailPrice) :
+                new ObjectParameter("detailPrice", typeof(double));
+    
+            var detailQuantityParameter = detailQuantity.HasValue ?
+                new ObjectParameter("detailQuantity", detailQuantity) :
+                new ObjectParameter("detailQuantity", typeof(double));
+    
+            var batchNoParameter = batchNo != null ?
+                new ObjectParameter("batchNo", batchNo) :
+                new ObjectParameter("batchNo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_ORDERDETAIL_CREATE", detailProductIDParameter, detailOrderIDParameter, detailPriceParameter, detailQuantityParameter, batchNoParameter);
+        }
+    
         public virtual int SP_PRODUCT_CREATE(string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, string createBy)
         {
             var productCodeParameter = productCode != null ?
@@ -627,6 +710,27 @@ namespace VEGETFOODS
                 new ObjectParameter("count", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCH_Result>("SP_PRODUCT_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual ObjectResult<SP_PRODUCT_SEARCHACTIVE_Result> SP_PRODUCT_SEARCHACTIVE(string txtSearch, Nullable<int> cateId, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var cateIdParameter = cateId.HasValue ?
+                new ObjectParameter("cateId", cateId) :
+                new ObjectParameter("cateId", typeof(int));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCHACTIVE_Result>("SP_PRODUCT_SEARCHACTIVE", txtSearchParameter, cateIdParameter, startIndexParameter, countParameter, totalItems);
         }
     
         public virtual int SP_PRODUCT_UPDATE(Nullable<int> productID, string productCode, string productName, string productShortName, Nullable<int> productCategoryId, string productImages, string productShortDesc, string productLongDesc, Nullable<double> productPrice, string productUnit, string productIngredient, string productSeason, Nullable<byte> isActive)
@@ -759,25 +863,26 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
         }
     
-        public virtual ObjectResult<SP_PRODUCT_SEARCHACTIVE_Result> SP_PRODUCT_SEARCHACTIVE(string txtSearch, Nullable<int> cateId, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        public virtual ObjectResult<SP_ORDER_GETBYORDERCODE_Result> SP_ORDER_GETBYORDERCODE(string orderCode)
         {
-            var txtSearchParameter = txtSearch != null ?
-                new ObjectParameter("txtSearch", txtSearch) :
-                new ObjectParameter("txtSearch", typeof(string));
+            var orderCodeParameter = orderCode != null ?
+                new ObjectParameter("orderCode", orderCode) :
+                new ObjectParameter("orderCode", typeof(string));
     
-            var cateIdParameter = cateId.HasValue ?
-                new ObjectParameter("cateId", cateId) :
-                new ObjectParameter("cateId", typeof(int));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_ORDER_GETBYORDERCODE_Result>("SP_ORDER_GETBYORDERCODE", orderCodeParameter);
+        }
     
-            var startIndexParameter = startIndex.HasValue ?
-                new ObjectParameter("startIndex", startIndex) :
-                new ObjectParameter("startIndex", typeof(int));
+        public virtual int SP_CONSIGMENT_UPDATEAMOUNT(Nullable<double> amout, string bathNo)
+        {
+            var amoutParameter = amout.HasValue ?
+                new ObjectParameter("amout", amout) :
+                new ObjectParameter("amout", typeof(double));
     
-            var countParameter = count.HasValue ?
-                new ObjectParameter("count", count) :
-                new ObjectParameter("count", typeof(int));
+            var bathNoParameter = bathNo != null ?
+                new ObjectParameter("bathNo", bathNo) :
+                new ObjectParameter("bathNo", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PRODUCT_SEARCHACTIVE_Result>("SP_PRODUCT_SEARCHACTIVE", txtSearchParameter, cateIdParameter, startIndexParameter, countParameter, totalItems);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_CONSIGMENT_UPDATEAMOUNT", amoutParameter, bathNoParameter);
         }
     }
 }
