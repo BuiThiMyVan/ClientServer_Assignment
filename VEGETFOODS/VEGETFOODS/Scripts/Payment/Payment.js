@@ -187,9 +187,7 @@
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
-                self.list = res.data.listCategories;
-                self.totalPage = res.data.totalPage;
-                self.pageView = res.data.pageView;
+                window.location.href = "/Payment/OrderSuccesfully";
             });
         }
     }

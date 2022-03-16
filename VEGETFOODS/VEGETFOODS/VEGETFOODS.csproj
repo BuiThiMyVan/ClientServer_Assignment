@@ -188,11 +188,13 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="CATEGORY.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\CommonConstants.cs" />
+    <Compile Include="Common\MailHelper.cs" />
     <Compile Include="CONSIGNMENT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
@@ -1663,6 +1665,7 @@
     <Content Include="Content\js\tinymce\skins\lightgray\skin.min.css" />
     <Content Include="Content\js\tinymce\skins\lightgray\skin.mobile.min.css" />
     <Content Include="Content\js\tinymce\tinymce.min.js" />
+    <Content Include="Content\template\neworder.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1883,6 +1886,7 @@
     <Content Include="Content\js\tinymce\skins\lightgray\skin.min.css.map" />
     <Content Include="Content\js\tinymce\skins\lightgray\skin.mobile.min.css.map" />
     <Content Include="Areas\Admin\Views\News\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Cart\ListCart.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
@@ -1961,6 +1965,7 @@
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
     <Content Include="Views\Shared\AccountHeader.cshtml" />
+    <Content Include="Views\Payment\OrderSuccesfully.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

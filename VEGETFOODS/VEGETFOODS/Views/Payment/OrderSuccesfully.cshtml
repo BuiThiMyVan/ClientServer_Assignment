@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "OrderSuccesfully";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hero-wrap hero-bread" style="background-image: url('/Content/images/bg_1.jpg');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9  text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="/home-page">Trang chủ</a></span> <span>Thông báo</span></p>
+                <h1 class="mb-0 bread">Đặt hàng thành công!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-5" v-else>
+    <div class="text-center p-5">Chúng tôi đã gửi thông tin đơn hàng đến email của bạn. Bạn có thể tra cứu tình trạng đơn hàng theo mã đơn hàng đã nhận được </div>
+    <p style="display: flex; justify-content: center;"><a href="/san-pham" class="btn btn-primary py-3 px-4">Tiếp tục mua sắm</a></p>
+</div>
+
