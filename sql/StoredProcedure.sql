@@ -544,4 +544,72 @@ CREATE PROCEDURE [dbo].[SP_ORDER_CREATE](@orderUsercode VARCHAR(50),@orderShi
 					  ,[OrderFullname]		)		VALUES(			@orderUsercode,			@orderShipAddress,			@orderPhone,			@orderShippingFee,			@orderShippingNote,			1,			@orderEmail,			@orderPayMethod,			@orderTotal,			GETDATE(),			@orderCode,			@orderFullname		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_ORDER_UPDATE](@orderID INT,@orderStatus INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		UPDATE [ORDER]		SET OrderStatus = @orderStatus,			UpdateTime = GETDATE()		WHERE OrderID = @orderID		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_ORDERDETAIL_CREATE](@detailProductID INT,@detailOrderID INT,@detailPrice FLOAT,@detailQuantity INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		INSERT INTO [ORDER_DETAIL] (						[DetailProductID]
 						  ,[DetailOrderID]
 						  ,[DetailPrice]
-						  ,[DetailQuantity]		)		VALUES(			@detailProductID,			@detailOrderID,			@detailPrice,			@detailQuantity		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_ORDER_GETBYORDERCODE](@orderCode VARCHAR(20))ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT *		FROM dbo.[ORDER]		WHERE OrderCode = @orderCode		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_CONSIGMENT_UPDATEAMOUNT](@amout FLOAT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		UPDATE CONSIGNMENT		SET ConsProductAmout = @amout		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDALTER TABLE ORDER_DETAILALTER COLUMN DetailSKU VARCHAR(20)
+						  ,[DetailQuantity]		)		VALUES(			@detailProductID,			@detailOrderID,			@detailPrice,			@detailQuantity		)		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_ORDER_GETBYORDERCODE](@orderCode VARCHAR(20))ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		SELECT *		FROM dbo.[ORDER]		WHERE OrderCode = @orderCode		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_CONSIGMENT_UPDATEAMOUNT](@amout FLOAT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		UPDATE CONSIGNMENT		SET ConsProductAmout = @amout		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDALTER TABLE ORDER_DETAILALTER COLUMN DetailSKU VARCHAR(20)CREATE PROCEDURE [dbo].[SP_ORDER_SEARCH]
+(
+@txtSearch NVARCHAR(50)
+-----
+, @startIndex int
+, @count int
+, @totalItems int OUTPUT
+)
+As
+Begin -- Start
+-----
+	if(@count > 0)
+	Begin
+	---------------------
+		SET XACT_ABORT ON
+		Begin Transaction
+
+			Begin Try
+				Select
+				 *
+				From
+				(
+					SELECT Row_Number() Over ( Order by ord.[CreateTime] Desc ) as [ROWID],							
+							  ord.[OrderID],
+							  ord.[OrderUserCode],
+							  ord.[OrderPhone],
+							  ord.[OrderStatus],
+							  ord.[OrderCode],
+							  ord.[CreateTime],
+							  ord.[OrderFullname],
+							  ord.[OrderShipAddress]
+					FROM dbo.[ORDER] ord
+					WHERE 
+					(
+						( @txtSearch IS NULL OR @txtSearch = '' OR ord.[OrderCode] LIKE '%' + @txtSearch + '%' )
+						
+					)
+				) T
+				Where
+					[ROWID] BETWEEN (@startIndex) AND (@startIndex + @count - 1);
+				
+				----- @totalItems -----
+				Select @totalItems 
+				 = (
+					SELECT Count(*)
+					FROM dbo.[ORDER] ord
+					WHERE 
+					(
+						( @txtSearch IS NULL OR @txtSearch = '' OR ord.[OrderCode] LIKE '%' + @txtSearch + '%' )
+						
+					)
+				);	
+				
+				Commit
+			End Try
+			Begin Catch
+				RollBack
+				Declare @ErrorMessage varchar(2000)
+				Select @ErrorMessage = 'Error: ' + ERROR_MESSAGE()
+				RAISERROR(@ErrorMessage, 16, 1)
+			End Catch
+		------
+		End -- Begin Transaction
+	---------------------
+	End -- if(@count > 0)
+-----
+--End -- Start
+
+CREATE PROCEDURE [dbo].[SP_ORDERDETAIL_GETBYORDERID](@orderId INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		Select *		From ORDER_DETAIL		Where DetailOrderID = @orderId		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----END

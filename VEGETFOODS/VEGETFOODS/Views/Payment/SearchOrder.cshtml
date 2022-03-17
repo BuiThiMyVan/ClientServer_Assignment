@@ -1,0 +1,146 @@
+﻿@using VEGETFOODS.Models
+@{
+    ViewBag.Title = "SearchOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+
+    <link href="~/Areas/Admin/Content/css/main-admin.css" rel="stylesheet" />
+}
+
+<div id="SearchOrder">
+    <div class="hero-wrap hero-bread" style="background-image: url('/Content/images/bg_1.jpg');">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9  text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="/home-page">Trang chủ</a></span> <span>Tra cứu đơn hàng</span></p>
+                    <h1 class="mb-0 bread">Tìm kiếm đơn hàng</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-box row justify-content-center" style="margin-left: 0; padding-right: 0">
+        <div class="search-form col-md-6" style="padding-right: 0">
+            <div class="form-group">
+                <span class="icon ion-ios-search"></span>
+                <input type="text" class="form-control" v-model="OrderCode" v-on:keypress.enter="getOrder()" placeholder="Nhập mã đơn hàng cần tra cứu">
+            </div>
+        </div>
+    </div>
+    <div v-if="listDetailOrder.length > 0">
+        <section class="ftco-section ftco-cart">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-detail">
+                            <div class="content-detail-head"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;&nbsp; Thông tin chi tiết đơn hàng</div>
+                            <div class="content-item">
+                                <label class="content-label">Mã đơn hàng</label>
+                                <span>{{ OrderCode }}</span>
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Tên khách hàng</label>
+                                <span>{{ OrderFullname }}</span>
+
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Địa chỉ</label>
+                                <span>{{ OrderShipAddress }}</span>
+
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Email</label>
+                                <span>{{ OrderEmail }}</span>
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Số điện thoại</label>
+                                <span>{{ OrderPhone }}</span>
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Active</label>
+                                <span class="text-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)"> Chờ giao hàng </span>
+                                <span class="text-orange" v-if="OrderStatus == @((int)Common.OrderSatus.ToReceived)"> Đang giao hàng </span>
+                                <span class="text-blue" v-if="OrderStatus == @((int)Common.OrderSatus.Completed)"> Đã giao </span>
+                                <span class="text-danger" v-if="OrderStatus == @((int)Common.OrderSatus.Cancelled)"> Đã huỷ </span>
+                            </div>
+                            <div class="content-item">
+                                <label class="content-label">Thời gian tạo</label>
+                                <span>{{ CreateTime }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 ">
+                        <div class="cart-list">
+                            <table class="table">
+                                <thead class="thead-primary">
+                                    <tr class="text-center">
+                                        <th>&nbsp;</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center" v-for="(item, index) in listDetailOrder">
+                                        <td class="image-prod"><div class="img"><img v-bind:src="item.ProductImages" style="width: 100%; height: 100%" alt="Alternate Text" /></div></td>
+                                        <td class="product-name">
+                                            <h3> {{ item.ProductName }}</h3>
+                                        </td>
+                                        <td class="price">{{ item.ProductPrice }} VNĐ</td>
+                                        <td class="quantity" style="padding-bottom: 0">
+                                            <div class="input-group mb-3" style="align-items: center;">
+                                                <input type="number" name="quantity" class="form-control input-number" :value="item.DetailQuantity" readonly>
+                                                <span>&nbsp; {{ item.ProductUnit }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="total">{{ getAmount(item.DetailQuantity, item.DetailPrice) }}  VNĐ </td>
+                                    </tr><!-- END TR-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-lg-4 mt-5 cart-wrap ">
+                    </div>
+                    <div class="col-lg-4 mt-5 cart-wrap ">
+                    </div>
+                    <div class="col-lg-4 mt-5 cart-wrap ">
+                        <div class="cart-total mb-3">
+                            <h3>Thanh toán</h3>
+                            <p class="d-flex">
+                                <span>Tạm tính</span>
+                                <span>{{ subTotal() }} VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Phí vận chuyển</span>
+                                <span>30000 VNĐ</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Giảm giá</span>
+                                <span>0 VNĐ</span>
+                            </p>
+                            <hr>
+                            <p class="d-flex total-price">
+                                <span>Tổng tiền</span>
+                                <span>{{ totalCartValue() }}  VNĐ</span>
+                            </p>
+                        </div>
+                        <p><a href="javascript:void(0)" v-on:click="updateOrder(@((int)Common.OrderSatus.Cancelled))" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)" class="btn btn-primary py-3 px-4">Huỷ đơn hàng</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="p-5" v-if="Searched == 1 && listDetailOrder.length == 0 ">
+        <div class="text-center p-5"> Không tìm thấy kết quả nào cho mã đơn hàng {{ OrderCode }} </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/Scripts/Payment/SearchOrder.js"></script>
+}
+

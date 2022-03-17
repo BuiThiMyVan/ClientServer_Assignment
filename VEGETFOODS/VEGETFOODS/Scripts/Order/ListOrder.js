@@ -1,5 +1,5 @@
-﻿var vmListNews = new Vue({
-    el: "#ListNews",
+﻿var vmListOrder = new Vue({
+    el: "#ListOrder",
     data: {
         currentPage: 1,
         pageSize: 10,
@@ -10,33 +10,34 @@
         Status: -1,
         list: {},
         textFilter: "Tất cả",
-        CountAllNews: 0,
+        CountAllCategories: 0,
         VName: "",
-        RoleId: -1
+        RoleId: -1,
+        OrderStatus: -1
     },
 
     methods: {
         first: function () {
             this.currentPage = 1;
-            this.getListNews();
+            this.getListOrder();
         },
 
         last: function () {
             this.currentPage = this.totalPage;
-            this.getListNews();
+            this.getListOrder();
         },
 
         next: function () {
             if (this.currentPage < this.totalPage) {
                 this.currentPage++;
-                this.getListNews();
+                this.getListOrder();
             }
         },
 
         prev: function () {
             if (this.currentPage > 1) {
                 this.currentPage--;
-                this.getListNews();
+                this.getListOrder();
             }
         },
 
@@ -47,17 +48,18 @@
             }
         },
 
-        getListNews: function () {
+        getListOrder: function () {
             AddLoader();
             var self = this;
             var modal = {
                 pageIndex: self.currentPage,
                 pageSize: self.pageSize,
-                txtSearch: self.txtSearch.trim()
+                txtSearch: self.txtSearch.trim(),
+                cateId: self.OrderStatus
             };
             $.ajax({
                 data: modal,
-                url: "/api/NewsApi/GetListNews",
+                url: "/api/OrderApi/GetListOrder",
                 type: 'POST',
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
@@ -66,39 +68,19 @@
                 self.totalPage = res.data.totalPage;
                 self.pageView = res.data.pageView;
                 HiddenLoader();
-                $("#ListNews").css("display", "block");
+                $("#ListOrder").css("display", "block");
             });
-        },
-
-        deleteNews: function (newsID) {
-            if (confirm('Bạn có chắc muốn xoá tin tức có mã ' + newsID + ' ? ')) {
-                $.ajax({
-                    url: "/api/NewsApi/DeleteNews?newsId=" + newsID,
-                    type: 'POST',
-                    dataType: 'json',
-                    contentType: "application/x-www-form-urlencoded; charset=UTF-8"
-                }).then(res => {
-                    if (res.message == 200) {
-                        alert('Xoá tin tức thành công');
-                        HiddenLoader();
-                        window.location.href = "/Admin/News/Index";
-                    } else {
-                        alert('Đã xảy ra lỗi khi xoá danh mục sản phẩm');
-                    }
-
-                });
-            }
-        }
+        },        
 
     }
 })
 
-vmListNews.getListNews();
+vmListOrder.getListOrder();
 
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     if (charCode == 13) {
-        vmListNews.getListNews();
+        vmListOrder.getListOrder();
     } else if ((charCode < 48 || charCode > 57)) {
         return false;
     }

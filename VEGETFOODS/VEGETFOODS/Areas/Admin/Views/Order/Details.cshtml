@@ -1,0 +1,113 @@
+﻿@using VEGETFOODS
+@using VEGETFOODS.Models
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Styles {
+    <style>
+        .content-wrapper .header-detail {
+            flex-direction: column;
+        }
+    </style>
+}
+
+<div class="content-wrapper" id="MyOrder" style="display: none">
+    <div class="header-detail">
+        <a href="/Admin/Order/Index" class="link-list"> < Danh sách đơn hàng</a>
+        <span class="name-title mt-8"> Chi tiết đơn hàng </span>
+    </div>
+    <div class="content-detail">
+        <div class="content-detail-head"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;&nbsp; Thông tin chi tiết đơn hàng</div>
+        <div class="content-item">
+            <label class="content-label">Mã đơn hàng</label>
+            <span>{{ OrderCode }}</span>
+        </div>
+        <div class="content-item">
+            <label class="content-label">Tên khách hàng</label>
+            <span>{{ OrderFullname }}</span>
+
+        </div>
+        <div class="content-item">
+            <label class="content-label">Địa chỉ</label>
+            <span>{{ OrderShipAddress }}</span>
+
+        </div>
+        <div class="content-item">
+            <label class="content-label">Email</label>
+            <span>{{ OrderEmail }}</span>
+        </div>
+        <div class="content-item">
+            <label class="content-label">Số điện thoại</label>
+            <span>{{ OrderPhone }}</span>
+        </div>
+        <div class="content-item">
+            <label class="content-label">Active</label>
+            <span class="text-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)"> Chờ giao hàng </span>
+            <span class="text-orange" v-if="OrderStatus == @((int)Common.OrderSatus.ToReceived)"> Đang giao hàng </span>
+            <span class="text-blue" v-if="OrderStatus == @((int)Common.OrderSatus.Completed)"> Đã giao </span>
+            <span class="text-danger" v-if="OrderStatus == @((int)Common.OrderSatus.Cancelled)"> Đã huỷ </span>
+        </div>
+        <div class="content-item">
+            <label class="content-label">Thời gian tạo</label>
+            <span>{{ CreateTime }}</span>
+        </div>
+        <div class="table-list" style="margin-top: 24px;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="ordinal-numbers text-center">STT</th>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col" class="text-center">Số lượng</th>
+                        <th scope="col" class="text-center">Giá</th>
+                        <th scope="col" class="text-center">Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in listDetailOrder">
+                        <td class="ordinal-numbers text-center">
+                            {{ index + 1 }}
+                        </td>
+                        <td>{{ item.ProductName }}</td>
+                        <td>{{ item.DetailQuantity }}</td>
+                        <td class="text-center">{{ item.DetailPrice }}</td>
+                        <td class="text-center"> {{ getAmount(item.DetailQuantity, item.DetailPrice )}} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12 d-flex mb-5" style="display: flex; justify-content: flex-end">
+            <div class="cart-detail cart-total" style="padding-right: 32px;">
+                <div class="content-item">
+                    <label class="content-label">Tạm tính</label>
+                    <span>{{ subTotal() }} VNĐ</span>
+                </div>
+                <div class="content-item" style="margin-top: 24px !important">
+                    <label class="content-label">Phí vận chuyển</label>
+                    <span>30000 VNĐ</span>
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Giảm giá</label>
+                    <span>0 VNĐ</span>
+                </div>
+                <div class="content-item">
+                    <label class="content-label">Tổng tiền</label>
+                    <span>{{ totalCartValue() }} VNĐ</span>
+                </div>
+            </div>
+        </div>
+        <div class="btn-update">
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.ToReceived))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Đang vận chuyển</button>
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Cancelled))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Huỷ đơn hàng</button>
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Completed))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToReceived)">Đã giao</button>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        var orderCode = '@ViewBag.OrderCode';
+    </script>
+
+    <script src="~/Scripts/Order/MyOrder.js"></script>
+}
+

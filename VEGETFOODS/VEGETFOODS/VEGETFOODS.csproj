@@ -246,6 +246,7 @@
     <Compile Include="Partials\SP_NEWSCATEGORY_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_NEWS_SEARCHACTIVE_Result.cs" />
     <Compile Include="Partials\SP_NEWS_SEARCH_Result.cs" />
+    <Compile Include="Partials\SP_ORDER_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_GETBYID_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_SEARCH_Result.cs" />
     <Compile Include="Partials\USER.cs" />
@@ -301,7 +302,13 @@
     <Compile Include="SP_NEWS_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_ORDERDETAIL_GETBYORDERID_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="SP_ORDER_GETBYORDERCODE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_ORDER_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_PRODUCT_GETBYID_Result.cs">
@@ -1887,6 +1894,7 @@
     <Content Include="Content\js\tinymce\skins\lightgray\skin.mobile.min.css.map" />
     <Content Include="Areas\Admin\Views\News\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Cart\ListCart.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
@@ -1915,7 +1923,10 @@
     <Content Include="Scripts\News\MyNews.js" />
     <Content Include="Scripts\News\News.js" />
     <Content Include="Scripts\News\NewsDetail.js" />
+    <Content Include="Scripts\Order\ListOrder.js" />
+    <Content Include="Scripts\Order\MyOrder.js" />
     <Content Include="Scripts\Payment\Payment.js" />
+    <Content Include="Scripts\Payment\SearchOrder.js" />
     <Content Include="Scripts\Product\CreateProduct.js" />
     <Content Include="Scripts\Product\ListProduct.js" />
     <Content Include="Scripts\Product\MyProduct.js" />
@@ -1957,6 +1968,9 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Shared\AccountHeader.cshtml" />
+    <Content Include="Views\Payment\OrderSuccesfully.cshtml" />
+    <Content Include="Views\Payment\SearchOrder.cshtml" />
     <EntityDeploy Include="VegetfoodsDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VegetfoodsDbContext.Designer.cs</LastGenOutput>
@@ -1964,8 +1978,6 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Shared\AccountHeader.cshtml" />
-    <Content Include="Views\Payment\OrderSuccesfully.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

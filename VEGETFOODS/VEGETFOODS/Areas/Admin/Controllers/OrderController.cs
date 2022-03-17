@@ -13,5 +13,12 @@ namespace VEGETFOODS.Areas.Admin.Controllers
         {
             return View();
         }
+
+        // GET: Admin/Order
+        public ActionResult Details(string orderCode)
+        {
+            ViewBag.OrderCode = orderCode;
+            return View();
+        }
     }
 }

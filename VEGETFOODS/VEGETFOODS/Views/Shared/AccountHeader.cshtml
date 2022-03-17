@@ -3,12 +3,19 @@
     var cookie = Request.Cookies[VEGETFOODS.Common.CommonConstants.USER_COOKIES];
 }
 
-@if ( cookie == null)
+@if (cookie == null)
 {
-<li class="nav-item"><a href="/dang-nhap" class="nav-link">Đăng nhập/Đăng ký</a></li>
+    <li class="nav-item"><a href="/dang-nhap" class="nav-link">Đăng nhập/Đăng ký</a></li>
 }
 else
 {
-    <li class="nav-item"><a href="/tai-khoan" class="nav-link"><i class="fas fa-user"></i></a></li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+        <div class="dropdown-menu" aria-labelledby="dropdown04">
+            <a class="dropdown-item" href="/tai-khoan">Thông tin tài khoản</a>
+            <a class="dropdown-item" href="/Home/Logout">Đăng xuất</a>
+        </div>
+    </li>
+
 }
 

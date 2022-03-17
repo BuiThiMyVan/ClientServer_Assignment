@@ -14,6 +14,13 @@ namespace VEGETFOODS
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+               name: "SearchOrder",
+               url: "tra-cuu-don-hang",
+               defaults: new { controller = "Payment", action = "SearchOrder", id = UrlParameter.Optional },
+               namespaces: new[] { "VEGETFOODS.Controllers.MVC_Controller" }
+           );
+
+            routes.MapRoute(
                name: "Account",
                url: "tai-khoan",
                defaults: new { controller = "Account", action = "Index", id = UrlParameter.Optional },

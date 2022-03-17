@@ -28,6 +28,15 @@ namespace VEGETFOODS.Models
             Client = 2
         }
 
+        public enum OrderSatus
+        {
+            All = -1,
+            ToShip = 1,
+            ToReceived = 2,
+            Cancelled = 3,
+            Completed = 4
+        }
+
         public class ContentMetadataProduct
         {
             [AllowHtml]

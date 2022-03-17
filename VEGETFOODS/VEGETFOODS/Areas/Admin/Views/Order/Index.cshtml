@@ -1,7 +1,124 @@
-﻿
+﻿@using VEGETFOODS
+@using VEGETFOODS.Models
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@section Styles {
+    <style>
+        .btn-delete {
+            color: #808080;
+        }
+
+            .btn-delete:hover {
+                cursor: pointer;
+                color: rgb(220, 53, 69);
+            }
+        .cus-info:hover {
+            opacity: 1 !important;
+            cursor: context-menu !important;
+        }
+
+        #search {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+}
+
+<div class="content-wrapper" style="display: none" id="ListOrder">
+    <div class="header">
+        <span class="list-title">Quản Lý Đơn Hàng</span>
+    </div>
+    <div id="search">
+        <div class="search-box">
+            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập mã đơn hàng" v-on:keypress.enter="getListOrder()" />
+            <div class="search-icon" v-on:click="getListOrder()"><i class="fas fa-search"></i></div>
+        </div>
+        <div>
+            <span>Trạng thái: </span>
+            <select class="content-input content-status" style="padding: 8px 16px;" v-model="OrderStatus" v-on:change="getListOrder()">
+                <option value="@((int)Common.OrderSatus.All)">Tất cả</option>
+                <option value="@((int)Common.OrderSatus.ToShip)">Chờ giao hàng</option>
+                <option value="@((int)Common.OrderSatus.ToReceived)">Đang giao hàng</option>
+                <option value="@((int)Common.OrderSatus.Cancelled)">Đã huỷ</option>
+                <option value="@((int)Common.OrderSatus.Completed)">Đã giao</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-list">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="ordinal-numbers text-center">STT</th>
+                    <th scope="col">Mã đơn hàng</th>
+                    <th scope="col" class="name-film text-center">Thông tin liên hệ</th>
+                    <th scope="col" class="show-date text-center">Ngày tạo</th>
+                    <th scope="col" class="produce-year text-center">Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in list">
+                    <td class="ordinal-numbers text-center">
+                        {{ item.ROWID }}
+                    </td>
+                    <td> <a class="text-main-color" v-bind:href="'/Admin/Order/Details?orderCode=' + item.OrderCode">{{ item.OrderCode }}</a></td>
+                    <td class="name-film cus-info">
+                        <div>{{ item.OrderFullname }}</div>
+                        <div>{{ item.OrderShipAddress }}</div>
+                        <div>{{ item.OrderPhone }}</div>
+                        <div>{{ item.OrderEmail }}</div>
+                    </td>
+                    <td class="show-date text-center">
+                        {{ item.CreateTimeFormat }}
+                    </td>
+                    <td class="text-center text-main-color" v-if="item.OrderStatus == @((int)Common.OrderSatus.ToShip)"> Chờ giao hàng </td>
+                    <td class="text-center text-orange" v-if="item.OrderStatus == @((int)Common.OrderSatus.ToReceived)"> Đang giao hàng </td>
+                    <td class="text-center text-blue" v-if="item.OrderStatus == @((int)Common.OrderSatus.Completed)"> Đã giao </td>
+                    <td class="text-center text-danger" v-if="item.OrderStatus == @((int)Common.OrderSatus.Cancelled)"> Đã huỷ </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginate">
+        <div class="paginate_sub paginate_sub-pageSize">
+            <label class="form-label">Số dòng trên 1 trang</label>
+            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListCategories()">
+                <option v-for="item in listPageSize" v-bind:value="item">
+                    {{item}}
+                </option>
+            </select>
+            <span>{{ pageView }} </span>
+        </div>
+        <div class="paginate_sub paginate_sub-link">
+            <div class="sub-link">
+                <label class="form-label">Đi đến trang</label>
+                <input type="text" v-bind:value="currentPage" id="pagePicked" class="pagePicked" v-on:keyup="validatePage()" onkeypress="return isNumberKey(event)">
+            </div>
+            <nav class="nav-link">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="first()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-step-backward"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="prev()"><i @*v-bind:style="{color:firstList_disable}"*@ class="fas fa-chevron-left"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="next()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-chevron-right"></i></span>
+                    </li>
+                    <li class="page-item">
+                        <span class="page-link" v-on:click="last()"><i @*v-bind:style="{color:lastList_disable}"*@ class="fas fa-step-forward"></i></span>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Order/ListOrder.js"></script>
+}
 

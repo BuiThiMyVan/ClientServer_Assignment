@@ -29,7 +29,7 @@ namespace VEGETFOODS.Controllers.MVC_Controller
         [System.Web.Http.HttpPost]
         public ActionResult CreateOrder(OrderInfo objOrder)
         {
-            var orderCode = "ORDER" + DateTime.Now.ToString("yyyyMMddTHH:mm:ssZ");
+            var orderCode = "ORDER" + DateTime.Now.ToString("yyyyMMddTHH:mm:ssZ").Replace(":", "");
             context.SP_ORDER_CREATE(objOrder.Order.OrderUserCode, objOrder.Order.OrderShipAddress, objOrder.Order.OrderPhone, objOrder.Order.OrderShippingFee, objOrder.Order.OrderShippingNote, objOrder.Order.OrderEmail, objOrder.Order.OrderPayMethod, objOrder.Order.OrderTotal, orderCode, objOrder.Order.OrderFullname);
 
             var orderCreated = context.SP_ORDER_GETBYORDERCODE(orderCode).FirstOrDefault();
@@ -67,6 +67,11 @@ namespace VEGETFOODS.Controllers.MVC_Controller
         // GET: Payment
         public ActionResult OrderSuccesfully()
         {           
+            return View();
+        }
+
+        public ActionResult SearchOrder()
+        {
             return View();
         }
     }

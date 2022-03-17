@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="VEGETFOODSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="VEGETFOODSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CATEGORY">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -495,6 +495,13 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
         <Function Name="SP_ORDER_GETBYORDERCODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="orderCode" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_ORDER_SEARCH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="txtSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="orderStatus" Type="int" Mode="In" />
+          <Parameter Name="startIndex" Type="int" Mode="In" />
+          <Parameter Name="count" Type="int" Mode="In" />
+          <Parameter Name="totalItems" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_ORDER_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="orderID" Type="int" Mode="In" />
           <Parameter Name="orderStatus" Type="int" Mode="In" />
@@ -505,6 +512,9 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Parameter Name="detailPrice" Type="float" Mode="In" />
           <Parameter Name="detailQuantity" Type="float" Mode="In" />
           <Parameter Name="batchNo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SP_ORDERDETAIL_GETBYORDERID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderId" Type="int" Mode="In" />
         </Function>
         <Function Name="SP_PRODUCT_CREATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="productCode" Type="varchar" Mode="In" />
@@ -634,7 +644,8 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <End Role="TOWN" EntitySet="TOWN" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VEGETFOODSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1007,11 +1018,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="createBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_DELETE">
-          <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_GETALL" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_GETALL_Result)" />
           <FunctionImport Name="SP_CATEGORY_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_GETBYID_Result)">
-          <Parameter Name="categoryID" Mode="In" Type="Int32" />
+            <Parameter Name="categoryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1026,6 +1037,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="categoryDesc" Mode="In" Type="String" />
             <Parameter Name="isActive" Mode="In" Type="Byte" />
           </FunctionImport>
+          <FunctionImport Name="SP_CONSIGMENT_UPDATEAMOUNT">
+            <Parameter Name="amout" Mode="In" Type="Double" />
+            <Parameter Name="bathNo" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_CREATE">
             <Parameter Name="bathNo" Mode="In" Type="String" />
             <Parameter Name="consProductID" Mode="In" Type="Int32" />
@@ -1034,16 +1049,16 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="productEXP" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_DELETE">
-          <Parameter Name="bathNo" Mode="In" Type="String" />
+            <Parameter Name="bathNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETALL" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETALL_Result)">
-          <Parameter Name="productId" Mode="In" Type="Int32" />
+            <Parameter Name="productId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETBYID_Result)">
-          <Parameter Name="batchNo" Mode="In" Type="String" />
+            <Parameter Name="batchNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETBYPRODUCTID" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETBYPRODUCTID_Result)">
-          <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_UPDATE">
             <Parameter Name="bathNo" Mode="In" Type="String" />
@@ -1062,7 +1077,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_EMAIL_IS_EXISTED" ReturnType="Collection(Boolean)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(VEGETFOODSModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1086,10 +1101,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="hashtags" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_DELETE">
-          <Parameter Name="newsID" Mode="In" Type="Int32" />
+            <Parameter Name="newsID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_GETBYID_Result)">
-          <Parameter Name="newsID" Mode="In" Type="Int32" />
+            <Parameter Name="newsID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_GETTOP3" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_GETTOP3_Result)" />
           <FunctionImport Name="SP_NEWS_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_SEARCH_Result)">
@@ -1120,11 +1135,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="newsDesc" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_DELETE">
-          <Parameter Name="newsCateID" Mode="In" Type="Int32" />
+            <Parameter Name="newsCateID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_GETALLACTIVE" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_GETALLACTIVE_Result)" />
           <FunctionImport Name="SP_NEWSCATEGORY_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_GETBYID_Result)">
-          <Parameter Name="newsCateID" Mode="In" Type="Int32" />
+            <Parameter Name="newsCateID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1155,6 +1170,16 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="orderCode" Mode="In" Type="String" />
             <Parameter Name="orderFullname" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="SP_ORDER_GETBYORDERCODE" ReturnType="Collection(VEGETFOODSModel.SP_ORDER_GETBYORDERCODE_Result)">
+            <Parameter Name="orderCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDER_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_ORDER_SEARCH_Result)">
+            <Parameter Name="txtSearch" Mode="In" Type="String" />
+            <Parameter Name="orderStatus" Mode="In" Type="Int32" />
+            <Parameter Name="startIndex" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Int32" />
+            <Parameter Name="totalItems" Mode="InOut" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="SP_ORDER_UPDATE">
             <Parameter Name="orderID" Mode="In" Type="Int32" />
             <Parameter Name="orderStatus" Mode="In" Type="Int32" />
@@ -1165,6 +1190,9 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="detailPrice" Mode="In" Type="Double" />
             <Parameter Name="detailQuantity" Mode="In" Type="Double" />
             <Parameter Name="batchNo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_ORDERDETAIL_GETBYORDERID" ReturnType="Collection(VEGETFOODSModel.SP_ORDERDETAIL_GETBYORDERID_Result)">
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_CREATE">
             <Parameter Name="productCode" Mode="In" Type="String" />
@@ -1181,10 +1209,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="createBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_DELETE">
-          <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_PRODUCT_GETBYID_Result)">
-          <Parameter Name="productID" Mode="In" Type="Int32" />
+            <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_PRODUCT_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1230,17 +1258,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="role" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_USER_GETBYUSERCODE" ReturnType="Collection(VEGETFOODSModel.SP_USER_GETBYUSERCODE_Result)">
-          <Parameter Name="usercode" Mode="In" Type="String" />
+            <Parameter Name="usercode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_USERCODE_IS_EXISTED" ReturnType="Collection(Boolean)">
-          <Parameter Name="usercode" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_ORDER_GETBYORDERCODE" ReturnType="Collection(VEGETFOODSModel.SP_ORDER_GETBYORDERCODE_Result)">
-          <Parameter Name="orderCode" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SP_CONSIGMENT_UPDATEAMOUNT">
-          <Parameter Name="amout" Mode="In" Type="Double" />
-            <Parameter Name="bathNo" Mode="In" Type="String" />
+            <Parameter Name="usercode" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_CATEGORY_GETALL_Result">
@@ -1378,6 +1399,47 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Property Type="Byte" Name="IsActive" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
         </ComplexType>
+        <ComplexType Name="SP_ORDER_GETBYORDERCODE_Result">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="String" Name="OrderUserCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OrderShipAddress" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="OrderPhone" Nullable="true" MaxLength="11" />
+          <Property Type="Double" Name="OrderShippingFee" Nullable="true" />
+          <Property Type="String" Name="OrderShippingNote" Nullable="true" MaxLength="200" />
+          <Property Type="Byte" Name="OrderStatus" Nullable="true" />
+          <Property Type="String" Name="OrderEmail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="OrderPayMethod" Nullable="true" />
+          <Property Type="Int32" Name="OrderTotal" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
+          <Property Type="String" Name="OrderCode" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="OrderFullname" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDER_SEARCH_Result">
+          <Property Type="Int64" Name="ROWID" Nullable="true" />
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="String" Name="OrderUserCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OrderPhone" Nullable="true" MaxLength="11" />
+          <Property Type="Byte" Name="OrderStatus" Nullable="true" />
+          <Property Type="String" Name="OrderCode" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
+          <Property Type="String" Name="OrderFullname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OrderShipAddress" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="OrderEmail" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SP_ORDERDETAIL_GETBYORDERID_Result">
+          <Property Type="Int32" Name="DetailID" Nullable="false" />
+          <Property Type="Int32" Name="DetailProductID" Nullable="true" />
+          <Property Type="Int32" Name="DetailOrderID" Nullable="true" />
+          <Property Type="Double" Name="DetailPrice" Nullable="true" />
+          <Property Type="Int32" Name="DetailQuantity" Nullable="true" />
+          <Property Type="String" Name="DetailSKU" Nullable="true" MaxLength="20" />
+          <Property Type="Double" Name="DetailRate" Nullable="true" />
+          <Property Type="String" Name="DetailComment" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ProductImages" Nullable="true" />
+          <Property Type="String" Name="ProductUnit" Nullable="true" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="SP_PRODUCT_GETBYID_Result">
           <Property Type="Int32" Name="ProductID" Nullable="false" />
           <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="50" />
@@ -1430,22 +1492,6 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Property Type="Byte" Name="IsActive" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
           <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
-        </ComplexType>
-        <ComplexType Name="SP_ORDER_GETBYORDERCODE_Result">
-          <Property Type="Int32" Name="OrderID" Nullable="false" />
-          <Property Type="String" Name="OrderUserCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="OrderShipAddress" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="OrderPhone" Nullable="true" MaxLength="11" />
-          <Property Type="Double" Name="OrderShippingFee" Nullable="true" />
-          <Property Type="String" Name="OrderShippingNote" Nullable="true" MaxLength="200" />
-          <Property Type="Byte" Name="OrderStatus" Nullable="true" />
-          <Property Type="String" Name="OrderEmail" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="OrderPayMethod" Nullable="true" />
-          <Property Type="Int32" Name="OrderTotal" Nullable="true" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
-          <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
-          <Property Type="String" Name="OrderCode" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="OrderFullname" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1709,6 +1755,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_CATEGORY_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_CATEGORY_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_CONSIGMENT_UPDATEAMOUNT" FunctionName="VEGETFOODSModel.Store.SP_CONSIGMENT_UPDATEAMOUNT" />
           <FunctionImportMapping FunctionImportName="SP_CONSIGNMENT_CREATE" FunctionName="VEGETFOODSModel.Store.SP_CONSIGNMENT_CREATE" />
           <FunctionImportMapping FunctionImportName="SP_CONSIGNMENT_DELETE" FunctionName="VEGETFOODSModel.Store.SP_CONSIGNMENT_DELETE" />
           <FunctionImportMapping FunctionImportName="SP_CONSIGNMENT_GETALL" FunctionName="VEGETFOODSModel.Store.SP_CONSIGNMENT_GETALL">
@@ -1877,8 +1924,61 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <FunctionImportMapping FunctionImportName="SP_NEWSCATEGORY_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_NEWSCATEGORY_UPDATE" />
           <FunctionImportMapping FunctionImportName="SP_NEWSCOMMENT_CREATE" FunctionName="VEGETFOODSModel.Store.SP_NEWSCOMMENT_CREATE" />
           <FunctionImportMapping FunctionImportName="SP_ORDER_CREATE" FunctionName="VEGETFOODSModel.Store.SP_ORDER_CREATE" />
+          <FunctionImportMapping FunctionImportName="SP_ORDER_GETBYORDERCODE" FunctionName="VEGETFOODSModel.Store.SP_ORDER_GETBYORDERCODE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_ORDER_GETBYORDERCODE_Result">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderUserCode" ColumnName="OrderUserCode" />
+                <ScalarProperty Name="OrderShipAddress" ColumnName="OrderShipAddress" />
+                <ScalarProperty Name="OrderPhone" ColumnName="OrderPhone" />
+                <ScalarProperty Name="OrderShippingFee" ColumnName="OrderShippingFee" />
+                <ScalarProperty Name="OrderShippingNote" ColumnName="OrderShippingNote" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
+                <ScalarProperty Name="OrderPayMethod" ColumnName="OrderPayMethod" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="OrderFullname" ColumnName="OrderFullname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_ORDER_SEARCH" FunctionName="VEGETFOODSModel.Store.SP_ORDER_SEARCH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_ORDER_SEARCH_Result">
+                <ScalarProperty Name="ROWID" ColumnName="ROWID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderUserCode" ColumnName="OrderUserCode" />
+                <ScalarProperty Name="OrderPhone" ColumnName="OrderPhone" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="OrderFullname" ColumnName="OrderFullname" />
+                <ScalarProperty Name="OrderShipAddress" ColumnName="OrderShipAddress" />
+                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_ORDER_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_ORDER_UPDATE" />
           <FunctionImportMapping FunctionImportName="SP_ORDERDETAIL_CREATE" FunctionName="VEGETFOODSModel.Store.SP_ORDERDETAIL_CREATE" />
+          <FunctionImportMapping FunctionImportName="SP_ORDERDETAIL_GETBYORDERID" FunctionName="VEGETFOODSModel.Store.SP_ORDERDETAIL_GETBYORDERID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_ORDERDETAIL_GETBYORDERID_Result">
+                <ScalarProperty Name="DetailID" ColumnName="DetailID" />
+                <ScalarProperty Name="DetailProductID" ColumnName="DetailProductID" />
+                <ScalarProperty Name="DetailOrderID" ColumnName="DetailOrderID" />
+                <ScalarProperty Name="DetailPrice" ColumnName="DetailPrice" />
+                <ScalarProperty Name="DetailQuantity" ColumnName="DetailQuantity" />
+                <ScalarProperty Name="DetailSKU" ColumnName="DetailSKU" />
+                <ScalarProperty Name="DetailRate" ColumnName="DetailRate" />
+                <ScalarProperty Name="DetailComment" ColumnName="DetailComment" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductImages" ColumnName="ProductImages" />
+                <ScalarProperty Name="ProductUnit" ColumnName="ProductUnit" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_CREATE" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_CREATE" />
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_DELETE" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_DELETE" />
           <FunctionImportMapping FunctionImportName="SP_PRODUCT_GETBYID" FunctionName="VEGETFOODSModel.Store.SP_PRODUCT_GETBYID">
@@ -1955,27 +2055,6 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_USERCODE_IS_EXISTED" FunctionName="VEGETFOODSModel.Store.SP_USERCODE_IS_EXISTED" />
-          <FunctionImportMapping FunctionImportName="SP_ORDER_GETBYORDERCODE" FunctionName="VEGETFOODSModel.Store.SP_ORDER_GETBYORDERCODE">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_ORDER_GETBYORDERCODE_Result">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="OrderUserCode" ColumnName="OrderUserCode" />
-                <ScalarProperty Name="OrderShipAddress" ColumnName="OrderShipAddress" />
-                <ScalarProperty Name="OrderPhone" ColumnName="OrderPhone" />
-                <ScalarProperty Name="OrderShippingFee" ColumnName="OrderShippingFee" />
-                <ScalarProperty Name="OrderShippingNote" ColumnName="OrderShippingNote" />
-                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
-                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
-                <ScalarProperty Name="OrderPayMethod" ColumnName="OrderPayMethod" />
-                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
-                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
-                <ScalarProperty Name="OrderFullname" ColumnName="OrderFullname" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_CONSIGMENT_UPDATEAMOUNT" FunctionName="VEGETFOODSModel.Store.SP_CONSIGMENT_UPDATEAMOUNT" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

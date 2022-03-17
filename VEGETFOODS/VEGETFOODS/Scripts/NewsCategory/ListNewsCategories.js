@@ -99,7 +99,7 @@ vmListNewsCategories.getListNewsCategories();
 function isNumberKey(evt) {
     var charCode = (evt.which) ? evt.which : event.keyCode;
     if (charCode == 13) {
-        vmListCategories.getListNewsCategories();
+        vmListNewsCategories.getListNewsCategories();
     } else if ((charCode < 48 || charCode > 57)) {
         return false;
     }
