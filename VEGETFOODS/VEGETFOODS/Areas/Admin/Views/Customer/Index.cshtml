@@ -19,15 +19,14 @@
     </style>
 }
 
-<div class="content-wrapper" style="display: none" id="ListNews">
+<div class="content-wrapper" style="display: none" id="ListCustomer">
     <div class="header">
-        <span class="list-title">Quản lý Tin Tức</span>
-        <a href="/Admin/News/Create" class="btn-main-color">Thêm mới</a>
+        <span class="list-title">Quản lý khách hàng</span>
     </div>
     <div id="search">
         <div class="search-box">
-            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên sản phẩm/ người tạo" v-on:keypress.enter="getListNews()" />
-            <div class="search-icon" v-on:click="getListNews()"><i class="fas fa-search"></i></div>
+            <input type="text" class="search-input" v-model="txtSearch" placeholder="Nhập tên, địa chỉ, sđt hoặc email" v-on:keypress.enter="getListCustomer()" />
+            <div class="search-icon" v-on:click="getListCustomer()"><i class="fas fa-search"></i></div>
         </div>
     </div>
     <div class="table-list">
@@ -35,10 +34,8 @@
             <thead>
                 <tr>
                     <th scope="col" class="ordinal-numbers text-center">STT</th>
-                    <th scope="col" class="name-film">Tiêu đề</th>
-                    <th scope="col" class="text-center">Tên danh mục</th>
+                    <th scope="col" class="name-film">Thông tin khách hàng</th>
                     <th scope="col" class="show-date text-center">Ngày tạo</th>
-                    <th scope="col" class="show-date text-center">Người tạo</th>
                     <th scope="col" class="produce-year text-center">Trạng thái</th>
                     <th scope="col" class="text-center"></th>
                 </tr>
@@ -48,13 +45,17 @@
                     <td class="ordinal-numbers text-center">
                         {{ item.ROWID }}
                     </td>
-                    <td class="name-film"> <a class="text-main-color" v-bind:href="'/Admin/News/Details?id=' + item.NewsID">{{ item.NewsTitle }}</a></td>
-                    <td class="text-center">{{ item.NewsCateTitle }} </td>
+                    <td class="name-film">
+                        <a class="text-main-color" v-bind:href="'/Admin/Customer/Details?userCode=' + item.UserCode">
+                            <div> {{ item.UserFullName }}</div>
+                            <div> {{ item.UserPhone }}</div>
+                            <div> {{ item.UserEmail }}</div>
+                            <div> {{ item.UserAddress }}</div>
+                        </a>
+                    </td>
                     <td class="show-date text-center">{{ item.CreateTimeFormat }}</td>
-                    <td class="show-date text-center">{{ item.CreateBy }}</td>
                     <td class="text-center text-main-color" v-if="item.IsActive == @((int)Common.ActiveStatus.Active)"> Active </td>
                     <td class="text-center text-danger" v-if="item.IsActive == @((int)Common.ActiveStatus.InActive)"> InActive </td>
-                    <td class="text-center"><a class="btn-delete" v-on:click="deleteNews(item.NewsID)"><i class="fas fa-trash"></i></a></td>
                 </tr>
             </tbody>
         </table>
@@ -62,7 +63,7 @@
     <div class="paginate">
         <div class="paginate_sub paginate_sub-pageSize">
             <label class="form-label">Số dòng trên 1 trang</label>
-            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListProduct()">
+            <select class="pagePicked m-3" v-model="pageSize" v-on:change="getListCategories()">
                 <option v-for="item in listPageSize" v-bind:value="item">
                     {{item}}
                 </option>
@@ -96,7 +97,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/Scripts/News/ListNews.js"></script>
+    <script src="~/Scripts/Customer/ListCustomer.js"></script>
 }
-
 

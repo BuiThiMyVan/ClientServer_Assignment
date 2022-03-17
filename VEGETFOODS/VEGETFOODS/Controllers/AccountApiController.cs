@@ -39,5 +39,32 @@ namespace VEGETFOODS.Controllers
 
             return Json(new { data = user });
         }
+
+        [HttpPost]
+        public IHttpActionResult UpdateInfoUser(USER objUser)
+        {
+            try
+            {
+                var emailExist = 0;
+                var old_user = context.SP_USER_GETBYUSERCODE(objUser.UserCode).FirstOrDefault();
+                if (context.SP_EMAIL_IS_EXISTED(objUser.UserEmail).FirstOrDefault() == true && !objUser.UserEmail.Equals(old_user.UserEmail))
+                {
+                    emailExist = 1;
+                } else
+                {
+                    objUser.UserPassword = objUser.EncodePassword(objUser.UserPassword);
+                    context.SP_USER_UPDATEINFO(objUser.UserCode, objUser.UserEmail, objUser.UserPassword, objUser.UserFullName, objUser.UserAvatar, objUser.UserPhone, objUser.UserAddress);
+                }
+                
+                return Json(new { message = 200, emailExist = emailExist });
+            }
+            catch
+            {
+                return Json(new { message = 400 });
+
+            }
+
+
+        }
     }
 }

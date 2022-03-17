@@ -185,6 +185,7 @@
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
@@ -200,6 +201,7 @@
     </Compile>
     <Compile Include="Controllers\AccountApiController.cs" />
     <Compile Include="Controllers\CategoriesApiController.cs" />
+    <Compile Include="Controllers\CustomerApiController.cs" />
     <Compile Include="Controllers\MVC_Controller\AboutUsController.cs" />
     <Compile Include="Controllers\MVC_Controller\CartController.cs" />
     <Compile Include="Controllers\MVC_Controller\ContactController.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Partials\SP_ORDER_SEARCH_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_GETBYID_Result.cs" />
     <Compile Include="Partials\SP_PRODUCT_SEARCH_Result.cs" />
+    <Compile Include="Partials\SP_USER_SEARCH_Result.cs" />
     <Compile Include="Partials\USER.cs" />
     <Compile Include="PRODUCT.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
@@ -321,6 +324,9 @@
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="SP_USER_GETBYUSERCODE_Result.cs">
+      <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_USER_SEARCH_Result.cs">
       <DependentUpon>VegetfoodsDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
@@ -1678,6 +1684,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Libs\CKFinder.dll" />
+    <Content Include="Scripts\Account\AccountDetail.js" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1895,12 +1902,16 @@
     <Content Include="Areas\Admin\Views\News\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Cart\ListCart.js" />
     <Content Include="Scripts\Categories\CreateCategory.js" />
     <Content Include="Scripts\Categories\ListCategories.js" />
     <Content Include="Scripts\Categories\MyCategory.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\Customer\ListCustomer.js" />
+    <Content Include="Scripts\Customer\MyCustomer.js" />
     <Content Include="Scripts\Home.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -1978,6 +1989,7 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Home\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

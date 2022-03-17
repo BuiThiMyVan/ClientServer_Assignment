@@ -15,6 +15,11 @@ namespace VEGETFOODS.Controllers.MVC_Controller
             return View();
         }
 
+        public ActionResult UserInfo()
+        {
+            return View();
+        }
+
         public ActionResult Logout()
         {
             HttpCookie cookie = Request.Cookies[Common.CommonConstants.USER_COOKIES];

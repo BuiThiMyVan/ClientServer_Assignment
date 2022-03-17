@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="VEGETFOODSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="VEGETFOODSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CATEGORY">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -582,6 +582,25 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
         <Function Name="SP_USER_GETBYUSERCODE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="usercode" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SP_USER_SEARCH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="txtSearch" Type="nvarchar" Mode="In" />
+          <Parameter Name="startIndex" Type="int" Mode="In" />
+          <Parameter Name="count" Type="int" Mode="In" />
+          <Parameter Name="totalItems" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_USER_UPDATE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usercode" Type="varchar" Mode="In" />
+          <Parameter Name="isActive" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SP_USER_UPDATEINFO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userCode" Type="varchar" Mode="In" />
+          <Parameter Name="userEmail" Type="varchar" Mode="In" />
+          <Parameter Name="userPassword" Type="varchar" Mode="In" />
+          <Parameter Name="userFullname" Type="nvarchar" Mode="In" />
+          <Parameter Name="userAvatar" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="userPhone" Type="varchar" Mode="In" />
+          <Parameter Name="userAddress" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_USERCODE_IS_EXISTED" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="usercode" Type="varchar" Mode="In" />
         </Function>
@@ -644,8 +663,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <End Role="TOWN" EntitySet="TOWN" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="VEGETFOODSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1018,11 +1036,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="createBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_DELETE">
-            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+          <Parameter Name="categoryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_GETALL" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_GETALL_Result)" />
           <FunctionImport Name="SP_CATEGORY_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_GETBYID_Result)">
-            <Parameter Name="categoryID" Mode="In" Type="Int32" />
+          <Parameter Name="categoryID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CATEGORY_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_CATEGORY_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1049,16 +1067,16 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="productEXP" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_DELETE">
-            <Parameter Name="bathNo" Mode="In" Type="String" />
+          <Parameter Name="bathNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETALL" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETALL_Result)">
-            <Parameter Name="productId" Mode="In" Type="Int32" />
+          <Parameter Name="productId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETBYID_Result)">
-            <Parameter Name="batchNo" Mode="In" Type="String" />
+          <Parameter Name="batchNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_GETBYPRODUCTID" ReturnType="Collection(VEGETFOODSModel.SP_CONSIGNMENT_GETBYPRODUCTID_Result)">
-            <Parameter Name="productID" Mode="In" Type="Int32" />
+          <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_CONSIGNMENT_UPDATE">
             <Parameter Name="bathNo" Mode="In" Type="String" />
@@ -1077,7 +1095,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_EMAIL_IS_EXISTED" ReturnType="Collection(Boolean)">
-            <Parameter Name="email" Mode="In" Type="String" />
+          <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(VEGETFOODSModel.sp_helpdiagramdefinition_Result)">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -1101,10 +1119,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="hashtags" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_DELETE">
-            <Parameter Name="newsID" Mode="In" Type="Int32" />
+          <Parameter Name="newsID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_GETBYID_Result)">
-            <Parameter Name="newsID" Mode="In" Type="Int32" />
+          <Parameter Name="newsID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWS_GETTOP3" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_GETTOP3_Result)" />
           <FunctionImport Name="SP_NEWS_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_NEWS_SEARCH_Result)">
@@ -1135,11 +1153,11 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="newsDesc" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_DELETE">
-            <Parameter Name="newsCateID" Mode="In" Type="Int32" />
+          <Parameter Name="newsCateID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_GETALLACTIVE" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_GETALLACTIVE_Result)" />
           <FunctionImport Name="SP_NEWSCATEGORY_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_GETBYID_Result)">
-            <Parameter Name="newsCateID" Mode="In" Type="Int32" />
+          <Parameter Name="newsCateID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_NEWSCATEGORY_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_NEWSCATEGORY_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1171,7 +1189,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="orderFullname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_GETBYORDERCODE" ReturnType="Collection(VEGETFOODSModel.SP_ORDER_GETBYORDERCODE_Result)">
-            <Parameter Name="orderCode" Mode="In" Type="String" />
+          <Parameter Name="orderCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDER_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_ORDER_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1192,7 +1210,7 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="batchNo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_ORDERDETAIL_GETBYORDERID" ReturnType="Collection(VEGETFOODSModel.SP_ORDERDETAIL_GETBYORDERID_Result)">
-            <Parameter Name="orderId" Mode="In" Type="Int32" />
+          <Parameter Name="orderId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_CREATE">
             <Parameter Name="productCode" Mode="In" Type="String" />
@@ -1209,10 +1227,10 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="createBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_DELETE">
-            <Parameter Name="productID" Mode="In" Type="Int32" />
+          <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_GETBYID" ReturnType="Collection(VEGETFOODSModel.SP_PRODUCT_GETBYID_Result)">
-            <Parameter Name="productID" Mode="In" Type="Int32" />
+          <Parameter Name="productID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_PRODUCT_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_PRODUCT_SEARCH_Result)">
             <Parameter Name="txtSearch" Mode="In" Type="String" />
@@ -1258,10 +1276,29 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             <Parameter Name="role" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_USER_GETBYUSERCODE" ReturnType="Collection(VEGETFOODSModel.SP_USER_GETBYUSERCODE_Result)">
-            <Parameter Name="usercode" Mode="In" Type="String" />
+          <Parameter Name="usercode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_USERCODE_IS_EXISTED" ReturnType="Collection(Boolean)">
+          <Parameter Name="usercode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_USER_SEARCH" ReturnType="Collection(VEGETFOODSModel.SP_USER_SEARCH_Result)">
+            <Parameter Name="txtSearch" Mode="In" Type="String" />
+            <Parameter Name="startIndex" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Int32" />
+            <Parameter Name="totalItems" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_USER_UPDATE">
             <Parameter Name="usercode" Mode="In" Type="String" />
+            <Parameter Name="isActive" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_USER_UPDATEINFO">
+            <Parameter Name="userCode" Mode="In" Type="String" />
+            <Parameter Name="userEmail" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+            <Parameter Name="userFullname" Mode="In" Type="String" />
+            <Parameter Name="userAvatar" Mode="In" Type="String" />
+            <Parameter Name="userPhone" Mode="In" Type="String" />
+            <Parameter Name="userAddress" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SP_CATEGORY_GETALL_Result">
@@ -1492,6 +1529,18 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
           <Property Type="Byte" Name="IsActive" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="true" Precision="16" />
           <Property Type="DateTime" Name="UpdateTime" Nullable="true" Precision="16" />
+        </ComplexType>
+        <ComplexType Name="SP_USER_SEARCH_Result">
+          <Property Type="Int64" Name="ROWID" Nullable="true" />
+          <Property Type="String" Name="UserCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="UserEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="UserFullname" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="UserRegistrationDate" Nullable="true" Precision="16" />
+          <Property Type="String" Name="UserAvatar" Nullable="true" />
+          <Property Type="String" Name="UserPhone" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="UserAddress" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="Role" Nullable="true" />
+          <Property Type="Byte" Name="IsActive" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2055,6 +2104,24 @@ error 6004: The table 'VEGETFOODS.dbo.USER_GROUP' is referenced by a relationshi
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_USERCODE_IS_EXISTED" FunctionName="VEGETFOODSModel.Store.SP_USERCODE_IS_EXISTED" />
+          <FunctionImportMapping FunctionImportName="SP_USER_SEARCH" FunctionName="VEGETFOODSModel.Store.SP_USER_SEARCH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VEGETFOODSModel.SP_USER_SEARCH_Result">
+                <ScalarProperty Name="ROWID" ColumnName="ROWID" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserEmail" ColumnName="UserEmail" />
+                <ScalarProperty Name="UserFullname" ColumnName="UserFullname" />
+                <ScalarProperty Name="UserRegistrationDate" ColumnName="UserRegistrationDate" />
+                <ScalarProperty Name="UserAvatar" ColumnName="UserAvatar" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UserAddress" ColumnName="UserAddress" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_USER_UPDATE" FunctionName="VEGETFOODSModel.Store.SP_USER_UPDATE" />
+          <FunctionImportMapping FunctionImportName="SP_USER_UPDATEINFO" FunctionName="VEGETFOODSModel.Store.SP_USER_UPDATEINFO" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

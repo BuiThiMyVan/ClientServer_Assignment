@@ -914,5 +914,68 @@ namespace VEGETFOODS
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
         }
+    
+        public virtual ObjectResult<SP_USER_SEARCH_Result> SP_USER_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        {
+            var txtSearchParameter = txtSearch != null ?
+                new ObjectParameter("txtSearch", txtSearch) :
+                new ObjectParameter("txtSearch", typeof(string));
+    
+            var startIndexParameter = startIndex.HasValue ?
+                new ObjectParameter("startIndex", startIndex) :
+                new ObjectParameter("startIndex", typeof(int));
+    
+            var countParameter = count.HasValue ?
+                new ObjectParameter("count", count) :
+                new ObjectParameter("count", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_USER_SEARCH_Result>("SP_USER_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+        }
+    
+        public virtual int SP_USER_UPDATE(string usercode, Nullable<int> isActive)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("isActive", isActive) :
+                new ObjectParameter("isActive", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_UPDATE", usercodeParameter, isActiveParameter);
+        }
+    
+        public virtual int SP_USER_UPDATEINFO(string userCode, string userEmail, string userPassword, string userFullname, string userAvatar, string userPhone, string userAddress)
+        {
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("userCode", userCode) :
+                new ObjectParameter("userCode", typeof(string));
+    
+            var userEmailParameter = userEmail != null ?
+                new ObjectParameter("userEmail", userEmail) :
+                new ObjectParameter("userEmail", typeof(string));
+    
+            var userPasswordParameter = userPassword != null ?
+                new ObjectParameter("userPassword", userPassword) :
+                new ObjectParameter("userPassword", typeof(string));
+    
+            var userFullnameParameter = userFullname != null ?
+                new ObjectParameter("userFullname", userFullname) :
+                new ObjectParameter("userFullname", typeof(string));
+    
+            var userAvatarParameter = userAvatar != null ?
+                new ObjectParameter("userAvatar", userAvatar) :
+                new ObjectParameter("userAvatar", typeof(string));
+    
+            var userPhoneParameter = userPhone != null ?
+                new ObjectParameter("userPhone", userPhone) :
+                new ObjectParameter("userPhone", typeof(string));
+    
+            var userAddressParameter = userAddress != null ?
+                new ObjectParameter("userAddress", userAddress) :
+                new ObjectParameter("userAddress", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_UPDATEINFO", userCodeParameter, userEmailParameter, userPasswordParameter, userFullnameParameter, userAvatarParameter, userPhoneParameter, userAddressParameter);
+        }
     }
 }
