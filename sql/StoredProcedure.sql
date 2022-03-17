@@ -634,20 +634,24 @@ Begin -- Start
 				 *
 				From
 				(
-					SELECT Row_Number() Over ( Order by cate1.[CreateTime] Desc ) as [ROWID],
-							cate2.[CategoryName] AS [CategoryParentName]
-							  ,cate1.[CategoryName]
-							  ,cate1.[CategoryDesc]
-							  ,cate1.[IsActive]
-							  ,cate1.[CreateTime]
-							  ,cate1.[CreateBy]
-					FROM CATEGORY cate1
-					LEFT JOIN CATEGORY cate2
-					ON cate1.CategoryParentID = cate2.CategoryID
+					SELECT Row_Number() Over ( Order by [CreateTime] Desc ) as [ROWID],
+							UserCode,
+							UserEmail,
+							UserFullname,
+							UserRegistrationDate,
+							UserAvatar,
+							UserPhone,
+							UserAddress,
+							Role,
+							IsActive
+					FROM dbo.[USER]
 					WHERE 
 					(
-						( @txtSearch IS NULL OR @txtSearch = '' OR cate1.[CategoryName] LIKE '%' + @txtSearch + '%' )
-						
+						( @txtSearch IS NULL OR @txtSearch = '' OR [UserCode] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserEmail] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserFullname] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserPhone] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserAddress] LIKE '%' + @txtSearch + '%' )
 					)
 				) T
 				Where
@@ -657,12 +661,14 @@ Begin -- Start
 				Select @totalItems 
 				 = (
 					SELECT Count(*)
-					FROM CATEGORY cate1
-					LEFT JOIN CATEGORY cate2
-					ON cate1.CategoryParentID = cate2.CategoryID
+					FROM dbo.[USER]
 					WHERE 
 					(
-						( @txtSearch IS NULL OR @txtSearch = '' OR cate1.[CategoryName] LIKE '%' + @txtSearch + '%' )						
+						( @txtSearch IS NULL OR @txtSearch = '' OR [UserCode] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserEmail] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserFullname] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserPhone] LIKE '%' + @txtSearch + '%' )
+						OR ( @txtSearch IS NULL OR @txtSearch = '' OR [UserAddress] LIKE '%' + @txtSearch + '%' )
 					)
 				);	
 				
@@ -679,4 +685,4 @@ Begin -- Start
 	---------------------
 	End -- if(@count > 0)
 -----
---End -- StartGO
+--End -- StartGOCREATE PROCEDURE [dbo].[SP_USER_UPDATE](@usercode VARCHAR(50),@isActive INT)ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		Update dbo.[USER]		SET IsActive = @isActive		WHERE UserCode = @usercode		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----ENDCREATE PROCEDURE [dbo].[SP_USER_UPDATEINFO](@userCode VARCHAR(50),@userEmail VARCHAR(100),@userPassword VARCHAR(50),@userFullname NVARCHAR (50),@userAvatar NVARCHAR(MAX),@userPhone VARCHAR(11),@userAddress NVARCHAR(200))ASBEGIN-----SET XACT_ABORT ONBEGIN TRANSACTION	BEGIN TRY		Update dbo.[USER]		SET UserEmail = @userEmail,			UserAvatar = @userAvatar,			UserPhone = @userPhone,			UserPassword = @userPassword,			UserFullName = @userFullname,			UserAddress = @userAddress		WHERE UserCode = @userCode		COMMIT	END TRY	BEGIN CATCH		ROLLBACK		DECLARE @ErrorMessage varchar(2000)		SELECT @ErrorMessage = 'Error: ' + ERROR_MESSAGE()		RAISERROR(@ErrorMessage, 16, 1)	END CATCH-----END
