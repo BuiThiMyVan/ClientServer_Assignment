@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using VEGETFOODS.Models;
+using static VEGETFOODS.Models.Common;
 using static VEGETFOODS.SP_NEWS_SEARCH_Result;
 using static VEGETFOODS.SP_NEWS_SEARCHACTIVE_Result;
 using static VEGETFOODS.SP_NEWS_SEARCHACTIVE_Result.SP_NEWS_SEARCHACTIVE_ResultDTO;
@@ -100,13 +101,13 @@ namespace VEGETFOODS.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult GetListNewsActive(Pagination objPage)
+        public IHttpActionResult GetListNewsActive(PaginationClient objPage)
         {
             var totalItems = new ObjectParameter("totalItems", typeof(int));
             var startIndex = (objPage.pageIndex - 1) * objPage.pageSize + 1;
             var count = objPage.pageSize;
             var txtSearch = objPage.txtSearch == null ? "" : objPage.txtSearch.Trim();
-            var categories = context.SP_NEWS_SEARCHACTIVE(txtSearch, startIndex, count, totalItems).ToList();
+            var categories = context.SP_NEWS_SEARCHACTIVE(txtSearch, objPage.cateId, startIndex, count, totalItems).ToList();
             var totalCategories = Convert.ToInt32(totalItems.Value);
             var pageView = "";
 
@@ -125,7 +126,8 @@ namespace VEGETFOODS.Controllers
             {
                 list = categories.Select(t => t.CopyObjectForSP_NEWS_SEARCHACTIVE_ResultApi()).ToArray(),
                 totalPage = totalPage,
-                pageView = pageView
+                pageView = pageView,
+                totalCate = totalCategories
             };
 
             return Json(new { data = jsonreturn });

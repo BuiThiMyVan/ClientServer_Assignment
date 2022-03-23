@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3b4c95125787487496dfd2d4517e89c3" Name="Diagram1">
+      <Diagram DiagramId="e135d08a02a14b56bfb56d2587c6af53" Name="Diagram1">
         <EntityTypeShape EntityType="VEGETFOODSModel.CATEGORY" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="VEGETFOODSModel.CONSIGNMENT" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="VEGETFOODSModel.DISCOUNT" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />

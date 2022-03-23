@@ -38,21 +38,14 @@
             </div> <!-- .col-md-8 -->
             <div class="col-lg-4 sidebar">
                 <div class="sidebar-box">
-                    <h3 class="heading">Danh mục</h3>
-                    <ul class="categories">
-                        <li v-for="item in ListNewsCategory"><a href="/"> {{ item.NewsCateTitle }} <span>({{ item.TotalNews }}) </span></a></li>
-                    </ul>
-                </div>
-
-                <div class="sidebar-box">
                     <h3 class="heading">Bài viết gần đây</h3>
                     <div class="block-21 mb-4 d-flex" v-for="recent in ListNewsRecent">
                         <a class="blog-img mr-4"><img v-bind:src="recent.NewsImages" style="width: 100%; height: 100%" alt="Alternate Text" /></a>
                         <div class="text">
-                            <h3 class="heading-1"><a href="#">{{ recent.NewsTitle }}</a></h3>
+                            <h3 class="heading-1"><a v-bind:href="'/News/Details?id=' + recent.NewsID">{{ recent.NewsTitle }}</a></h3>
                             <div class="meta">
-                                <div><a href="#"><span class="icon-calendar"></span> {{ recent.CreateTime }}</a></div>
-                                <div><a href="#"><span class="icon-person"></span> {{ recent.CreateBy }}</a></div>
+                                <div><a v-bind:href="'/News/Details?id=' + recent.NewsID"><span class="icon-calendar"></span> {{ recent.CreateTime }}</a></div>
+                                <div><a v-bind:href="'/News/Details?id=' + recent.NewsID"><span class="icon-person"></span> {{ recent.CreateBy }}</a></div>
                             </div>
                         </div>
                     </div>

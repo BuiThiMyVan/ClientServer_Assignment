@@ -1982,6 +1982,7 @@
     <Content Include="Views\Shared\AccountHeader.cshtml" />
     <Content Include="Views\Payment\OrderSuccesfully.cshtml" />
     <Content Include="Views\Payment\SearchOrder.cshtml" />
+    <Content Include="Views\Home\UserInfo.cshtml" />
     <EntityDeploy Include="VegetfoodsDbContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>VegetfoodsDbContext.Designer.cs</LastGenOutput>
@@ -1989,7 +1990,6 @@
     <Content Include="VegetfoodsDbContext.edmx.diagram">
       <DependentUpon>VegetfoodsDbContext.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Home\UserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

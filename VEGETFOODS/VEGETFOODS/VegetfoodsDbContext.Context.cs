@@ -405,11 +405,15 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCH_Result>("SP_NEWS_SEARCH", txtSearchParameter, startIndexParameter, countParameter, totalItems);
         }
     
-        public virtual ObjectResult<SP_NEWS_SEARCHACTIVE_Result> SP_NEWS_SEARCHACTIVE(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
+        public virtual ObjectResult<SP_NEWS_SEARCHACTIVE_Result> SP_NEWS_SEARCHACTIVE(string txtSearch, Nullable<int> newscateId, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
         {
             var txtSearchParameter = txtSearch != null ?
                 new ObjectParameter("txtSearch", txtSearch) :
                 new ObjectParameter("txtSearch", typeof(string));
+    
+            var newscateIdParameter = newscateId.HasValue ?
+                new ObjectParameter("newscateId", newscateId) :
+                new ObjectParameter("newscateId", typeof(int));
     
             var startIndexParameter = startIndex.HasValue ?
                 new ObjectParameter("startIndex", startIndex) :
@@ -419,7 +423,7 @@ namespace VEGETFOODS
                 new ObjectParameter("count", count) :
                 new ObjectParameter("count", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCHACTIVE_Result>("SP_NEWS_SEARCHACTIVE", txtSearchParameter, startIndexParameter, countParameter, totalItems);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_NEWS_SEARCHACTIVE_Result>("SP_NEWS_SEARCHACTIVE", txtSearchParameter, newscateIdParameter, startIndexParameter, countParameter, totalItems);
         }
     
         public virtual int SP_NEWS_UPDATE(Nullable<int> newsID, Nullable<int> newsCateID, string newsTitle, string newsImages, string newsSummary, string newsBody, string createBy, string hashtags, Nullable<byte> isActive)
@@ -906,15 +910,6 @@ namespace VEGETFOODS
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_USER_GETBYUSERCODE_Result>("SP_USER_GETBYUSERCODE", usercodeParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> SP_USERCODE_IS_EXISTED(string usercode)
-        {
-            var usercodeParameter = usercode != null ?
-                new ObjectParameter("usercode", usercode) :
-                new ObjectParameter("usercode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
-        }
-    
         public virtual ObjectResult<SP_USER_SEARCH_Result> SP_USER_SEARCH(string txtSearch, Nullable<int> startIndex, Nullable<int> count, ObjectParameter totalItems)
         {
             var txtSearchParameter = txtSearch != null ?
@@ -976,6 +971,15 @@ namespace VEGETFOODS
                 new ObjectParameter("userAddress", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_USER_UPDATEINFO", userCodeParameter, userEmailParameter, userPasswordParameter, userFullnameParameter, userAvatarParameter, userPhoneParameter, userAddressParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> SP_USERCODE_IS_EXISTED(string usercode)
+        {
+            var usercodeParameter = usercode != null ?
+                new ObjectParameter("usercode", usercode) :
+                new ObjectParameter("usercode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("SP_USERCODE_IS_EXISTED", usercodeParameter);
         }
     }
 }

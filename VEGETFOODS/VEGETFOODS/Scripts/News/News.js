@@ -6,6 +6,7 @@
         pageCount: 1,
         pageView: "",
         txtSearch: '',
+        totalCate: 0,
         ListNewsCategory: [],
         ListNewsActive: [],
         ListNewsRecent: []
@@ -49,13 +50,14 @@
             });
         },
 
-        getListNews: function () {
+        getListNews: function (cateId) {
             AddLoader();
             var self = this;
             var modal = {
                 pageIndex: self.currentPage,
                 pageSize: self.pageSize,
-                txtSearch: self.txtSearch.trim()
+                txtSearch: self.txtSearch.trim(),
+                cateId: cateId
             };
             $.ajax({
                 data: modal,
@@ -67,7 +69,9 @@
                 self.ListNewsActive = res.data.list;
                 self.totalPage = res.data.totalPage;
                 self.pageView = res.data.pageView;
-                debugger
+                self.totalCate = res.data.totalCate;
+                $('a.search-by-category').removeClass('text-main-color');
+                $('a[name=newscate_' + cateId + ']').addClass('text-main-color');
                 HiddenLoader();
             });
         },
@@ -76,5 +80,5 @@
 });
 
 vmNews.getAllNewsCategory();
-vmNews.getListNews();
+vmNews.getListNews(-1);
 vmNews.getRecentNews();

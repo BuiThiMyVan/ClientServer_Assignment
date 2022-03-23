@@ -34,6 +34,7 @@ namespace VEGETFOODS
             public object[] list { get; set; }
             public int totalPage { get; set; }
             public string pageView { get; set; }
+            public int totalCate { get; set; }
         }
 
         public SP_NEWS_SEARCHACTIVE_ResultDTO CopyObjectForSP_NEWS_SEARCHACTIVE_ResultApi()
