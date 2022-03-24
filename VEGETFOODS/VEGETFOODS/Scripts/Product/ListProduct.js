@@ -71,7 +71,7 @@
         },
 
         deleteProduct: function (productID) {
-            if (confirm('Bạn có chắc muốn xoá danh mục sản phẩm có mã ' + productID + ' ? ')) {
+            if (confirm('Bạn có chắc muốn xoá sản phẩm có mã ' + productID + ' ? ')) {
                 $.ajax({
                     url: "/api/ProductApi/DeleteProduct?productId=" + productID,
                     type: 'POST',
@@ -83,7 +83,7 @@
                         HiddenLoader();
                         window.location.href = "/Admin/Product/Index";
                     } else {
-                        alert('Đã xảy ra lỗi khi xoá danh mục sản phẩm');
+                        alert('Đã xảy ra lỗi khi xoá sản phẩm');
                     }
 
                 });

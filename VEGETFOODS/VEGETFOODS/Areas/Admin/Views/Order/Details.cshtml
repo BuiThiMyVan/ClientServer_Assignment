@@ -9,6 +9,10 @@
         .content-wrapper .header-detail {
             flex-direction: column;
         }
+
+        .btn-update-space {
+            margin-left: 24px;
+        }
     </style>
 }
 
@@ -97,9 +101,9 @@
             </div>
         </div>
         <div class="btn-update">
-            <button v-on:click="updateOrder(@((int)Common.OrderSatus.ToReceived))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Đang vận chuyển</button>
-            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Cancelled))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Huỷ đơn hàng</button>
-            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Completed))" class="btn-main-color" v-if="OrderStatus == @((int)Common.OrderSatus.ToReceived)">Đã giao</button>
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.ToReceived))" class="btn-main-color btn-update-space" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Đang vận chuyển</button>
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Cancelled))" class="btn-main-color btn-update-space" v-if="OrderStatus == @((int)Common.OrderSatus.ToShip)">Huỷ đơn hàng</button>
+            <button v-on:click="updateOrder(@((int)Common.OrderSatus.Completed))" class="btn-main-color btn-update-space" v-if="OrderStatus == @((int)Common.OrderSatus.ToReceived)">Đã giao</button>
         </div>
     </div>
 </div>

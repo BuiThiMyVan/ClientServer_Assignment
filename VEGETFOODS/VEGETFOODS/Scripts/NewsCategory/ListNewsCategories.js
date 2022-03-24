@@ -72,7 +72,7 @@
         },
 
         deleteCategory: function (categoryID) {
-            if (confirm('Bạn có chắc muốn xoá danh mục sản phẩm có mã ' + categoryID + ' ? ')) {
+            if (confirm('Bạn muốn xoá danh mục sản phẩm có mã ' + categoryID + ' ? Nếu xoá danh mục, các tin tức thuộc danh mục cũng sẽ bị xoá, bạn chắc chắn chứ?')) {
                 $.ajax({
                     url: "/api/NewsCategoryApi/DeleteNewsCategory?categoryId=" + categoryID,
                     type: 'POST',

@@ -9,6 +9,8 @@ namespace VEGETFOODS.Common
     {
         public static string USER_SESSION = "USER_SESSION";
         public static string USER_COOKIES = "USER_COOKIES";
+        public static string CartCookies = "CartCookies";
+
 
     }
 }

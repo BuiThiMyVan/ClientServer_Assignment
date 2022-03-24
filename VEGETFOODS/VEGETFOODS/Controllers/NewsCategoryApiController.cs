@@ -84,11 +84,11 @@ namespace VEGETFOODS.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult DeleteNewsCategory(int newsCategoryId)
+        public IHttpActionResult DeleteNewsCategory(int categoryId)
         {
             try
             {
-                context.SP_NEWSCATEGORY_DELETE(newsCategoryId);
+                context.SP_NEWSCATEGORY_DELETE(categoryId);
                 return Json(new { message = 200 });
             }
             catch

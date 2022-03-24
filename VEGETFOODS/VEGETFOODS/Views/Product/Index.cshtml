@@ -64,9 +64,6 @@
                                 <a v-bind:href="'/Product/Details?id='+ item.ProductID" class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                     <span><i class="ion-ios-menu"></i></span>
                                 </a>
-                                <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                    <span><i class="ion-ios-cart"></i></span>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -77,8 +74,8 @@
             <div class="col text-center">
                 <div class="block-27">
                     <ul>
-                        <li><a href="#">&lt;</a></li>
-                        <li><a href="#">&gt;</a></li>
+                        <li><a href="javascript:void(0)" v-on:click="prev()">&lt;</a></li>
+                        <li><a href="javascript:void(0)" v-on:click="next()">&gt;</a></li>
                     </ul>
                 </div>
             </div>

@@ -21,7 +21,7 @@ namespace VEGETFOODS.Controllers
             var startIndex = (objPage.pageIndex - 1) * objPage.pageSize;
             var count = objPage.pageSize;
             var txtSearch = objPage.txtSearch == null ? "" : objPage.txtSearch.Trim();
-            var categories = context.SP_USER_SEARCH(txtSearch, startIndex, count, totalItems).ToList();
+            var categories = context.SP_USER_SEARCH(txtSearch, startIndex, count, totalItems).Where(x => x.Role == Models.Common.Role.Client.GetHashCode()).ToList();
             var totalCategories = Convert.ToInt32(totalItems.Value);
             var pageView = "";
 

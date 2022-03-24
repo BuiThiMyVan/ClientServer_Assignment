@@ -187,7 +187,12 @@
                 dataType: 'json',
                 contentType: "application/x-www-form-urlencoded; charset=UTF-8"
             }).then(res => {
-                window.location.href = "/Payment/OrderSuccesfully";
+                if (res.message != "") {
+                    console.log(res.message);
+                } else {
+                    window.location.href = "/Payment/OrderSuccesfully";
+
+                }
             });
         }
     }

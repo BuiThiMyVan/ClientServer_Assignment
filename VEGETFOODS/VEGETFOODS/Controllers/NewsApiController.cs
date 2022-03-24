@@ -21,7 +21,7 @@ namespace VEGETFOODS.Controllers
         public IHttpActionResult GetListNews(Pagination objPage)
         {
             var totalItems = new ObjectParameter("totalItems", typeof(int));
-            var startIndex = (objPage.pageIndex - 1) * objPage.pageSize;
+            var startIndex = (objPage.pageIndex - 1) * objPage.pageSize + 1;
             var count = objPage.pageSize;
             var txtSearch = objPage.txtSearch == null ? "" : objPage.txtSearch.Trim();
             var categories = context.SP_NEWS_SEARCH(txtSearch, startIndex, count, totalItems).ToList();
@@ -30,11 +30,11 @@ namespace VEGETFOODS.Controllers
 
             if (totalCategories < (objPage.pageIndex * objPage.pageSize))
             {
-                pageView = (startIndex + 1) + "-" + totalCategories + " trong tổng số " + totalCategories;
+                pageView = (startIndex) + "-" + totalCategories + " trong tổng số " + totalCategories;
             }
             else
             {
-                pageView = (startIndex + 1) + "-" + (objPage.pageIndex * objPage.pageSize) + " trong tổng số " + totalCategories;
+                pageView = (startIndex) + "-" + (objPage.pageIndex * objPage.pageSize) + " trong tổng số " + totalCategories;
             }
             int totalPage = 0;
             totalPage = (int)Math.Ceiling((double)totalCategories / objPage.pageSize);
